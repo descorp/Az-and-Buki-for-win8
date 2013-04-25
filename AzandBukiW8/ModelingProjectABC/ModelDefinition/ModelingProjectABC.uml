@@ -1,0 +1,2052 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="28bf6aac-2480-4b28-b962-979c202d7fc0"
+  name="ModelingProjectABC" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <subsystem
+        Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+        name="Клиент &quot;Азбука&quot;"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="cd0c2c69-cd98-42cd-bec8-cb8d2441085c"
+        name="User"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="90bb0bf7-5eb7-4301-9cb2-ea3ae3ee9187"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Browse Alphabets"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="db373fb3-c5c0-451a-940f-04bf7ab963c2"
+              LastKnownName="Browse Alphabets"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="2ca477e7-7724-4ac7-88af-bfdd399fe038"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="384c43ea-e28f-415e-9b38-5c149e5969b6"
+                  name="Browse Alphabets"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="ed9ed2c2-7fba-4035-b7ab-e1260d488abd"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Browse Words"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="2bf9083e-9f51-4a27-a59b-ec880ee619da"
+              LastKnownName="Browse Words"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="53aae57d-d931-40d8-a18e-7a37f5951385"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c67320ff-3138-44c9-80cd-e99f4375e0f6"
+                  name="Browse Words"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="92e881e2-59b0-4c24-8b1b-cbc456b21fd2"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Profile"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="6d919bcc-d935-499b-a0e9-01a8f8ec9e93"
+              LastKnownName="Profile"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ff58ec84-dfdf-47a8-9611-c4df07241a09"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a25f02f8-c8bd-47fd-acbd-21cc7863c690"
+                  name="Profile"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="87dbcbca-122e-41aa-93f2-f8767e607aa2"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Authorization"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="36c64eb5-3189-425c-8348-9f85dcbf389d"
+              LastKnownName="Authorization"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="29f4bb1d-7b96-435e-a69b-736efcf6f92e"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6e85705a-7f57-411d-9c89-c17d96947de7"
+                  name="Authorization"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="b93025da-8e34-44f0-9f7d-012c8e48a0ed"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Play Game"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="badf82ee-6646-47b2-a7ee-f3a85126ea9a"
+              LastKnownName="Play Game"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="729864a8-397e-4ae2-95c5-5ebc585a464e"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="7411b3ab-b722-47c6-bdd4-821f0c2f6843"
+                  name="Play Game"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="fce8a796-d35e-4cac-8b5e-4cc0f8c0881d"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="More Alphabets"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="29fcaf9a-64c2-4762-859e-2e3874e05268"
+              LastKnownName="More Alphabets"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a6b3f252-39ca-42b2-a731-dbe441f980c8"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="fd616d11-6ca6-4a8e-8843-beea4d713e72"
+                  name="More Alphabets"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="65df77d5-37d3-4880-8605-983694df12cc"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Registration"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="b9a5b9d9-1c37-43a2-9f27-c4dc78fb6536"
+              LastKnownName="Registration"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="05521aa2-4555-4e11-b022-94a5c4f9ae7b"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="230d1446-51a8-4f1d-90d4-9a42dcc916c0"
+                  name="Registration"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <subsystem
+        Id="79584ca8-4c1a-4afd-be35-8b59320b15b2"
+        name="Сервер "
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="fc389886-5393-450f-bbc9-e61eab0dc427"
+        name="Администратор"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="db373fb3-c5c0-451a-940f-04bf7ab963c2"
+        name="Browse Alphabets"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="9a4dc35d-a9dc-4f6a-b317-9f45d5db4c98"
+            isDerived="false"
+            sourceEndRoleName="Browse Alphabets"
+            targetEndRoleName="Choose Alphabet"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="9b6a4adb-7dd4-4556-a9e3-25a51e510a05"
+              LastKnownName="Choose Alphabet"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="404f2a5d-bb35-448f-85a6-fb661b11afc5"
+                  name="Browse Alphabets"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="da9662bd-4ad7-4c38-8b02-8c72aaa4cfa9"
+                  name="Choose Alphabet"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="6f4bc063-ff21-4c15-8b53-9ffb076061fe"
+            isDerived="false"
+            sourceEndRoleName="Browse Alphabets"
+            targetEndRoleName="Back"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="1685ef48-220c-4131-95dd-4302e112bcd5"
+              LastKnownName="Back"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a3935ab2-4d93-427b-8703-808218e194c4"
+                  name="Browse Alphabets"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e4c35a09-95b9-444c-9be8-4d92fc63cb2f"
+                  name="Back"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="2bf9083e-9f51-4a27-a59b-ec880ee619da"
+        name="Browse Words"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="c6b415a8-6c35-4439-abec-df15cf88782a"
+            isDerived="false"
+            sourceEndRoleName="Browse Words"
+            targetEndRoleName="Choose word"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="8bee91f0-57e5-4d8b-93ce-cda34d2ff577"
+              LastKnownName="Choose word"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="9b0a5cf3-0d2e-41cb-9cb9-22462a36b7a0"
+                  name="Browse Words"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="67d44f04-6b5a-4189-835e-b6bc53f01347"
+                  name="Choose word"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="9b6a4adb-7dd4-4556-a9e3-25a51e510a05"
+        name="Choose Alphabet"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="34dd8b3f-d609-4cbe-bb27-c33b0fb759a5"
+            isDerived="false"
+            sourceEndRoleName="Choose Alphabet"
+            targetEndRoleName="Choose Letter"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="368fc441-3bff-4c14-b975-b1feab3360cc"
+              LastKnownName="Choose Letter"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c4ed70b3-f1b1-461f-8cdc-1dc8c4f15771"
+                  name="Choose Alphabet"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="cb14545c-0a99-4563-adaa-5153e019130a"
+                  name="Choose Letter"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="a5fd4b57-e7e1-4b85-a443-2b3883229d22"
+            isDerived="false"
+            sourceEndRoleName="Choose Alphabet"
+            targetEndRoleName="Back"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="f15eedd9-4610-49be-8bb9-794e62bf78b0"
+              LastKnownName="Back"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="477badec-9f6c-4f70-9c19-059d4269f913"
+                  name="Choose Alphabet"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8b01a4ff-e1f9-4b83-8d29-ec8e0e176577"
+                  name="Back"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="c3a3694e-2b97-4e98-82a7-01d04a765d4c"
+        name="Choose Letter"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="368fc441-3bff-4c14-b975-b1feab3360cc"
+        name="Choose Letter"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="9da52a33-a9ba-4975-bb7d-80fb026010e2"
+            isDerived="false"
+            sourceEndRoleName="Choose Letter"
+            targetEndRoleName="Browse Word List"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="26c0e731-88c1-42f4-82c3-1fae123bac40"
+              LastKnownName="Browse Word List"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="b0a396d8-423d-4f25-9247-4977d9af6611"
+                  name="Choose Letter"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="65b7b026-89ca-40a2-b301-d61a6e5c12aa"
+                  name="Browse Word List"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="e1b585b1-38db-425f-86ed-ad01ed579110"
+            isDerived="false"
+            sourceEndRoleName="Choose Letter"
+            targetEndRoleName="Back"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="341208b4-9479-4a5b-ba71-53cfeb448254"
+              LastKnownName="Back"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="bea56f76-9ba8-4567-9f09-254e41ea6d84"
+                  name="Choose Letter"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a317787b-7e1c-4210-b94a-ed915d9e4201"
+                  name="Back"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="c131cf67-73fb-45f1-8543-0a6f18c0212c"
+            isDerived="false"
+            sourceEndRoleName="Choose Letter"
+            targetEndRoleName="Play sound"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="897ed810-cd68-4528-9f09-23114731cc23"
+              LastKnownName="Play sound"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="93aaa31c-a63f-412b-8e4d-da008396ae5e"
+                  name="Choose Letter"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="fa07733e-db80-4df1-b7dd-3334bc3563af"
+                  name="Play sound"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="897ed810-cd68-4528-9f09-23114731cc23"
+        name="Play sound"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="26c0e731-88c1-42f4-82c3-1fae123bac40"
+        name="Browse Word List"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="341208b4-9479-4a5b-ba71-53cfeb448254"
+        name="Back"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="1ce58f4a-f2f5-44e9-ad18-9742f79405a6"
+        name="Browse History"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="a8d3696f-3c3d-41ad-8a00-a06173d7bd17"
+            isDerived="false"
+            sourceEndRoleName="Browse History"
+            targetEndRoleName="Share"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="64f637da-9e30-4964-85d9-712465cf117d"
+              LastKnownName="Share"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8034e4ad-4a79-4fbb-8d5e-4f0fc01c618c"
+                  name="Browse History"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a1a0305b-820f-4e3e-928f-7c5d4bf42b5a"
+                  name="Share"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="f15eedd9-4610-49be-8bb9-794e62bf78b0"
+        name="Back"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="1685ef48-220c-4131-95dd-4302e112bcd5"
+        name="Back"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="6d919bcc-d935-499b-a0e9-01a8f8ec9e93"
+        name="Profile"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="50e44f9b-59d7-4662-b9e5-8629a87e2b78"
+            isDerived="false"
+            sourceEndRoleName="Profile"
+            targetEndRoleName="Browse Log"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="1ce58f4a-f2f5-44e9-ad18-9742f79405a6"
+              LastKnownName="Browse History"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d28b1c2b-abf7-47c5-a8e6-10002e065e4d"
+                  name="Profile"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d9316bdc-b134-4496-be21-5b02c6c989dc"
+                  name="Browse Log"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="b4ab58d3-94e3-40c5-9a3a-1672e80e8eed"
+            isDerived="false"
+            sourceEndRoleName="Profile"
+            targetEndRoleName="Edit User Data"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="1839202f-0dc7-459f-bc90-2dfa0cd4a630"
+              LastKnownName="Edit User Data"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5134317c-07a6-495d-82a9-6bf1126adb39"
+                  name="Profile"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8e063771-600f-4322-8df4-7c2fed4e78a0"
+                  name="Edit User Data"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="1839202f-0dc7-459f-bc90-2dfa0cd4a630"
+        name="Edit User Data"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="badf82ee-6646-47b2-a7ee-f3a85126ea9a"
+        name="Play Game"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="a302ff4d-44a5-4b2c-9155-ac69916a64a6"
+            isDerived="false"
+            sourceEndRoleName="Play Game"
+            targetEndRoleName="Share result"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="89793558-ce39-4a82-8e70-71aa6c00066b"
+              LastKnownName="Share result"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="9d4505ea-1f4f-4c7e-90e3-04d414e6e865"
+                  name="Play Game"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a7023e49-6fca-4382-90e6-aa13c0a52699"
+                  name="Share result"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="47c12a7b-ee5f-46db-bbad-29d5fba70868"
+            isDerived="false"
+            sourceEndRoleName="Play Game"
+            targetEndRoleName="Back"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="775b808d-0ba0-40f9-89f9-d6cb97e0005c"
+              LastKnownName="Back"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ccb1b6a7-ea62-49e7-bafc-05508c2f06e4"
+                  name="Play Game"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="0666e4be-cdf6-4b58-9dd9-a1321b00bce4"
+                  name="Back"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="775b808d-0ba0-40f9-89f9-d6cb97e0005c"
+        name="Back"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="36c64eb5-3189-425c-8348-9f85dcbf389d"
+        name="Authorization"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="64f637da-9e30-4964-85d9-712465cf117d"
+        name="Share"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="89793558-ce39-4a82-8e70-71aa6c00066b"
+        name="Share result"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="29fcaf9a-64c2-4762-859e-2e3874e05268"
+        name="More Alphabets"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="35835236-686d-4a17-9fde-59cbd65b109e"
+            isDerived="false"
+            sourceEndRoleName="More Alphabets"
+            targetEndRoleName="Load"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="f6bb20be-f5a5-414c-ac86-b429653d67a9"
+              LastKnownName="Load"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="20ca9739-6eac-42b7-bf64-248fa46db4b2"
+                  name="More Alphabets"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="3f421ba2-022b-421a-a00b-053b393e9e3c"
+                  name="Load"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="f6bb20be-f5a5-414c-ac86-b429653d67a9"
+        name="Load"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="8bee91f0-57e5-4d8b-93ce-cda34d2ff577"
+        name="Choose word"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="3c12afcc-59c5-4055-8cc7-994880f5e508"
+            isDerived="false"
+            sourceEndRoleName="Choose word"
+            targetEndRoleName="Play sound"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="00b9eda3-6399-4ffc-804b-662942cf8078"
+              LastKnownName="Play sound"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e618a558-d955-4f08-92d1-0f8422b0a810"
+                  name="Choose word"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ef402546-e3a5-44d8-b0ac-37f29eb45d81"
+                  name="Play sound"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="00b9eda3-6399-4ffc-804b-662942cf8078"
+        name="Play sound"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="e4442c36-9096-47f6-80f5-ead23b04e935"
+        name="Back"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="b9a5b9d9-1c37-43a2-9f27-c4dc78fb6536"
+        name="Registration"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="0acd2eab-0161-4f23-922b-239d7951d4eb"
+            LastKnownName="Клиент &quot;Азбука&quot;"
+            LastKnownLocation="ModelingProjectABC.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9e0341eb-014c-4217-b789-ca987a19d623"
+        name="Alphabet"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="a5605b27-1a78-48ba-9a09-01d39d7aa7f0"
+            isDerived="false"
+            sourceEndRoleName="Alphabet"
+            targetEndRoleName="Letter"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="b6094490-e5ba-462e-bff8-9458619d7e08"
+              LastKnownName="Letter"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="9f83fac3-96af-4c5f-be27-186231495e84"
+                  name="Alphabet"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ad211bcf-84e2-4dff-bf93-58f7f8ac6143"
+                  name="Letter"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="c897f782-c600-46d2-9c7a-6354aba367e8"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="aba8ed3d-78f1-4f1c-a2c3-d139ad6a22d1"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="656e6672-8f79-4825-9025-283ba5b48708"
+            name="Language"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="8f82a5d3-973b-4c9f-a444-0c219549ce60"
+            name="Logo"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="301fddd4-99ab-4bb0-9262-cae98a914f4f"
+            name="Letters"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="b6094490-e5ba-462e-bff8-9458619d7e08"
+        name="Letter"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="e83b299c-8c28-4046-94dd-586f92eccfbc"
+            isDerived="false"
+            sourceEndRoleName="Letter"
+            targetEndRoleName="Word"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="a777177d-60b2-4ea5-beff-3dae202a3c55"
+              LastKnownName="Word"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="62b035f0-6505-4ede-b9c6-57e3e0e488d5"
+                  name="Letter"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="39f016ce-e089-4371-a1c0-7f043aaec80c"
+                  name="Word"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="01be9053-a21d-4af8-9d4d-22a731f9f313"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="225a08d6-0914-4bd8-bda8-26d6799c4ce7"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="406cf74f-324a-4a1e-ae83-d454304c624c"
+            name="Value"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="990828e0-3faf-4ac5-9a6e-3b18d5828335"
+            name="WordList"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="27fe10cb-87ab-4b0f-be7f-be734ca7cea5"
+            name="Sound"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="a777177d-60b2-4ea5-beff-3dae202a3c55"
+        name="Word"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="f0684d26-3037-4deb-b3c8-7088dbc034ee"
+            name="Value"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="08944fa0-625a-4858-ba14-3b922ecf9213"
+            name="Sprite"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="70b85c87-1c82-48f2-8965-0c6028def674"
+            name="Sound"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="b53d1e16-434f-4fc0-8267-36beb5ee8b2f"
+        name="Game"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="2127b9c4-81c4-47b5-ad05-30e86beb0297"
+            isDerived="false"
+            sourceEndRoleName="Game"
+            targetEndRoleName="User"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="e6b73470-ee0f-4e25-bad2-d47d12d4ce2e"
+              LastKnownName="User"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="abc2d6f1-1439-4ace-a0a9-be7e32e80a86"
+                  name="Game"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="575ed371-5668-475e-af23-756e5eef31e7"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="60ff86a5-e7fd-4d64-911e-620f69a8d270"
+            isDerived="false"
+            sourceEndRoleName="Game"
+            targetEndRoleName="GameResult"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="8a93fd0e-6507-4374-bbc9-40c6c0881d8e"
+              LastKnownName="GameResult"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="809c08e4-43db-4f4f-a6b6-9a2b88c7187b"
+                  name="Game"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="321e31c2-9e23-4e50-ae59-905e896a8ca4"
+                  name="GameResult"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="8ebfddff-dccf-4cf5-b5ac-7433b797afad"
+            name="Time"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="4a0fd1d9-5df6-4034-a7ad-3d7c9fec520b"
+            name="Result"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="ad1c1610-79d6-45b6-9788-e2f615ef4038"
+            name="User"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="3a80eb1a-e900-4735-9397-e2035b337602"
+            name="Alphabet"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="6c2eb3c1-20cf-4b9d-9273-ec42a09a1df7"
+            name="Start"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="fd6fc8ce-5a46-4447-8fa9-cfdec5ff753e"
+            name="AddScores"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="e6b73470-ee0f-4e25-bad2-d47d12d4ce2e"
+        name="User"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="8ae354f1-fd91-470c-bb1a-c261a5dcc634"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="HistoryNote"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="f8e9a3c7-2523-46c5-a277-e685424c31b8"
+              LastKnownName="HistoryNote"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d4749b2e-d2ca-4093-9355-42c55fd59018"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="81446932-bab1-451d-93b2-f90c43a6dfba"
+                  name="HistoryNote"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="92513938-740b-45ac-a545-4b803c3ea224"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="f9bcbab3-2272-4757-ac8c-69fa7f16d9d0"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="cb9aa181-09d2-4e06-80e0-5d9cd23243cc"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Alphabet"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="9e0341eb-014c-4217-b789-ca987a19d623"
+              LastKnownName="Alphabet"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="24833a83-3c86-489e-a7e8-b01207a5bb1f"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="2acef2f9-da04-4a32-9542-0f866487f64b"
+                  name="Alphabet"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="c95dec01-117f-4a77-a0a1-77444c07d7c4"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="042909a6-2c6f-4dba-8cd5-9b68fca1497b"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="ccbcadf6-cc06-4605-9b92-9b4750e61f95"
+            name="Name"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="6bcf6561-43c0-4d5d-b5bd-30dfda5a5d7f"
+            name="Age"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="e277ee9f-d45d-4a3d-b87a-ee580f8d9032"
+            name="Password"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="41907c44-5d27-46c6-9fda-497508e924c6"
+            name="Photo"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="f381f92d-db58-42b7-8805-0959023f7051"
+            name="History"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="a715797e-2cf8-4380-8e81-9d8269865f8f"
+            name="Alphabets"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="f8e9a3c7-2523-46c5-a277-e685424c31b8"
+        name="HistoryNote"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="af2694ff-2929-42d6-880a-0360ac097ce1"
+            name="Date"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="fab7953b-e58b-4501-9bdf-fce197e1b1b4"
+            name="Action"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="807dfc3e-57ea-4df2-88f0-a98429e2aa8b"
+            name="Share"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="1aa27df8-c22e-4919-84f9-075071f2c542"
+        name="WordList"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="0495f398-4717-4204-b0d3-14bed9dd9617">
+            <classMoniker
+              Id="a777177d-60b2-4ea5-beff-3dae202a3c55"
+              LastKnownName="Word"
+              LastKnownLocation="ModelingProjectABC.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="be80fb88-0109-4d5d-872b-e03f3eec2feb"
+            name="Words"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="7b34c428-683e-451b-b2f4-9362c8a6e595"
+            name="Alphabet"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="a9ad7005-e90b-4964-a9a9-da108fdf8437"
+            name="User"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="8a93fd0e-6507-4374-bbc9-40c6c0881d8e"
+        name="GameResult"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="0afb710e-976d-4ec2-88a2-846a7d34f912"
+            name="Scores"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="66295bf5-37a3-4735-bc63-e47abda70858"
+            name="Value"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="e21bd2f4-2a4b-4047-9bad-5af02bbc96d6"
+        name="UserManager"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="dd87d702-c8c8-43d7-a1c1-794edc4ccc74"
+            isDerived="false"
+            sourceEndRoleName="UserManager"
+            targetEndRoleName="User"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="e6b73470-ee0f-4e25-bad2-d47d12d4ce2e"
+              LastKnownName="User"
+              LastKnownLocation="ModelingProjectABC.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8bf987f8-f94c-4932-8ad3-c86ed0a0dbd3"
+                  name="UserManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8a425d7e-58e7-47eb-ba05-4dd9cd434773"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="a312f348-508d-4440-8f07-2d5746f7bf57"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="345d0026-41c4-486a-b36c-ae9176c531ba"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="4ce2b941-6914-422f-92bf-7490e16eb4a9"
+            name="Users"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="57e5c2a6-c351-40d9-bed8-cbd4dcbd4586"
+            name="AddNew"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="932a1f76-2cde-4591-9d1a-ba81efbe6bf7"
+            name="Authorization"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="2f89cd26-17b3-492e-ac57-e1527307a852"
+            name="EditUserData"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>

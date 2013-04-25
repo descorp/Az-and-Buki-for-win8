@@ -1,0 +1,484 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" dslVersion="1.0.0.0" Id="e3598309-a2f5-4f2d-9f5b-081cc8a717af" name="Диаграмма вариантов использования" linkedPackageId="c140602d-be84-4aae-a262-18dedd3dcdaf" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <profileInstances>
+    <packageHasProfileInstances Id="7d93c945-5889-4f0f-b2ed-3e4c964635f8">
+      <profileInstance Id="0a288c35-4e30-466b-ba4b-5d3963f18c9b" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="aaab060c-047d-4f5f-8008-1d20acb62b37">
+      <profileInstance Id="c5a12322-afbf-4bf1-af85-5e5e9379e5d1" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" name="Клиент &quot;Азбука&quot;" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="0acd2eab-0161-4f23-922b-239d7951d4eb" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <actor Id="0150afff-3b49-4340-849c-9341d61ac8bd" name="User" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="cd0c2c69-cd98-42cd-bec8-cb8d2441085c" />
+        <targetEnds>
+          <association Id="5fde7895-c495-423c-9bb6-106ecaf53391" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Browse Alphabets" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="9e0af7f3-4b09-4d9b-9c56-55413d210c49" LastKnownName="Browse Alphabets" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b21f13b7-f708-463b-aa15-c7d83155ed8e" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="2ca477e7-7724-4ac7-88af-bfdd399fe038" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b5517efb-a97d-4327-a20d-9a322a8f169d" name="Browse Alphabets" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="384c43ea-e28f-415e-9b38-5c149e5969b6" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="90bb0bf7-5eb7-4301-9cb2-ea3ae3ee9187" />
+          </association>
+          <association Id="ef5b8856-9bd9-4393-b9ee-f5a085e886af" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Browse Words" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="8cefd480-494a-440b-ae38-b571ad82c3fa" LastKnownName="Browse Words" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="65fddf54-f6ac-4049-89b2-a9393c7174ad" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="53aae57d-d931-40d8-a18e-7a37f5951385" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b70102ce-116a-4998-b4a4-ed9029ecc90b" name="Browse Words" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="c67320ff-3138-44c9-80cd-e99f4375e0f6" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="ed9ed2c2-7fba-4035-b7ab-e1260d488abd" />
+          </association>
+          <association Id="de8709ec-af18-411e-a048-99d44850dce8" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Profile" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="e6ac14eb-6310-457d-8794-ba584dac732f" LastKnownName="Profile" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ccec05d3-e258-42b9-a46f-d5176db6c43c" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="ff58ec84-dfdf-47a8-9611-c4df07241a09" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="1cc980f8-5c89-4585-b87e-2b23a8f035b1" name="Profile" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="a25f02f8-c8bd-47fd-acbd-21cc7863c690" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="92e881e2-59b0-4c24-8b1b-cbc456b21fd2" />
+          </association>
+          <association Id="da955f0b-81a9-44bb-8435-9b585fbdf073" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Authorization" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="92fccbdd-a3eb-46cc-97b2-6ad4866340af" LastKnownName="Authorization" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="617021b2-39d9-44fc-8087-7e8919cb3505" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="29f4bb1d-7b96-435e-a69b-736efcf6f92e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="18170f2e-22b8-461b-9c3b-8e1825526544" name="Authorization" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="6e85705a-7f57-411d-9c89-c17d96947de7" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="87dbcbca-122e-41aa-93f2-f8767e607aa2" />
+          </association>
+          <association Id="1ec045f8-420e-419b-b529-bf93a11264f4" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Play Game" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="63c76f91-8db5-467d-9191-cadb226fdeda" LastKnownName="Play Game" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b5bc8932-5643-4a10-8464-fef606cd5461" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="729864a8-397e-4ae2-95c5-5ebc585a464e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="872eb412-6194-49e7-a101-fdc4080d6f42" name="Play Game" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="7411b3ab-b722-47c6-bdd4-821f0c2f6843" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="b93025da-8e34-44f0-9f7d-012c8e48a0ed" />
+          </association>
+          <association Id="0b1a0ba9-5a8c-46d1-b058-b275fa0b3601" isDerived="false" sourceEndRoleName="User" targetEndRoleName="More Alphabets" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="734d659b-9cf8-4d9d-97de-1872b6c3c3c6" LastKnownName="More Alphabets" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="1330c030-eeb4-455c-b2d5-564db0080655" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="a6b3f252-39ca-42b2-a731-dbe441f980c8" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f586dea8-3e36-4528-84ac-3ed0db2f5b2d" name="More Alphabets" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="fd616d11-6ca6-4a8e-8843-beea4d713e72" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="fce8a796-d35e-4cac-8b5e-4cc0f8c0881d" />
+          </association>
+          <association Id="f2f9b29a-7bb1-4ad3-a4b8-60e89b6a5b36" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Registration" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="e0dc0327-4e94-4379-84d2-76bf13e6f7c2" LastKnownName="Registration" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2f2cc3f0-b4b9-42c4-9408-b89744173bc1" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="05521aa2-4555-4e11-b022-94a5c4f9ae7b" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="9a015902-b47f-4189-9687-01f5ac46399f" name="Registration" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="230d1446-51a8-4f1d-90d4-9a42dcc916c0" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="65df77d5-37d3-4880-8605-983694df12cc" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="9e0af7f3-4b09-4d9b-9c56-55413d210c49" name="Browse Alphabets" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="db373fb3-c5c0-451a-940f-04bf7ab963c2" />
+        <targetEnds>
+          <association Id="8c19f4f3-8c5f-4c0a-b73b-e87e17c0390d" isDerived="false" sourceEndRoleName="Browse Alphabets" targetEndRoleName="Choose Alphabet" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="34197614-11b5-4d0e-908c-3c717052bb32" LastKnownName="Choose Alphabet" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="cf2a0c66-a92c-4004-b8e6-10a7b77ee368" name="Browse Alphabets" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="404f2a5d-bb35-448f-85a6-fb661b11afc5" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="61931483-1f66-4233-9ced-7f67707013c5" name="Choose Alphabet" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="da9662bd-4ad7-4c38-8b02-8c72aaa4cfa9" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="9a4dc35d-a9dc-4f6a-b317-9f45d5db4c98" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="8cefd480-494a-440b-ae38-b571ad82c3fa" name="Browse Words" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="2bf9083e-9f51-4a27-a59b-ec880ee619da" />
+        <targetEnds>
+          <association Id="fddc229f-3914-4fe2-9e86-37672d73a176" isDerived="false" sourceEndRoleName="Browse Words" targetEndRoleName="Choose word" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="16fd5bfa-2416-4aea-8eba-c507b9a9379a" LastKnownName="Choose word" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="398548a9-35b6-4227-8d50-497e4e8b5961" name="Browse Words" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="9b0a5cf3-0d2e-41cb-9cb9-22462a36b7a0" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="581136bb-2837-4d0e-9ab1-dc53d87abf0f" name="Choose word" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="67d44f04-6b5a-4189-835e-b6bc53f01347" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="c6b415a8-6c35-4439-abec-df15cf88782a" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="34197614-11b5-4d0e-908c-3c717052bb32" name="Choose Alphabet" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="9b6a4adb-7dd4-4556-a9e3-25a51e510a05" />
+        <targetEnds>
+          <association Id="04ed7438-3e4d-4920-828f-9e3a5dc689fe" isDerived="false" sourceEndRoleName="Choose Alphabet" targetEndRoleName="Choose Letter" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="45708243-5c1e-4677-969f-259bdefc189a" LastKnownName="Choose Letter" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c4215762-b617-4e15-9059-7dd87161966d" name="Choose Alphabet" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="c4ed70b3-f1b1-461f-8cdc-1dc8c4f15771" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="51fc227a-4887-47d8-b319-dee86ff07562" name="Choose Letter" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="cb14545c-0a99-4563-adaa-5153e019130a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="34dd8b3f-d609-4cbe-bb27-c33b0fb759a5" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="45708243-5c1e-4677-969f-259bdefc189a" name="Choose Letter" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="368fc441-3bff-4c14-b975-b1feab3360cc" />
+        <targetEnds>
+          <association Id="8cd2b359-2f17-4897-82e3-ab4c29b70f91" isDerived="false" sourceEndRoleName="Choose Letter" targetEndRoleName="Browse Word List" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="699c0a48-d49a-4fc4-a1af-caa0f91360bb" LastKnownName="Browse Word List" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ee114499-677a-4c8a-9c81-d8f6395782d5" name="Choose Letter" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="b0a396d8-423d-4f25-9247-4977d9af6611" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="970bc9fa-91eb-4de6-855f-3a6e0f5b488a" name="Browse Word List" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="65b7b026-89ca-40a2-b301-d61a6e5c12aa" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="9da52a33-a9ba-4975-bb7d-80fb026010e2" />
+          </association>
+          <association Id="e268d37d-d794-4552-8878-657ea3bd70f7" isDerived="false" sourceEndRoleName="Choose Letter" targetEndRoleName="Play sound" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="352ca333-9cff-4422-b6a9-f85d931a340b" LastKnownName="Play sound" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b246faa2-218c-41a7-a2a7-147ddb933b45" name="Choose Letter" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="93aaa31c-a63f-412b-8e4d-da008396ae5e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="bba13972-afb7-4136-86ef-747c6f129a11" name="Play sound" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="fa07733e-db80-4df1-b7dd-3334bc3563af" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="c131cf67-73fb-45f1-8543-0a6f18c0212c" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="352ca333-9cff-4422-b6a9-f85d931a340b" name="Play sound" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="897ed810-cd68-4528-9f09-23114731cc23" />
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="699c0a48-d49a-4fc4-a1af-caa0f91360bb" name="Browse Word List" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="26c0e731-88c1-42f4-82c3-1fae123bac40" />
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="daeb0366-a9d3-4469-a73f-dbaabf9390a8" name="Browse History" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="1ce58f4a-f2f5-44e9-ad18-9742f79405a6" />
+        <targetEnds>
+          <association Id="bd9ab1ed-ee6c-4cd8-b8dd-7103218c0826" isDerived="false" sourceEndRoleName="Browse History" targetEndRoleName="Share" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="2ecf2771-150d-44bd-b7b3-7a5b940a3a3e" LastKnownName="Share" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="9aae097d-a1bb-485d-9f9b-d6d6902a143a" name="Browse History" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="8034e4ad-4a79-4fbb-8d5e-4f0fc01c618c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="50920bdb-d35f-4b4d-9865-526d2dbf83be" name="Share" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="a1a0305b-820f-4e3e-928f-7c5d4bf42b5a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="a8d3696f-3c3d-41ad-8a00-a06173d7bd17" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="e6ac14eb-6310-457d-8794-ba584dac732f" name="Profile" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="6d919bcc-d935-499b-a0e9-01a8f8ec9e93" />
+        <targetEnds>
+          <association Id="492ad88b-5b66-49a0-a389-da496cdc7f2e" isDerived="false" sourceEndRoleName="Profile" targetEndRoleName="Browse Log" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="daeb0366-a9d3-4469-a73f-dbaabf9390a8" LastKnownName="Browse History" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b4771d21-dfd9-4e9f-8d20-8c1cb66b7ec2" name="Profile" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="d28b1c2b-abf7-47c5-a8e6-10002e065e4d" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="094ad422-c9dd-4b88-b4ab-c523480582b6" name="Browse Log" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="d9316bdc-b134-4496-be21-5b02c6c989dc" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="50e44f9b-59d7-4662-b9e5-8629a87e2b78" />
+          </association>
+          <association Id="08d122f3-b8fd-464f-9f08-eeffa399bade" isDerived="false" sourceEndRoleName="Profile" targetEndRoleName="Edit User Data" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="50e0bf28-f968-441e-86bc-e348cff593e6" LastKnownName="Edit User Data" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="185942b7-be8e-45e4-966e-2c71943557fb" name="Profile" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="5134317c-07a6-495d-82a9-6bf1126adb39" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="83ab7d7c-84d7-48a4-8dec-5ccdd839f489" name="Edit User Data" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="8e063771-600f-4322-8df4-7c2fed4e78a0" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="b4ab58d3-94e3-40c5-9a3a-1672e80e8eed" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="50e0bf28-f968-441e-86bc-e348cff593e6" name="Edit User Data" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="1839202f-0dc7-459f-bc90-2dfa0cd4a630" />
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="63c76f91-8db5-467d-9191-cadb226fdeda" name="Play Game" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="badf82ee-6646-47b2-a7ee-f3a85126ea9a" />
+        <targetEnds>
+          <association Id="1a04d3f4-cc11-49fb-a2c7-e4932a0d1b8a" isDerived="false" sourceEndRoleName="Play Game" targetEndRoleName="Share result" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="efa3fe0a-256e-4f26-98cc-e8df7eb87def" LastKnownName="Share result" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c4563d02-9e2d-4381-94e5-4cd756eda2da" name="Play Game" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="9d4505ea-1f4f-4c7e-90e3-04d414e6e865" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="741ec18c-daff-48bf-86a1-a95fe77bf38d" name="Share result" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="a7023e49-6fca-4382-90e6-aa13c0a52699" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="a302ff4d-44a5-4b2c-9155-ac69916a64a6" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="92fccbdd-a3eb-46cc-97b2-6ad4866340af" name="Authorization" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="36c64eb5-3189-425c-8348-9f85dcbf389d" />
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="2ecf2771-150d-44bd-b7b3-7a5b940a3a3e" name="Share" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="64f637da-9e30-4964-85d9-712465cf117d" />
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <useCaseModelRootHasTypes>
+      <useCase Id="efa3fe0a-256e-4f26-98cc-e8df7eb87def" name="Share result" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="89793558-ce39-4a82-8e70-71aa6c00066b" />
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="734d659b-9cf8-4d9d-97de-1872b6c3c3c6" name="More Alphabets" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="29fcaf9a-64c2-4762-859e-2e3874e05268" />
+        <targetEnds>
+          <association Id="95f100a3-c674-4d40-b416-c0a90660322e" isDerived="false" sourceEndRoleName="More Alphabets" targetEndRoleName="Load" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="595512d3-202f-439c-8c7c-74f9b08b539e" LastKnownName="Load" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="da98c068-0e4a-433e-b602-9b56d1b87cfc" name="More Alphabets" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="20ca9739-6eac-42b7-bf64-248fa46db4b2" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="28e8301f-d386-4f11-a894-d4dc858a6923" name="Load" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="3f421ba2-022b-421a-a00b-053b393e9e3c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="35835236-686d-4a17-9fde-59cbd65b109e" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="595512d3-202f-439c-8c7c-74f9b08b539e" name="Load" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="f6bb20be-f5a5-414c-ac86-b429653d67a9" />
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="16fd5bfa-2416-4aea-8eba-c507b9a9379a" name="Choose word" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="8bee91f0-57e5-4d8b-93ce-cda34d2ff577" />
+        <targetEnds>
+          <association Id="c0d36ca1-1cb3-4252-9169-aea0b2f132d8" isDerived="false" sourceEndRoleName="Choose word" targetEndRoleName="Play sound" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="76f89c32-1519-45af-a73a-d533e7b2b522" LastKnownName="Play sound" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="a470271e-4087-4a3a-9c5a-2a8166d479ef" name="Choose word" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="e618a558-d955-4f08-92d1-0f8422b0a810" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="88da6d44-6c85-486b-aa1f-7a34803121f8" name="Play sound" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="ef402546-e3a5-44d8-b0ac-37f29eb45d81" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="3c12afcc-59c5-4055-8cc7-994880f5e508" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="76f89c32-1519-45af-a73a-d533e7b2b522" name="Play sound" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="00b9eda3-6399-4ffc-804b-662942cf8078" />
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="e0dc0327-4e94-4379-84d2-76bf13e6f7c2" name="Registration" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="b9a5b9d9-1c37-43a2-9f27-c4dc78fb6536" />
+        <subjects>
+          <subsystemMoniker Id="c8114014-ce7c-4c3b-a551-fc900b82ee31" LastKnownName="Клиент &quot;Азбука&quot;" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="c140602d-be84-4aae-a262-18dedd3dcdaf" name="ModelingProjectABC">
+    <elementDefinition Id="28bf6aac-2480-4b28-b962-979c202d7fc0" />
+  </package>
+</useCaseModelRoot>

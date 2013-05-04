@@ -6,14 +6,6 @@ using SQLite;
 
 namespace AzandBukiAdminApp
 {
-    //class ABCDataContext : DataContext
-    //{
-    //    public ABCDataContext() : base("Data Source=appdata:/ABCdb.sdf; File Mode=read only;") { }
-
-    //    public Table<Alphabet> Alphabets;
-    //    public Table<Letter> Letters;
-    //    public Table<Word> Words;
-    //}
     
 
     #region Alphabet
@@ -35,8 +27,14 @@ namespace AzandBukiAdminApp
             set;
         }
 
+        public string Description
+        {
+            get;
+            set;
+        }
 
-        public string Sprite
+
+        public string Logo
         {
             get;
             set;
@@ -68,6 +66,11 @@ namespace AzandBukiAdminApp
             set;
         }
 
+        public string Logo
+        {
+            get;
+            set;
+        }
     }
     #endregion
 

@@ -11,7 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace App1.Common
+namespace LevelUP.Common
 {
     /// <summary>
     /// Обычная реализация объекта Page, предоставляющая несколько важных и удобных возможностей:

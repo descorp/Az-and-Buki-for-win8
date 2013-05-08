@@ -14,12 +14,12 @@ using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
-namespace App1
+namespace LevelUP
 {
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
-    public sealed partial class UserAlphabetsPage : App1.Common.LayoutAwarePage
+    public sealed partial class UserAlphabetsPage : LevelUP.Common.LayoutAwarePage
     {
         public UserAlphabetsPage()
         {

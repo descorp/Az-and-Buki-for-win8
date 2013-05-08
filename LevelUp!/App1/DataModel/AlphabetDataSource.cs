@@ -10,9 +10,9 @@ using System.IO;
 using Windows.Storage;
 
 
-namespace App1
+namespace LevelUP
 {
-    public abstract class ABCItem : App1.Common.BindableBase
+    public abstract class ABCItem : LevelUP.Common.BindableBase
     {
         public static Uri _baseUri = new Uri("ms-appx:///");
 
@@ -374,14 +374,31 @@ namespace App1
                     var LetterQuery = db.Query<Letter>("SELECT * FROM Letter WHERE AlphabetID=?", Aitem.ID);
 
                     for (int j = 0; j < LetterQuery.Count; j++)
-                        Aitem.LetterItems.Add(new LetterItem(
+                    {
+                        var Litem = new LetterItem(
                                         String.Concat("Alphabet ", Aitem.ID.ToString(), " Letter ", LetterQuery[j].ID.ToString()),
                                         LetterQuery[j].Value,
                                         Path.Combine(ApplicationData.Current.LocalFolder.Path, LetterQuery[j].Logo),
                                         LetterQuery[j].Value,
                                         LetterQuery[j].ID,
                                         Aitem
-                                        ));
+                                        );
+
+                        var WordQuery = db.Query<Word>("SELECT * FROM Word WHERE AlphabetID=? AND LetterID=?", Aitem.ID, LetterQuery[j].ID);
+
+                        for (int k = 0; k < WordQuery.Count; k++)
+                                Litem.WordItems.Add(new WordItem(
+                                                String.Concat("Alphabet ", WordQuery[k].AlphabetID.ToString(), " Letter ", WordQuery[k].LetterID.ToString(), WordQuery[k].ID.ToString()),
+                                                " ",
+                                                Path.Combine(ApplicationData.Current.LocalFolder.Path, WordQuery[k].ValueImg),
+                                                " ",
+                                                WordQuery[k].ID,
+                                                Aitem,
+                                                Path.Combine(ApplicationData.Current.LocalFolder.Path, WordQuery[k].Image)
+                                                ));
+
+                        Aitem.LetterItems.Add(Litem);
+                    }
                 }
                 return Aitem;
             }
@@ -392,39 +409,16 @@ namespace App1
         {
             // Для небольших наборов данных можно использовать простой линейный поиск
             var matches = _ABCDataSource.AllAlphabets.SelectMany(group => group.LetterItems).Where((item) => item.UniqueId.Equals(uniqueId));
-            if (matches.Count() == 1)
-            {
-                var _Path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db");
-                SQLiteConnection db = new SQLiteConnection(_Path);
-
-                var Litem = matches.First();
-                if (Litem.WordItems.Count == 0)
-                {
-                    var WordQuery = db.Query<Word>("SELECT * FROM Word WHERE AlphabetID=? AND LetterID=?", Litem.Alphabet.ID, Litem.ID);
-
-                    for (int j = 0; j < WordQuery.Count; j++)
-                        Litem.WordItems.Add(new WordItem(
-                                            String.Concat("Alphabet ", Litem.Alphabet.ID.ToString(), " Letter ", Litem.ID.ToString(), WordQuery[j].ID.ToString()),
-                                            " ",
-                                            Path.Combine(ApplicationData.Current.LocalFolder.Path, WordQuery[j].ValueImg),
-                                            " ",
-                                            WordQuery[j].ID,
-                                            Litem.Alphabet,
-                                            Path.Combine(ApplicationData.Current.LocalFolder.Path,WordQuery[j].Image)
-                                            ));
-                }
-                return Litem;
-            }
-            return null;
+            return matches.First();           
+            
         }
 
 
 
         public ABCDataSource()
         {
-            var _Path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db");
-            SQLiteConnection db = new SQLiteConnection(_Path);
-            
+           
+            SQLiteConnection db = new SQLiteConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path,"ABCdb.db"));
             
             var AlphabetQuery = db.Query<Alphabet>("SELECT * FROM Alphabet");
             
@@ -448,6 +442,54 @@ namespace App1
         }
 
         
+    }
+
+
+    public class PasswordBoxItem : LevelUP.Common.BindableBase
+    {
+        public PasswordBoxItem(String ImagePath)
+        {
+            this._imagePath = ImagePath;
+        }
+
+        private ImageSource _image = null;
+        private String _imagePath = null;
+        public ImageSource Image
+        {
+            get
+            {
+                if (this._image == null && this._imagePath != null)
+                {
+                    this._image = new BitmapImage(new Uri(ABCItem._baseUri, this._imagePath));
+                }
+                return this._image;
+            }
+
+            set
+            {
+                this._imagePath = null;
+                this.SetProperty(ref this._image, value);
+            }
+        }
+    }
+
+    public class PasswordBoxImageSource
+    {
+        public PasswordBoxImageSource(params String[] ImagePath)
+        {
+            _items = new ObservableCollection<PasswordBoxItem>();
+            for (int i = 0; i < ImagePath.Length; i++)
+            {
+                _items.Add(new PasswordBoxItem(ImagePath[i]));
+            }
+        }
+        private ObservableCollection<PasswordBoxItem> _items;
+        
+        public ObservableCollection<PasswordBoxItem> Items
+        {
+            get { return this._items; }
+            
+        }
     }
 
 }

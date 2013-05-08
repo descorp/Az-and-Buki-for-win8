@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using SQLite;
 
-namespace App1
+namespace LevelUP
 {
     
 
@@ -156,4 +156,34 @@ namespace App1
     }
     #endregion
 
+    #region User
+    public class User
+    {
+        [PrimaryKey, AutoIncrement]
+        public int ID
+        {
+            get;
+            set;
+        }
+
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        public string Hash
+        {
+            get;
+            set;
+        }
+        
+        public string Avatar
+        {
+            get;
+            set;
+        }
+
+    }
+    #endregion
 }

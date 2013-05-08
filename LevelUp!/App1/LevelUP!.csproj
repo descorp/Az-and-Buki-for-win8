@@ -7,8 +7,8 @@
     <ProjectGuid>{72C2A9B7-296F-4DFA-A123-EE484A91D9E6}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>App1</RootNamespace>
-    <AssemblyName>App1</AssemblyName>
+    <RootNamespace>LevelUP</RootNamespace>
+    <AssemblyName>LevelUP</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -118,6 +118,7 @@
     <Compile Include="AlphabetDetailsPage.xaml.cs">
       <DependentUpon>AlphabetDetailsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\UserManager.cs" />
     <Compile Include="LetterPage.xaml.cs">
       <DependentUpon>LetterPage.xaml</DependentUpon>
     </Compile>
@@ -136,6 +137,12 @@
     <Compile Include="UserAlphabetsPage.xaml.cs">
       <DependentUpon>UserAlphabetsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserSignOnPage.xaml.cs">
+      <DependentUpon>UserSignOnPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserProfilePage.xaml.cs">
+      <DependentUpon>UserProfilePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -145,13 +152,17 @@
     <None Include="App1_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\CH1.png" />
+    <Content Include="Assets\CH2.png" />
+    <Content Include="Assets\CH3.png" />
+    <Content Include="Assets\CH4.png" />
+    <Content Include="Assets\CH5.png" />
+    <Content Include="Assets\CH6.png" />
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\LightGray.png" />
-    <Content Include="Assets\MediumGray.png" />
-    <Content Include="Assets\DarkGray.png" />
+    <Content Include="Assets\Userlogo.png" />
     <Content Include="Content\ABClogo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +195,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserSignOnPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="SharpDX">
+      <HintPath>..\packages\SharpDX.2.4.2\lib\win8\SharpDX.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

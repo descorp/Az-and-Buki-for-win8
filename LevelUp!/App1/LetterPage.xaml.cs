@@ -14,12 +14,12 @@ using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
-namespace App1
+namespace LevelUP
 {
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
-    public sealed partial class LetterPage : App1.Common.LayoutAwarePage
+    public sealed partial class LetterPage : LevelUP.Common.LayoutAwarePage
     {
         public LetterPage()
         {
@@ -37,15 +37,18 @@ namespace App1
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-             if (pageState != null && pageState.ContainsKey("SelectedItem"))
+            if (pageState != null && pageState.ContainsKey("SelectedItem"))
             {
                 navigationParameter = pageState["SelectedItem"];
             }
 
-            var letter = ABCDataSource.GetItem((String)navigationParameter);
-            this.DefaultViewModel["Letters"] = letter.Alphabet.LetterItems;
-            this.DefaultViewModel["Words"] = letter.WordItems;
-            this.fwLetters.SelectedItem = letter;
+            LetterItem letter = ABCDataSource.GetItem((String)navigationParameter);
+            if (letter != null)
+            {
+                this.DefaultViewModel["Letters"] = letter.Alphabet.LetterItems;
+                this.DefaultViewModel["Words"] = letter.WordItems;
+                this.fwLetters.SelectedItem = letter;
+            }
         }
 
         /// <summary>
@@ -56,12 +59,19 @@ namespace App1
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
+            var selectedItem = (LetterItem)this.fwLetters.SelectedItem;
+            pageState["SelectedItem"] = selectedItem.UniqueId;
         }
 
         private void fwLetters_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
         {
             LetterItem letter = ABCDataSource.GetItem(((LetterItem)this.fwLetters.SelectedItem).UniqueId);
-            this.DefaultViewModel["Words"] = letter.WordItems;
+            if (letter != null)
+            {
+
+                this.DefaultViewModel["Words"] = letter.WordItems;
+            }
         }
+
     }
 }

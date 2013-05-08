@@ -1,4 +1,4 @@
-﻿using App1.Common;
+﻿using LevelUP.Common;
 
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону "Приложение таблицы" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234226
 
-namespace App1
+namespace LevelUP
 {
     /// <summary>
     /// Обеспечивает зависящее от конкретного приложения поведение, дополняющее класс Application по умолчанию.
@@ -77,7 +77,7 @@ namespace App1
                 // Если стек навигации не восстанавливается для перехода к первой странице,
                 // настройка новой страницы путем передачи необходимой информации в качестве параметра
                 // навигации
-                if (!rootFrame.Navigate(typeof(UserAlphabetsPage), "AllAlphabets"))
+                if (!rootFrame.Navigate(typeof(MainMenu)))
                 {
                     throw new Exception("Failed to create initial page");
                 }

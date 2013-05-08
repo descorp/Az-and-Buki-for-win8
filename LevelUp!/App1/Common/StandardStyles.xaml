@@ -1834,4 +1834,5 @@
         </Setter>
     </Style>
     <SolidColorBrush x:Key="ABCBackgroundThemeBrush" Color="#FFC9FFFA"/>
+    <SolidColorBrush x:Key="ABCTransparentBackgroundThemeBrush" Color="#FFC9FFFA" Opacity="90"/>
 </ResourceDictionary>

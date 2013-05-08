@@ -14,12 +14,12 @@ using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
-namespace App1
+namespace LevelUP
 {
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
-    public sealed partial class AlphabetDetailsPage : App1.Common.LayoutAwarePage
+    public sealed partial class AlphabetDetailsPage : LevelUP.Common.LayoutAwarePage
     {
         public AlphabetDetailsPage()
         {
@@ -38,8 +38,11 @@ namespace App1
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             var abc = ABCDataSource.GetAlphabet((String)navigationParameter);
-            this.DefaultViewModel["Alphabet"] = abc;
-            this.DefaultViewModel["Items"] = abc.LetterItems;
+            if (abc != null)
+            {
+                this.DefaultViewModel["Alphabet"] = abc;
+                this.DefaultViewModel["Items"] = abc.LetterItems;
+            }
         }
 
         /// <summary>
@@ -50,6 +53,7 @@ namespace App1
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
+
         }
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)

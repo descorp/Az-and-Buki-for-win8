@@ -19,9 +19,9 @@ namespace LevelUP
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
-    public sealed partial class MainMenu : LevelUP.Common.LayoutAwarePage
+    public sealed partial class UserProfilePage : LevelUP.Common.LayoutAwarePage
     {
-        public MainMenu()
+        public UserProfilePage()
         {
             this.InitializeComponent();
         }
@@ -47,32 +47,6 @@ namespace LevelUP
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
-        }
-
-        private void btnAlphabets_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(UserAlphabetsPage), "AllAlphabets");
-
-        }
-
-        private void btnPlay_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnLogIn_Click(object sender, RoutedEventArgs e)
-        {
- 
-        }
-
-        private void btnLogOn_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(UserSignOnPage));
         }
     }
 }

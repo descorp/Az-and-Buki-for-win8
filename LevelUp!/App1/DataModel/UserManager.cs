@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Security.Cryptography.Core;
+using Windows.Storage.Streams;
+using Windows.Security.Cryptography;
 
 namespace LevelUP
 {
@@ -23,38 +26,65 @@ namespace LevelUP
 
         public async static Task<int> AddUserAsync(User Newby)
         {
-            
+
+            Newby.Hash = ComputeMD5(Newby.Hash);
             var db = new SQLiteAsyncConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
 
-            var ID = await db.InsertAsync(Newby);
+            var Result =await db.InsertAsync(Newby);
+            if (Result > 0)
+            {
+                var u = db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Newby.Name);
+                Newby.ID = u.Result[0].ID;
+                if (Newby.Avatar != "ms-appx:///Assets/Userlogo.png")
+                {
 
-            return ID;
+                    Newby.Avatar = String.Concat("Users/UL", Newby.ID.ToString(), ".png");
+
+                    await db.UpdateAsync(Newby);
+                }
+                
+
+                ApplicationData.Current.LocalSettings.Values["UserName"] = Newby.Name;
+                ApplicationData.Current.LocalSettings.Values["UserLogo"] = Newby.Avatar;
+                
+                return Newby.ID;
+            }
+            else return -1;
+        }
+
+        public async static Task<bool> Authorize(string Name,string Pass)
+        {
+            var db = new SQLiteAsyncConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
+
+            var User = await db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Name);
+            if (String.Compare( ComputeMD5(String.Concat(Name,Pass)), User[0].Hash)!=0)
+                return false;
+            
+            ApplicationData.Current.LocalSettings.Values["UserName"]=Name;
+            ApplicationData.Current.LocalSettings.Values["UserLogo"] = User[0].Avatar;
+
+            return true;
             
         }
 
-        public static bool Authorize(User user)
-        {
-            SQLiteConnection db = new SQLiteConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
-            //ПРоверяем наличие пользователя в базе
-            //Если есть - Ура!
-            //Иначе - требуем интернет - соединения, либо ввести данные еще раз
-            //Если есть интернет - спрашиваем у сервера, копируем данные в локальную бд
-            return false;
-        }
 
-        public static bool EditUserData(User olduser, User newuser)
-        {
-            //Пытаемся отправить на сервер
-            //Если успешно - обновляем и локальную бд
-            return false;
-        }
 
-        public static bool IsUniqueLogin(String Login)
+        public async static Task<bool> IsUniqueLoginAsync(String Login)
         {
-            SQLiteConnection db = new SQLiteConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
-            db.CreateTable<User>();
-            var UQuery = db.Query<User>("SELECT * FROM User WHERE Name=?", Login);
+            var db = new SQLiteAsyncConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
+            
+            var UQuery = await db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Login);
+            
             return UQuery.Count > 0 ? false : true;
+        }
+
+        private static string ComputeMD5(string str)
+        {
+            var alg = HashAlgorithmProvider.OpenAlgorithm("MD5");
+            IBuffer buff = CryptographicBuffer.ConvertStringToBinary(str, BinaryStringEncoding.Utf8);
+            var hashed = alg.HashData(buff);
+            var res = CryptographicBuffer.EncodeToHexString(hashed);
+            return res;
         }
     }
 }

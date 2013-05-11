@@ -40,8 +40,7 @@
         * Row 1 contains the rest of the page layout
     -->
     <Grid Style="{StaticResource LayoutRootStyle}"
-        DataContext="{Binding Alphabet}"
-        d:DataContext="{Binding AllAlphabets[0], Source={d:DesignInstance Type=local:ABCDataSource}}">
+        DataContext="{Binding Alphabet}">
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
@@ -57,7 +56,8 @@
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
         
-        <GridView Grid.Row="1" Margin="120,20,20,30" 
+        <GridView x:Name="gv"
+            Grid.Row="1" Margin="120,20,20,30" 
                   SelectionMode="None"
                   ItemClick="GridView_ItemClick"
                   IsItemClickEnabled="True"

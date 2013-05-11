@@ -24,6 +24,7 @@ namespace LevelUP
         public AlphabetDetailsPage()
         {
             this.InitializeComponent();
+            
         }
 
         /// <summary>

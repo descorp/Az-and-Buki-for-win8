@@ -38,10 +38,11 @@ namespace LevelUP
             var passitemssource4 = new PasswordBoxImageSource("ms-appx:///Assets/CH1.png", "ms-appx:///Assets/CH2.png",
                 "ms-appx:///Assets/CH3.png", "ms-appx:///Assets/CH4.png", "ms-appx:///Assets/CH5.png", "ms-appx:///Assets/CH6.png");
 
-            this.DefaultViewModel["Images1"] = passitemssource1.Items;
-            this.DefaultViewModel["Images2"] = passitemssource2.Items;
-            this.DefaultViewModel["Images3"] = passitemssource3.Items;
-            this.DefaultViewModel["Images4"] = passitemssource4.Items;
+            this.PassBox.ApplyTemplate();
+            this.PassBox.SMItemSource1 = passitemssource1.Items;
+            this.PassBox.SMItemSource2 = passitemssource2.Items;
+            this.PassBox.SMItemSource3 = passitemssource3.Items;
+            this.PassBox.SMItemSource4 = passitemssource4.Items;
 
             logofilePath = "ms-appx:///Assets/Userlogo.png";
         }
@@ -71,22 +72,29 @@ namespace LevelUP
 
         private async void btnOk_Click(object sender, RoutedEventArgs e)
         {
-
-            if (UserManager.IsUniqueLogin(tbName.Text))
+            var uniquelogin = await UserManager.IsUniqueLoginAsync(tbName.Text);
+            if (uniquelogin)
             {
                 var newUserID = await UserManager.AddUserAsync(new User()
                     {
                         Name = tbName.Text,
                         Avatar = logofilePath,
-                        Hash = String.Concat(tbName.Text, fvCH1.SelectedIndex, fvCH2.SelectedIndex,
-                        fvCH3.SelectedIndex, fvCH4.SelectedIndex).GetHashCode().ToString()});
+                        Hash = String.Concat(tbName.Text, PassBox.Key)
+                    });
 
                 if (newUserID > 0)
                 {
-                    this.Frame.Navigate(typeof(MainMenu), tbName.Text);
+                    if (logofilePath != "ms-appx:///Assets/Userlogo.png")
+                    {
+                        var file = await StorageFile.GetFileFromPathAsync(logofilePath);
+
+                        await file.RenameAsync(String.Concat("UL", newUserID.ToString(), ".png"));
+                    }
+
+                    this.Frame.Navigate(typeof(MainMenu), "Autorized");
                     return;
                 }
-                
+
                 var messageDialog = new MessageDialog("Что-то не получилось, попробуй в другой раз");
 
                 messageDialog.Commands.Add(new UICommand("Close",
@@ -123,11 +131,12 @@ namespace LevelUP
             OpenPicker.FileTypeFilter.Add(".jpg");
             OpenPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
             var file = await OpenPicker.PickSingleFileAsync();
-            var folder = ApplicationData.Current.LocalFolder;
+            
             
             if (file != null)
-            {                          
-                var logofile = await file.CopyAsync(ApplicationData.Current.LocalFolder,"Users/UL");
+            {
+                var folder = StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.LocalFolder.Path,"Users")).GetResults();
+                var logofile = await file.CopyAsync(folder, "UL.png");
 
                 logofilePath = logofile.Path;
 

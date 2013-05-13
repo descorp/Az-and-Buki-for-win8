@@ -28,7 +28,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="btnPlayWord" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource PlayAppBarButtonStyle}"/>
+                        <Button x:Name="btnPlayWord" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource PlayAppBarButtonStyle}" Click="btnPlayWord_Click" Tag="{Binding UniqueId}"/>
                         <Image x:Name="imgWordPicture" HorizontalAlignment="Center" Height="90" VerticalAlignment="Center" Source="{Binding Image}" Grid.Column="1" MaxWidth="400" Stretch="None" Width="400"/>
                     </Grid>
                     <Image x:Name="imgWordValue" Height="400" Source="{Binding imgPicture}" Stretch="None" Width="400"/>
@@ -41,12 +41,19 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Image HorizontalAlignment="Center" Height="150" VerticalAlignment="Top" Width="150" Source="{Binding Image}" Margin="10"/>
-                <GridView x:Name="gvWords" Margin="1,1,0,0" Grid.Column="1"
-                	ItemTemplate="{StaticResource WordItemTemplate}"
-                	ItemsSource="{Binding Source={StaticResource WordViewSource}}"
-                    IsItemClickEnabled="False"
-                    SelectionMode="None" Padding="0"/>
+                <StackPanel Margin="0,0,10,94" Orientation="Vertical">
+            		<Image HorizontalAlignment="Center" Height="150" VerticalAlignment="Top" Width="150" Source="{Binding Image}" Margin="10,0"/>
+                    <Button x:Name="btnPlayLetter" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                            Style="{StaticResource PlayAppBarButtonStyle}" 
+                            
+                            Click="btnPlayLetter_Click"/>
+            	</StackPanel>
+            	<GridView x:Name="gvWords" Margin="1,1,0,0" Grid.Column="1"
+            		ItemTemplate="{StaticResource WordItemTemplate}"
+            		ItemsSource="{Binding Source={StaticResource WordViewSource}}"
+            		IsItemClickEnabled="True"
+                                    
+            		SelectionMode="None" Padding="0" Loaded="gvWords_Loaded"/>
             </Grid>
         </DataTemplate>
 

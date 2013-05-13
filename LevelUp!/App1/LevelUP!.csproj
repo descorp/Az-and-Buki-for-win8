@@ -135,6 +135,9 @@
     <Compile Include="Common\LayoutAwarePage.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="AchievementsPage.xaml.cs">
+      <DependentUpon>AchievementsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SlotMashineControl.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
@@ -159,7 +162,12 @@
     <Content Include="Assets\CH4.png" />
     <Content Include="Assets\CH5.png" />
     <Content Include="Assets\CH6.png" />
+    <Content Include="Assets\LearnImg.png" />
     <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\MainPageLogo.png" />
+    <Content Include="Assets\MedalImgl.png" />
+    <Content Include="Assets\PlayImg.png" />
+    <Content Include="Assets\SettingsImg.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
@@ -195,6 +203,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
+    <Page Include="AchievementsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>

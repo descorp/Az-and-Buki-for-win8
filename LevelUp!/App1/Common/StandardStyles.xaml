@@ -1833,6 +1833,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <SolidColorBrush x:Key="ABCBackgroundThemeBrush" Color="#FFC9FFFA"/>
-    <SolidColorBrush x:Key="ABCTransparentBackgroundThemeBrush" Color="#FFC9FFFA" Opacity="90"/>
+    <SolidColorBrush x:Key="ABCBackgroundThemeBrush" Color="#FF73ACFF"/>
+    <SolidColorBrush x:Key="ABCTransparentBackgroundThemeBrush" Color="#FF73ACFF" Opacity="90"/>
 </ResourceDictionary>

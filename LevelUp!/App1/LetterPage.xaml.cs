@@ -11,16 +11,20 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Media;
+using Windows.Storage;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
 namespace LevelUP
 {
+
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
     public sealed partial class LetterPage : LevelUP.Common.LayoutAwarePage
     {
+        GridView gvWords = null;
         public LetterPage()
         {
             this.InitializeComponent();
@@ -72,6 +76,37 @@ namespace LevelUP
                 this.DefaultViewModel["Words"] = letter.WordItems;
             }
         }
+
+        private async void btnPlayLetter_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = (LetterItem)this.fwLetters.SelectedItem;
+            MediaElement snd = new MediaElement();
+            StorageFile file = await StorageFile.GetFileFromPathAsync(selectedItem.Sound);
+            var stream = await file.OpenAsync(FileAccessMode.Read);
+            snd.SetSource(stream, file.ContentType);
+            snd.Play();
+        }
+
+        private async void btnPlayWord_Click(object sender, RoutedEventArgs e)
+        {
+
+            var selectedItem = ABCDataSource.GetWordItem(((Button)sender).Tag as String);
+            if (selectedItem.Sound != "none" && selectedItem.Sound != "")
+            {
+                MediaElement snd = new MediaElement();
+                StorageFile file = await StorageFile.GetFileFromPathAsync(selectedItem.Sound);
+                var stream = await file.OpenAsync(FileAccessMode.Read);
+                snd.SetSource(stream, file.ContentType);
+                snd.Play();
+            }
+        }
+
+        private void gvWords_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            gvWords = sender as GridView;
+        }
+
+     
 
     }
 }

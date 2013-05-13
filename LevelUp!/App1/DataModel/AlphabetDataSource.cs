@@ -87,12 +87,20 @@ namespace LevelUP
 
     public class LetterItem : ABCItem
     {
-        public LetterItem(String uniqueId, String title, String imagePath, String description, int ID, AlphabetItem alphabet)
+        public LetterItem(String uniqueId, String title, String imagePath, String description, int ID, AlphabetItem alphabet, String sound)
             : base(uniqueId, title, imagePath, description)
         {
             this._id = ID;
             this._alphabet = alphabet;
+            this._sound = sound;
             WordItems.CollectionChanged += ItemsCollectionChanged;
+        }
+
+        private String _sound;
+        public String Sound
+        {
+            get { return this._sound; }
+            set { this.SetProperty(ref this._sound, value); }
         }
 
         private AlphabetItem _alphabet;
@@ -187,12 +195,13 @@ namespace LevelUP
 
     public class WordItem : ABCItem
     {
-        public WordItem(String uniqueId, String title, String imagePath, String description, int ID, AlphabetItem alphabet, String picturePath)
+        public WordItem(String uniqueId, String title, String imagePath, String description, int ID, AlphabetItem alphabet, String picturePath, String sound)
             : base(uniqueId, title, imagePath, description)
         {
             this._id = ID;
             this._alphabet = alphabet;
             this._PicturePath = picturePath;
+            this._sound = sound;
         }
 
         private AlphabetItem _alphabet;
@@ -200,6 +209,13 @@ namespace LevelUP
         {
             get { return this._alphabet; }
             set { this.SetProperty(ref this._alphabet, value); }
+        }
+
+        private String _sound;
+        public String Sound
+        {
+            get { return this._sound; }
+            set { this.SetProperty(ref this._sound, value); }
         }
 
         private int _id = 0;
@@ -381,21 +397,29 @@ namespace LevelUP
                                         Path.Combine(ApplicationData.Current.LocalFolder.Path, LetterQuery[j].Logo),
                                         LetterQuery[j].Value,
                                         LetterQuery[j].ID,
-                                        Aitem
+                                        Aitem,
+                                        Path.Combine(ApplicationData.Current.LocalFolder.Path,LetterQuery[j].Sound)
                                         );
 
                         var WordQuery = db.Query<Word>("SELECT * FROM Word WHERE AlphabetID=? AND LetterID=?", Aitem.ID, LetterQuery[j].ID);
 
                         for (int k = 0; k < WordQuery.Count; k++)
-                                Litem.WordItems.Add(new WordItem(
-                                                String.Concat("Alphabet ", WordQuery[k].AlphabetID.ToString(), " Letter ", WordQuery[k].LetterID.ToString(), WordQuery[k].ID.ToString()),
-                                                " ",
-                                                Path.Combine(ApplicationData.Current.LocalFolder.Path, WordQuery[k].ValueImg),
-                                                " ",
-                                                WordQuery[k].ID,
-                                                Aitem,
-                                                Path.Combine(ApplicationData.Current.LocalFolder.Path, WordQuery[k].Image)
-                                                ));
+                        {
+                            String sound;
+                            if (WordQuery[k].Sound == null) sound = "none";
+                            else sound = Path.Combine(ApplicationData.Current.LocalFolder.Path, WordQuery[k].Sound);
+                            
+                            Litem.WordItems.Add(new WordItem(
+                                            String.Concat("Alphabet ", WordQuery[k].AlphabetID.ToString(), " Letter ", WordQuery[k].LetterID.ToString(), " Word ", WordQuery[k].ID.ToString()),
+                                            " ",
+                                            Path.Combine(ApplicationData.Current.LocalFolder.Path, WordQuery[k].ValueImg),
+                                            " ",
+                                            WordQuery[k].ID,
+                                            Aitem,
+                                            Path.Combine(ApplicationData.Current.LocalFolder.Path, WordQuery[k].Image),
+                                            sound
+                                            ));
+                        }
 
                         Aitem.LetterItems.Add(Litem);
                     }
@@ -413,7 +437,21 @@ namespace LevelUP
             
         }
 
+        public static WordItem GetWordItem(string uniqueId)
+        {
+            var AlphabetID = ParseAlphabetID(uniqueId);
+            var LetterID = ParseLetterID(uniqueId);
+            var WordID = ParseWordID(uniqueId);
 
+            if (AlphabetID < 0 || LetterID < 0 || WordID < 0)
+                return null;
+
+            var alpha = _ABCDataSource.AllAlphabets.Where(alphabet => alphabet.ID == AlphabetID).First();
+            var let = alpha.LetterItems.Where(letter=>letter.ID==LetterID).First();
+            var w = let.WordItems.Where(word=>word.ID==WordID).First();
+
+            return w;            
+        }
 
         public ABCDataSource()
         {
@@ -441,7 +479,35 @@ namespace LevelUP
            
         }
 
-        
+        private static int ParseAlphabetID(string uniqueID)
+        {            
+            if (uniqueID.Contains("Alphabet") == true)
+            {
+                string[] pars = uniqueID.Split(' ');
+                return int.Parse(pars[1]);
+            }
+            else return -1;
+        }
+
+        private static int ParseLetterID(string uniqueID)
+        {
+            if (uniqueID.Contains("Letter") == true)
+            {
+                string[] pars = uniqueID.Split(' ');
+                return int.Parse(pars[3]);
+            }
+            else return -1;
+        }
+
+        private static int ParseWordID(string uniqueID)
+        {
+            if (uniqueID.Contains("Word") == true)
+            {
+                string[] pars = uniqueID.Split(' ');
+                return int.Parse(pars[5]);
+            }
+            else return -1;
+        }
     }
 
 

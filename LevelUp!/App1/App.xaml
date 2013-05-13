@@ -24,6 +24,7 @@
             <ControlTemplate x:Key="ABCButtonTemplate" TargetType="Button">
             	<Grid Background="{StaticResource ABCBackgroundThemeBrush}"/>
             </ControlTemplate>
+            
             <Style x:Key="ButtonABCStyle" TargetType="Button">
             	<Setter Property="Background" Value="{StaticResource ButtonBackgroundThemeBrush}"/>
             	<Setter Property="Foreground" Value="{StaticResource ButtonForegroundThemeBrush}"/>
@@ -39,6 +40,10 @@
             		<Setter.Value>
             			<ControlTemplate TargetType="Button">
             				<Grid>
+            					<Grid.ColumnDefinitions>
+            						<ColumnDefinition Width="Auto"/>
+            						<ColumnDefinition/>
+            					</Grid.ColumnDefinitions>
             					<VisualStateManager.VisualStateGroups>
             						<VisualStateGroup x:Name="CommonStates">
             							<VisualState x:Name="Normal"/>
@@ -87,9 +92,10 @@
             							<VisualState x:Name="PointerFocused"/>
             						</VisualStateGroup>
             					</VisualStateManager.VisualStateGroups>
-            					<Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="3">
+            					<Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="3" Grid.Column="1">
             						<ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             					</Border>
+                                
             					<Rectangle x:Name="FocusVisualWhite" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="1.5" StrokeEndLineCap="Square" Stroke="{StaticResource FocusVisualWhiteStrokeThemeBrush}" StrokeDashArray="1,1"/>
             					<Rectangle x:Name="FocusVisualBlack" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="0.5" StrokeEndLineCap="Square" Stroke="{StaticResource FocusVisualBlackStrokeThemeBrush}" StrokeDashArray="1,1"/>
             				</Grid>

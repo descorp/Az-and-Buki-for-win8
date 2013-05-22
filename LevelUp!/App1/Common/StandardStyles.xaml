@@ -430,6 +430,13 @@
         <Setter Property="AutomationProperties.Name" Value="Pause"/>
         <Setter Property="Content" Value="&#xE103;"/>
     </Style>
+
+    <Style x:Key="DeleteAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter Property="AutomationProperties.AutomationId" Value="DeleteAppBarButton"/>
+        <Setter Property="AutomationProperties.Name" Value="Delete"/>
+        <Setter Property="Content" Value="&#xE106;"/>
+    </Style>
+    
     <!--
     <Style x:Key="EditAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="EditAppBarButton"/>
@@ -443,11 +450,7 @@
     </Style>
     
     
-    <Style x:Key="DeleteAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
-        <Setter Property="AutomationProperties.AutomationId" Value="DeleteAppBarButton"/>
-        <Setter Property="AutomationProperties.Name" Value="Delete"/>
-        <Setter Property="Content" Value="&#xE106;"/>
-    </Style>
+   
     
     <Style x:Key="DiscardAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="DiscardAppBarButton"/>

@@ -46,6 +46,7 @@ namespace LevelUP
 
                 ApplicationData.Current.LocalSettings.Values["UserName"] = Newby.Name;
                 ApplicationData.Current.LocalSettings.Values["UserLogo"] = Newby.Avatar;
+                ApplicationData.Current.LocalSettings.Values["UserID"] = Newby.ID;
                 
                 return Newby.ID;
             }
@@ -57,17 +58,35 @@ namespace LevelUP
             var db = new SQLiteAsyncConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
 
             var User = await db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Name);
+            if (User.Count == 0)
+                return false;
             if (String.Compare( ComputeMD5(String.Concat(Name,Pass)), User[0].Hash)!=0)
                 return false;
             
             ApplicationData.Current.LocalSettings.Values["UserName"]=Name;
             ApplicationData.Current.LocalSettings.Values["UserLogo"] = User[0].Avatar;
+            ApplicationData.Current.LocalSettings.Values["UserID"] = User[0].ID;
 
             return true;
             
         }
 
+        public static void LogOut()
+        {
+            ApplicationData.Current.LocalSettings.Values.Remove("UserName");
+            ApplicationData.Current.LocalSettings.Values.Remove("UserLogo");
+            ApplicationData.Current.LocalSettings.Values.Remove("UserID");
+        }
 
+        public static bool IsAutorized
+        {
+            get { return ApplicationData.Current.LocalSettings.Values.ContainsKey("UserName"); }
+        }
+
+        public static int UserId
+        {
+            get { return (int)ApplicationData.Current.LocalSettings.Values["UserID"]; }
+        }
 
         public async static Task<bool> IsUniqueLoginAsync(String Login)
         {

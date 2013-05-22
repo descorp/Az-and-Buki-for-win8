@@ -42,30 +42,21 @@ namespace LevelUP
 
         private async void btnSignIn_Click(object sender, RoutedEventArgs e)
         {
-            var result = await UserManager.Authorize(tbName.Text,PassBox.Key);
-            if (result)
+            if (tbName.Text.Length > 0)
             {
-                rootPage.UserLogIn();
-                Popup p = this.Parent as Popup;
-                p.IsOpen = false; // close the Popup
+                var result = await UserManager.Authorize(tbName.Text, PassBox.Key);
+                if (result)
+                {
+                    rootPage.UserLogIn();
+                    Popup p = this.Parent as Popup;
+                    p.IsOpen = false; // close the Popup
+                }
+                else
+                {
+                    Logger.ShowMessage("Неверный логин или пароль, попробуй еще раз!");
+                    return;
+                }
             }
-            else
-            {
-                var messageDialog = new MessageDialog("Неверный логин или пароль, попробуй еще раз!");
-
-                messageDialog.Commands.Add(new UICommand("Close",
-                    new UICommandInvokedHandler(CommandInvokedHandler)));
-
-                messageDialog.DefaultCommandIndex = 0;
-
-                await messageDialog.ShowAsync();
-                return;
-            }
-
-        }
-
-        private void CommandInvokedHandler(IUICommand command)
-        {
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)

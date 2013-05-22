@@ -29,7 +29,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Button x:Name="btnPlayWord" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource PlayAppBarButtonStyle}" Click="btnPlayWord_Click" Tag="{Binding UniqueId}"/>
-                        <Image x:Name="imgWordPicture" HorizontalAlignment="Center" Height="90" VerticalAlignment="Center" Source="{Binding Image}" Grid.Column="1" MaxWidth="400" Stretch="None" Width="400"/>
+                        <Image x:Name="imgWordPicture" HorizontalAlignment="Center" Height="90" VerticalAlignment="Center" Source="{Binding Image}" Grid.Column="1" MaxWidth="400" Width="400"/>
                     </Grid>
                     <Image x:Name="imgWordValue" Height="400" Source="{Binding imgPicture}" Stretch="None" Width="400"/>
                 </StackPanel>

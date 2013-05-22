@@ -72,57 +72,46 @@ namespace LevelUP
 
         private async void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            var uniquelogin = await UserManager.IsUniqueLoginAsync(tbName.Text);
-            if (uniquelogin)
+            if (tbName.Text.Length > 3)
             {
-                var newUserID = await UserManager.AddUserAsync(new User()
-                    {
-                        Name = tbName.Text,
-                        Avatar = logofilePath,
-                        Hash = String.Concat(tbName.Text, PassBox.Key)
-                    });
-
-                if (newUserID > 0)
+                var uniquelogin = await UserManager.IsUniqueLoginAsync(tbName.Text);
+                if (uniquelogin)
                 {
-                    if (logofilePath != "ms-appx:///Assets/Userlogo.png")
-                    {
-                        var file = await StorageFile.GetFileFromPathAsync(logofilePath);
+                    var newUserID = await UserManager.AddUserAsync(new User()
+                        {
+                            Name = tbName.Text,
+                            Avatar = logofilePath,
+                            Hash = String.Concat(tbName.Text, PassBox.Key)
+                        });
 
-                        await file.RenameAsync(String.Concat("UL", newUserID.ToString(), ".png"));
+                    if (newUserID > 0)
+                    {
+                        if (logofilePath != "ms-appx:///Assets/Userlogo.png")
+                        {
+                            var file = await StorageFile.GetFileFromPathAsync(logofilePath);
+
+                            await file.RenameAsync(String.Concat("UL", newUserID.ToString(), ".png"));
+                        }
+
+                        this.Frame.Navigate(typeof(MainMenu), "Autorized");
+                        return;
                     }
 
-                    this.Frame.Navigate(typeof(MainMenu), "Autorized");
+                    Logger.ShowMessage("Что-то не получилось, попробуй в другой раз");
+
                     return;
                 }
-
-                var messageDialog = new MessageDialog("Что-то не получилось, попробуй в другой раз");
-
-                messageDialog.Commands.Add(new UICommand("Close",
-                    new UICommandInvokedHandler(CommandInvokedHandler)));
-
-                messageDialog.DefaultCommandIndex = 0;
-
-                await messageDialog.ShowAsync();
-                return;
+                else
+                {
+                    Logger.ShowMessage("Это имя занято другим пользователем, придумай другое");
+                    return;
+                }
             }
             else
-            {
-                var messageDialog = new MessageDialog("Это имя занято другим пользователем, придумай другое");
-
-                messageDialog.Commands.Add(new UICommand("Close",
-                    new UICommandInvokedHandler(CommandInvokedHandler)));
-
-                messageDialog.DefaultCommandIndex = 0;
-
-                await messageDialog.ShowAsync();
-                return;
-            }           
-            
+                Logger.ShowMessage("Ты ввел слишком короткое имя, придумай другое");
         }
 
-        private void CommandInvokedHandler(IUICommand command)
-        {
-        }
+        
 
         private async void Image_Tapped(object sender, TappedRoutedEventArgs e)
         {

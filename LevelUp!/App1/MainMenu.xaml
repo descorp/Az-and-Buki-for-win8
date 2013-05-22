@@ -55,10 +55,11 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="20">
                 <Image Height="80" Margin="0" Width="79" Source="Assets/MedalImgl.png"/>
-                <Button x:Name="btnSettings" Content="Рекорды" Width="350" Height="70" Background="{StaticResource ABCBackgroundThemeBrush}" FontSize="29.333" FontWeight="Normal" Click="btnSettings_Click" Style="{StaticResource ButtonABCStyle}" Margin="40,5,5,5"/>
+                <Button x:Name="btnHighScores" Content="Рекорды" Width="350" Height="70" Background="{StaticResource ABCBackgroundThemeBrush}" FontSize="29.333" FontWeight="Normal" Click="btnHighScores_Click" Style="{StaticResource ButtonABCStyle}" Margin="40,5,5,5"/>
+               
             </StackPanel>
         </StackPanel>
-
+        
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->

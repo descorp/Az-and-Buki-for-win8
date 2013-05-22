@@ -26,7 +26,9 @@ namespace LevelUP
     public sealed partial class MainMenu : LevelUP.Common.LayoutAwarePage
     {
         Popup LogInPopup;
-        private bool Authorized=false;
+
+        Popup MessageBoxPopup;
+
         public MainMenu()
         {
             this.InitializeComponent();
@@ -76,18 +78,14 @@ namespace LevelUP
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Frame.Navigate(typeof(ChooseGamePage));
         }
         public static MainMenu Current;
 
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void btnLogIn_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Authorized)
+            if (UserManager.IsAutorized)
             {
                 UserLogOut();
             }
@@ -97,6 +95,7 @@ namespace LevelUP
                 {
                     // create the Popup in code
                     LogInPopup = new Popup();
+                                       
 
                     // we are creating this in code and need to handle multiple instances
                     // so we are attaching to the Popup.Closed event to remove our reference
@@ -119,12 +118,22 @@ namespace LevelUP
 
         private void btnLogOn_Click(object sender, RoutedEventArgs e)
         {
+            if (LogInPopup != null)
+            {
+                LogInPopup.IsOpen = false;
+                LogInPopup.Closed += (senderPopup, argsPopup) =>
+                {
+                    LogInPopup = null;
+                };
+            }
             this.Frame.Navigate(typeof(UserSignOnPage));
         }
 
         public void UserLogIn()
-        {
+        {            
+
             btnLogIn.Content = "Выход";
+            btnLogOn.Visibility = Visibility.Collapsed;
             var Name = (String)ApplicationData.Current.LocalSettings.Values["UserName"];
             tbUserName.Text = "Привет, " + Name + "!";
             var LogoPath = (String)ApplicationData.Current.LocalSettings.Values["UserLogo"];
@@ -133,17 +142,56 @@ namespace LevelUP
                 LogoPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, LogoPath);
             }
 
-            imgProfile.Source = new BitmapImage(new Uri(ABCItem._baseUri, LogoPath));
-            Authorized = true;
+            imgProfile.Source = new BitmapImage(new Uri(ABCItem._baseUri, LogoPath));            
         }
 
         public void UserLogOut()
         {
+            btnLogOn.Visibility = Visibility.Visible;
             btnLogIn.Content = "Вход";
             tbUserName.Text = "Вход не выполнен";
-            ApplicationData.Current.LocalSettings.Values.Remove("UserName");
-            ApplicationData.Current.LocalSettings.Values.Remove("UserLogo");
-            Authorized = false;
+            UserManager.LogOut();
+            
+        }
+
+        private void btnHighScores_Click(object sender, RoutedEventArgs e)
+        {
+            if (LogInPopup != null)
+            {
+                LogInPopup.IsOpen = false;
+                LogInPopup.Closed += (senderPopup, argsPopup) =>
+                {
+                    LogInPopup = null;
+                };
+            }
+
+            if (UserManager.IsAutorized)
+                this.Frame.Navigate(typeof(AchievementsPage), UserManager.UserId);
+            else
+            {
+                if ( MessageBoxPopup == null)
+                {
+                    // create the Popup in code
+                    MessageBoxPopup = new Popup();
+
+
+                    // we are creating this in code and need to handle multiple instances
+                    // so we are attaching to the Popup.Closed event to remove our reference
+                    MessageBoxPopup.Closed += (senderPopup, argsPopup) =>
+                    {
+                        MessageBoxPopup = null;
+                    };
+
+                    MessageBoxPopup.HorizontalOffset = (Window.Current.Bounds.Width - 600)/2;
+                    MessageBoxPopup.VerticalOffset = 350;
+
+                    // set the content to our UserControl
+                    MessageBoxPopup.Child = new TextPopup("Войди под своим именем, чтобы просматривать и получать достижения");
+
+                    // open the Popup
+                    MessageBoxPopup.IsOpen = true;
+                }
+            }
         }
     }
 }

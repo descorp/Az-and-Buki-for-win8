@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
@@ -10,18 +11,20 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
 namespace LevelUP
-{
+{   
+    
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
-    public sealed partial class UserAlphabetsPage : LevelUP.Common.LayoutAwarePage
+    public sealed partial class ChooseGamePage : LevelUP.Common.LayoutAwarePage
     {
-        public UserAlphabetsPage()
+        public ChooseGamePage()
         {
             this.InitializeComponent();
         }
@@ -37,8 +40,10 @@ namespace LevelUP
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            var abcs = ContentManager.GetAlphabets((String)navigationParameter) ;
-            this.DefaultViewModel["ABCItems"] = abcs;
+            ObservableCollection<GameItem> Games = new ObservableCollection<GameItem>();
+            Games.Add( new GameItem("Game 1", "С какой буквы начинается слово?", "ms-appx:///Assets/Gamelogo1.png", "Учим буквы и слова в игровой форме"));
+
+            this.DefaultViewModel["Items"] = Games;
         }
 
         /// <summary>
@@ -51,11 +56,14 @@ namespace LevelUP
         {
         }
 
-        private void gvAlphabets_ItemClick(object sender, ItemClickEventArgs e)
+        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var itemId = ((AlphabetItem)e.ClickedItem).UniqueId;
-            this.Frame.Navigate(typeof(AlphabetDetailsPage), itemId);
+            this.Frame.Navigate(typeof(GamePage));
+        }
 
+        private void GoBack(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainMenu));
         }
     }
 }

@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
@@ -19,12 +20,12 @@ namespace LevelUP
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
-    public sealed partial class AlphabetDetailsPage : LevelUP.Common.LayoutAwarePage
+    public sealed partial class GameResultPage : LevelUP.Common.LayoutAwarePage
     {
-        public AlphabetDetailsPage()
+        Popup MessageBoxPopup;
+        public GameResultPage()
         {
             this.InitializeComponent();
-            
         }
 
         /// <summary>
@@ -38,12 +39,60 @@ namespace LevelUP
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            var abc = ContentManager.GetAlphabet((String)navigationParameter);
-            if (abc != null)
+            var rate = (double)navigationParameter;
+
+            if ( !UserManager.IsAutorized && rate>0.4 )
             {
-                this.DefaultViewModel["Alphabet"] = abc;
-                this.DefaultViewModel["Items"] = abc.LetterItems;
+                if (MessageBoxPopup == null)
+                {
+                    // create the Popup in code
+                    MessageBoxPopup = new Popup();
+
+
+                    // we are creating this in code and need to handle multiple instances
+                    // so we are attaching to the Popup.Closed event to remove our reference
+                    MessageBoxPopup.Closed += (senderPopup, argsPopup) =>
+                    {
+                        MessageBoxPopup = null;
+                    };
+
+                    MessageBoxPopup.HorizontalOffset = (Window.Current.Bounds.Width - 600) / 2;
+                    MessageBoxPopup.VerticalOffset = 350;
+
+                    // set the content to our UserControl
+                    MessageBoxPopup.Child = new TextPopup("Войди под своим именем, чтобы получать награды за блестящую игру");
+
+                    // open the Popup
+                    MessageBoxPopup.IsOpen = true;
+                }
             }
+
+            
+
+            tbStatus.Text = "Кажется, тебе нужно еще поучиться";
+            if (rate > 0.2)            
+                imgStar1.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
+            if (rate > 0.4)
+            {
+                imgStar2.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
+                tbStatus.Text = "Уже неплохо! Я верю, ты можешь лучше!";
+            }
+            if (rate > 0.6)
+            {
+                imgStar3.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
+                tbStatus.Text = "Так держать!";
+            }
+            if (rate > 0.8)
+            {
+                imgStar4.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
+                tbStatus.Text = "Молодец! Отличный результат!";
+            }
+            if (rate > 0.9)
+            {
+                imgStar5.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
+                tbStatus.Text = "Умница, похоже, ты гений!";
+            }
+            
         }
 
         /// <summary>
@@ -54,13 +103,11 @@ namespace LevelUP
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
-
         }
 
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void GoBack(object sender, RoutedEventArgs e)
         {
-            var itemId = ((LetterItem)e.ClickedItem).UniqueId;
-            this.Frame.Navigate(typeof(LetterPage), itemId);
+            this.Frame.Navigate(typeof(MainMenu));
         }
     }
 }

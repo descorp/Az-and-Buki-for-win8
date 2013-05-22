@@ -116,12 +116,27 @@
     <Compile Include="AutorizationControl.xaml.cs">
       <DependentUpon>AutorizationControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChooseGamePage.xaml.cs">
+      <DependentUpon>ChooseGamePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\ABCModel.cs" />
-    <Compile Include="DataModel\AlphabetDataSource.cs" />
+    <Compile Include="DataModel\ContentManager.cs" />
     <Compile Include="AlphabetDetailsPage.xaml.cs">
       <DependentUpon>AlphabetDetailsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\AwardManager.cs" />
+    <Compile Include="DataModel\GameClass.cs" />
     <Compile Include="DataModel\UserManager.cs" />
+    <Compile Include="GamePage.xaml.cs">
+      <DependentUpon>GamePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GameParamsControl.xaml.cs">
+      <DependentUpon>GameParamsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GameResultPage.xaml.cs">
+      <DependentUpon>GameResultPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="LetterPage.xaml.cs">
       <DependentUpon>LetterPage.xaml</DependentUpon>
     </Compile>
@@ -141,11 +156,17 @@
     <Compile Include="SlotMashineControl.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="TextPopup.xaml.cs">
+      <DependentUpon>TextPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserAlphabetsPage.xaml.cs">
       <DependentUpon>UserAlphabetsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserSignOnPage.xaml.cs">
       <DependentUpon>UserSignOnPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GameAnswerControl.xaml.cs">
+      <DependentUpon>GameAnswerControl.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -162,17 +183,27 @@
     <Content Include="Assets\CH4.png" />
     <Content Include="Assets\CH5.png" />
     <Content Include="Assets\CH6.png" />
+    <Content Include="Assets\EasyLevel.png" />
+    <Content Include="Assets\EmptyStar.png" />
+    <Content Include="Assets\FullStar.png" />
+    <Content Include="Assets\Gamelogo1.png" />
+    <Content Include="Assets\HappyFace.png" />
+    <Content Include="Assets\HardLevel.png" />
     <Content Include="Assets\LearnImg.png" />
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\MainPageLogo.png" />
     <Content Include="Assets\MedalImgl.png" />
+    <Content Include="Assets\MediumLevel.png" />
     <Content Include="Assets\PlayImg.png" />
+    <Content Include="Assets\SadFace.png" />
     <Content Include="Assets\SettingsImg.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Userlogo.png" />
-    <Content Include="Content\ABClogo.png" />
+    <Content Include="Sounds\tray again.wav" />
+    <Content Include="Sounds\grate job.wav" />
+    <Content Include="Sounds\yey.wav" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -183,11 +214,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ChooseGamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Common\StandardStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AlphabetDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameParamsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameResultPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -208,6 +255,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TextPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -220,12 +271,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GameAnswerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SharpDX">
       <HintPath>..\packages\SharpDX.2.4.2\lib\win8\SharpDX.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

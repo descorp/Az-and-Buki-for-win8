@@ -46,7 +46,7 @@ namespace LevelUP
                 navigationParameter = pageState["SelectedItem"];
             }
 
-            LetterItem letter = ABCDataSource.GetItem((String)navigationParameter);
+            LetterItem letter = ContentManager.GetItem((String)navigationParameter);
             if (letter != null)
             {
                 this.DefaultViewModel["Letters"] = letter.Alphabet.LetterItems;
@@ -69,7 +69,7 @@ namespace LevelUP
 
         private void fwLetters_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
         {
-            LetterItem letter = ABCDataSource.GetItem(((LetterItem)this.fwLetters.SelectedItem).UniqueId);
+            LetterItem letter = ContentManager.GetItem(((LetterItem)this.fwLetters.SelectedItem).UniqueId);
             if (letter != null)
             {
 
@@ -90,7 +90,7 @@ namespace LevelUP
         private async void btnPlayWord_Click(object sender, RoutedEventArgs e)
         {
 
-            var selectedItem = ABCDataSource.GetWordItem(((Button)sender).Tag as String);
+            var selectedItem = ContentManager.GetWordItem(((Button)sender).Tag as String);
             if (selectedItem.Sound != "none" && selectedItem.Sound != "")
             {
                 MediaElement snd = new MediaElement();

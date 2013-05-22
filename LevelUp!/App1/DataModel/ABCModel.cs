@@ -29,13 +29,8 @@ namespace LevelUP
         }
 
     }
-    #endregion
 
-
-
-    #region Localization
-
-    class Localization
+    class AlphabetLocalization
     {
         [PrimaryKey, AutoIncrement]
         public int ID
@@ -184,6 +179,93 @@ namespace LevelUP
             set;
         }
 
+    }
+    #endregion
+
+
+    #region Award
+    public class UserAward
+    {
+        [PrimaryKey, AutoIncrement]
+        public int ID
+        {
+            get;
+            set;
+        }
+
+        public int UserID
+        {
+            get;
+            set;
+        }
+
+        public int AwardID
+        {
+            get;
+            set;
+        }
+
+        public DateTime Date
+        {
+            get;
+            set;
+        }
+    }
+
+    public class Award
+    {
+        [PrimaryKey, AutoIncrement]
+        public int ID
+        {
+            get;
+            set;
+        }
+
+        public string LogoPath
+        {
+            get;
+            set;
+        }
+
+        public int LogoPath
+        {
+            get;
+            set;
+        }
+    }
+
+    public class AwardLocalization
+    {
+        [PrimaryKey, AutoIncrement]
+        public int ID
+        {
+            get;
+            set;
+        }
+
+        public int AwardId
+        {
+            get;
+            set;
+        }
+
+        public String LanguageID
+        {
+            get;
+            set;
+        }
+
+        public String AwardName
+        {
+            get;
+            set;
+        }
+
+        public String AwardDescription
+        {
+            get;
+            set;
+        }
     }
     #endregion
 }

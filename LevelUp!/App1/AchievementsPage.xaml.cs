@@ -19,9 +19,9 @@ namespace LevelUP
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
-    public sealed partial class SettimgsPage : LevelUP.Common.LayoutAwarePage
+    public sealed partial class AchievementsPage : LevelUP.Common.LayoutAwarePage
     {
-        public SettimgsPage()
+        public AchievementsPage()
         {
             this.InitializeComponent();
             

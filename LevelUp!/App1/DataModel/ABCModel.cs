@@ -204,12 +204,6 @@ namespace LevelUP
             get;
             set;
         }
-
-        public DateTime Date
-        {
-            get;
-            set;
-        }
     }
 
     public class Award
@@ -227,7 +221,7 @@ namespace LevelUP
             set;
         }
 
-        public int LogoPath
+        public int Rate
         {
             get;
             set;

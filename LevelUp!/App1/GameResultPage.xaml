@@ -11,8 +11,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-
-        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
         <x:String x:Key="PageName">Результаты</x:String>
     </Page.Resources>
 
@@ -46,13 +44,21 @@
         	<Image x:Name="imgStar5" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="Assets/EmptyStar.png"/>
         </StackPanel>
         <TextBlock x:Name="tbStatus" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Результат игры" VerticalAlignment="Top" Grid.Row="1" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,40"/>
-        <Grid Margin="0,0,0,40" Grid.Row="3">
+        <Grid Margin="0,0,0,40" Grid.Row="3"  DataContext="{Binding Award}">
         	<Grid.ColumnDefinitions>
         		<ColumnDefinition/>
         		<ColumnDefinition/>
         	</Grid.ColumnDefinitions>
-        	<Image x:Name="imgAchievement" HorizontalAlignment="Center" Height="200" VerticalAlignment="Center" Width="200" Grid.Column="1"/>
-        	<TextBlock x:Name="tbAchievement" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource PageSubheaderTextStyle}" TextAlignment="Center"/>
+        	<Grid Grid.ColumnSpan="2" Margin="0" Grid.Column="1">
+        		<Grid.RowDefinitions>
+        			<RowDefinition Height="Auto"/>
+        			<RowDefinition/>
+        		</Grid.RowDefinitions>
+        		<Image x:Name="imgAchievement" Source="{Binding Image}" HorizontalAlignment="Center" Height="200" VerticalAlignment="Center" Width="200" Margin="0" Grid.Row="1"/>
+        		<TextBlock x:Name="tbAchievement" Text="{Binding Title}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource PageSubheaderTextStyle}" TextAlignment="Center" Margin="0"/>
+
+        	</Grid>
+        	<TextBlock x:Name="tbAboutAchievements" Margin="120,0,20,0" TextWrapping="Wrap" TextAlignment="{StaticResource FormTextAlignment}" Style="{StaticResource SubheaderTextStyle}" VerticalAlignment="Center"/>
 
         </Grid>
 

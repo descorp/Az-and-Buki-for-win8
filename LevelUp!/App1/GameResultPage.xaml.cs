@@ -37,11 +37,46 @@ namespace LevelUP
         /// </param>
         /// <param name="pageState">Словарь состояния, сохраненного данной страницей в ходе предыдущего
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
-        protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+        protected override async void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             var rate = (double)navigationParameter;
 
-            if ( !UserManager.IsAutorized && rate>0.4 )
+            
+
+            int StarRate = 0;
+
+            tbStatus.Text = "Кажется, тебе нужно еще поучиться";
+            if (rate > 0.2)
+            {
+                imgStar1.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
+                StarRate = 1;
+            }
+            if (rate > 0.4)
+            {
+                imgStar2.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
+                tbStatus.Text = "Уже неплохо! Я верю, ты можешь лучше!";
+                StarRate = 2;
+            }
+            if (rate > 0.6)
+            {
+                imgStar3.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
+                tbStatus.Text = "Так держать!";
+                StarRate = 3;
+            }
+            if (rate > 0.8)
+            {
+                imgStar4.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
+                tbStatus.Text = "Молодец! Отличный результат!";
+                StarRate = 4;
+            }
+            if (rate > 0.9)
+            {
+                imgStar5.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
+                tbStatus.Text = "Умница, похоже, ты гений!";
+                StarRate = 5;
+            }
+
+            if (!UserManager.IsAutorized && rate > 0.4)
             {
                 if (MessageBoxPopup == null)
                 {
@@ -66,31 +101,15 @@ namespace LevelUP
                     MessageBoxPopup.IsOpen = true;
                 }
             }
-
-            
-
-            tbStatus.Text = "Кажется, тебе нужно еще поучиться";
-            if (rate > 0.2)            
-                imgStar1.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
-            if (rate > 0.4)
+            else
             {
-                imgStar2.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
-                tbStatus.Text = "Уже неплохо! Я верю, ты можешь лучше!";
-            }
-            if (rate > 0.6)
-            {
-                imgStar3.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
-                tbStatus.Text = "Так держать!";
-            }
-            if (rate > 0.8)
-            {
-                imgStar4.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
-                tbStatus.Text = "Молодец! Отличный результат!";
-            }
-            if (rate > 0.9)
-            {
-                imgStar5.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
-                tbStatus.Text = "Умница, похоже, ты гений!";
+                AwardItem award = await AwardManager.GetAwardForRate(StarRate);
+                if (award != null)
+                {
+                    AwardManager.AddUserAward(award, UserManager.UserId);
+                    this.DefaultViewModel["Award"] = award;
+                    tbAboutAchievements.Text = "За твои старания ты получаешь награду! Посмотреть все свои награды ты можешь в разделе Достижения";
+                }
             }
             
         }

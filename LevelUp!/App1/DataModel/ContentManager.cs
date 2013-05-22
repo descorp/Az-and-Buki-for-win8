@@ -544,6 +544,8 @@ namespace LevelUP
                 this.SetProperty(ref this._image, value);
             }
         }
+
+        
     }
 
     public class PasswordBoxImageSource
@@ -563,6 +565,8 @@ namespace LevelUP
             get { return this._items; }
             
         }
+
+
     }
 
     

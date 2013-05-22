@@ -36,8 +36,9 @@ namespace LevelUP
         /// </param>
         /// <param name="pageState">Словарь состояния, сохраненного данной страницей в ходе предыдущего
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
-        protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+        protected async override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+            this.DefaultViewModel["UAwards"] = await AwardManager.UsersAwards(UserManager.UserId);
         }
 
         /// <summary>

@@ -73,7 +73,7 @@ namespace LevelUP
 
             this._levels = new ObservableCollection<GameLevel>();
 
-            int LevelCount = 10;
+            int LevelCount = abcToTest.LetterItems.Count/2;
 
             for (int i = 0; i < LevelCount; i++)
             {
@@ -152,7 +152,7 @@ namespace LevelUP
                         var wordIndex = rand.Next(Curletter.WordItems.Count - 1);
                         word = Curletter.WordItems[wordIndex].Clone();
                     }
-                    while (words.Contains(word));                   
+                    while ((words.Where(w=>w.ID==word.ID)).Count()!=0);                   
                 }
                 if (!LoadWords) word.Image = null;
                 words.Add(word);

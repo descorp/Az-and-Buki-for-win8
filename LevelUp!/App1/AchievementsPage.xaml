@@ -12,6 +12,9 @@
 
     <Page.Resources>
         <x:String x:Key="PageName">Достижения</x:String>
+        <CollectionViewSource
+            x:Name="AchievementsItemsSrc"
+            Source="{Binding UAwards}" />
     </Page.Resources>
 
     <!--
@@ -37,7 +40,9 @@
             	<TextBlock x:Name="pageTitle" Text="{StaticResource PageName}" Style="{StaticResource PageHeaderTextStyle}" Margin="0" Width="1216"/>
             </StackPanel>
         </Grid>
-        <GridView x:Name="gvAchievements" Grid.Row="1" TabIndex="1" Margin="120,0,0,0">
+        <GridView x:Name="gvAchievements" Grid.Row="1" TabIndex="1" Margin="120,0,0,0" 
+                  ItemsSource="{Binding Source={StaticResource AchievementsItemsSrc}}"
+                  SelectionMode="None">
         	<GridView.Resources>
         		<DataTemplate x:Key="AchievementsHeaderTemplate">
         			<Grid Margin="20,0" Width="300">
@@ -45,25 +50,25 @@
         			</Grid>
         		</DataTemplate>
         		<DataTemplate x:Key="AchievementsItemTemplate">
-        			<Grid>
+        			<Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
         				<Grid.RowDefinitions>
         					<RowDefinition Height="Auto"/>
         					<RowDefinition Height="Auto"/>
         					<RowDefinition Height="Auto"/>
         				</Grid.RowDefinitions>
-        				<Image x:Name="imgBage" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="300" Grid.Row="1"/>
-        				<TextBlock x:Name="tbName" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Style="{StaticResource SubtitleTextStyle}"/>
-        				<Grid Margin="0" Grid.RowSpan="3" Grid.Row="2">
+        				<Image x:Name="imgBage" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Width="250" Grid.Row="1" Source="{Binding Image}" Margin="20"/>
+        				<TextBlock x:Name="tbName" Text="{Binding Title}" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}"/>
+        				<Grid Margin="0,5" Grid.RowSpan="3" Grid.Row="2">
         					<Grid.ColumnDefinitions>
         						<ColumnDefinition Width="Auto"/>
         						<ColumnDefinition/>
         					</Grid.ColumnDefinitions>
-        					<TextBlock x:Name="tbDescription" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Style="{StaticResource SubtitleTextStyle}" Margin="0" Grid.Column="1"/>
-        					<TextBlock x:Name="tbDate" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Style="{StaticResource SubtitleTextStyle}" Margin="0,0,10,0" Foreground="{StaticResource ABCTransparentBackgroundThemeBrush}"/>
+        					<TextBlock x:Name="tbDescription" TextWrapping="Wrap" Text="{Binding Description}" Style="{StaticResource SubtitleTextStyle}" Margin="5" Grid.Column="1"/>
+        					<TextBlock x:Name="tbDate" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Date}" VerticalAlignment="Top" Style="{StaticResource SubtitleTextStyle}" Margin="5" Foreground="{StaticResource ABCTransparentBackgroundThemeBrush}"/>
         				</Grid>
         			</Grid>
-        		</DataTemplate>
-        	</GridView.Resources>
+        		</DataTemplate>        		
+        	</GridView.Resources>        	
         	<GridView.ItemTemplate>
         		<StaticResource ResourceKey="AchievementsItemTemplate"/>
         	</GridView.ItemTemplate>

@@ -21,7 +21,7 @@ namespace LevelUP
             this._uniqueId = uniqueId;
             this._title = title;
             this._description = description;
-            this._imagePath = imagePath;
+            this.ImagePath = imagePath;
         }
         private string _uniqueId = string.Empty;
         public string UniqueId
@@ -52,21 +52,21 @@ namespace LevelUP
         }
 
         private ImageSource _image = null;
-        protected String _imagePath = null;
+        public String ImagePath = null;
         public ImageSource Image
         {
             get
             {
-                if (this._image == null && this._imagePath != null)
+                if (this._image == null && this.ImagePath != null)
                 {
-                    this._image = new BitmapImage(new Uri(ABCItem._baseUri, this._imagePath));
+                    this._image = new BitmapImage(new Uri(ABCItem._baseUri, this.ImagePath));
                 }
                 return this._image;
             }
 
             set
             {
-                this._imagePath = null;
+                this.ImagePath = null;
                 this.SetProperty(ref this._image, value);
             }
         }
@@ -74,7 +74,7 @@ namespace LevelUP
         public void SetImage(String path)
         {
             this._image = null;
-            this._imagePath = path;
+            this.ImagePath = path;
             this.OnPropertyChanged("Image");
         }
 
@@ -259,7 +259,7 @@ namespace LevelUP
 
         public WordItem Clone()
         {
-            return new WordItem(this.UniqueId, this.Title, this._imagePath, this.Description, this._id, this._alphabet, this._PicturePath, this._sound); 
+            return new WordItem(this.UniqueId, this.Title, this.ImagePath, this.Description, this._id, this._alphabet, this._PicturePath, this._sound); 
         }
     }
 

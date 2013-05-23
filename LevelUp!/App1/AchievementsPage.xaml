@@ -63,8 +63,12 @@
         						<ColumnDefinition Width="Auto"/>
         						<ColumnDefinition/>
         					</Grid.ColumnDefinitions>
+        					<Button x:Name="btnShare" Click="btnShare_Click" Content="" Tag="{Binding ID}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        						<Button.Background>
+        							<ImageBrush ImageSource="Icons/vkbtn.png" Stretch="Uniform"/>
+        						</Button.Background>
+        					</Button>
         					<TextBlock x:Name="tbDescription" TextWrapping="Wrap" Text="{Binding Description}" Style="{StaticResource SubtitleTextStyle}" Margin="5" Grid.Column="1"/>
-        					<TextBlock x:Name="tbDate" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Date}" VerticalAlignment="Top" Style="{StaticResource SubtitleTextStyle}" Margin="5" Foreground="{StaticResource ABCTransparentBackgroundThemeBrush}"/>
         				</Grid>
         			</Grid>
         		</DataTemplate>        		
@@ -76,7 +80,7 @@
         		<StaticResource ResourceKey="AchievementsHeaderTemplate"/>
         	</GridView.HeaderTemplate>
         </GridView>
-
+        
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->

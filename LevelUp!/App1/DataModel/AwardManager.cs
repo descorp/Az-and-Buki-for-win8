@@ -55,6 +55,28 @@ namespace LevelUP
             return UserAwards;
         }
 
+        public async static Task<AwardItem> GetAward(int awardId)
+        {
+            
+
+            var db = new SQLiteAsyncConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
+
+            var AwardQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE ID=?", awardId);
+            var Award = AwardQuery.FirstOrDefault();
+
+            //TODO Do proper localization
+            var LocalQuery = await db.QueryAsync<AwardLocalization>(
+                                     "SELECT * FROM AwardLocalization WHERE AwardID=?", Award.ID);
+            
+            var localization = LocalQuery.FirstOrDefault();
+
+            return new AwardItem(String.Concat("Award " + Award.ID.ToString()),
+                                             localization.AwardName,
+                                             Path.Combine(ApplicationData.Current.LocalFolder.Path, Award.LogoPath),
+                                             localization.AwardDescription,
+                                             Award.ID);
+        }
+
         public async static Task<AwardItem> GetAwardForRate(int Rate)
         {
             if (Rate>5 || Rate <2)

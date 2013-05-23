@@ -113,8 +113,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AutorizationControl.xaml.cs">
-      <DependentUpon>AutorizationControl.xaml</DependentUpon>
+    <Compile Include="AuthorizationControl.xaml.cs">
+      <DependentUpon>AuthorizationControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ChooseGamePage.xaml.cs">
       <DependentUpon>ChooseGamePage.xaml</DependentUpon>
@@ -127,6 +127,7 @@
     <Compile Include="DataModel\AwardManager.cs" />
     <Compile Include="DataModel\GameClass.cs" />
     <Compile Include="DataModel\UserManager.cs" />
+    <Compile Include="DataModel\VKclass.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
@@ -168,6 +169,9 @@
     <Compile Include="GameAnswerControl.xaml.cs">
       <DependentUpon>GameAnswerControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VKAuthPage.xaml.cs">
+      <DependentUpon>VKAuthPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -177,12 +181,12 @@
     <None Include="App1_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\CH1.png" />
-    <Content Include="Assets\CH2.png" />
-    <Content Include="Assets\CH3.png" />
-    <Content Include="Assets\CH4.png" />
-    <Content Include="Assets\CH5.png" />
-    <Content Include="Assets\CH6.png" />
+    <Content Include="Icons\CH1.png" />
+    <Content Include="Icons\CH2.png" />
+    <Content Include="Icons\CH3.png" />
+    <Content Include="Icons\CH4.png" />
+    <Content Include="Icons\CH5.png" />
+    <Content Include="Icons\CH6.png" />
     <Content Include="Assets\EasyLevel.png" />
     <Content Include="Assets\EmptyStar.png" />
     <Content Include="Assets\FullStar.png" />
@@ -201,6 +205,7 @@
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Userlogo.png" />
+    <Content Include="Icons\vkbtn.png" />
     <Content Include="Sounds\tray again.wav" />
     <Content Include="Sounds\grate job.wav" />
     <Content Include="Sounds\yey.wav" />
@@ -210,7 +215,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AutorizationControl.xaml">
+    <Page Include="AuthorizationControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -275,8 +280,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="VKAuthPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.5\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX">
       <HintPath>..\packages\SharpDX.2.4.2\lib\win8\SharpDX.dll</HintPath>
     </Reference>

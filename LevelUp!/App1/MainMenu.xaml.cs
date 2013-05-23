@@ -108,7 +108,7 @@ namespace LevelUP
                     LogInPopup.VerticalOffset = (Window.Current.Bounds.Height - 440) / 2;
 
                     // set the content to our UserControl
-                    LogInPopup.Child = new AutorizationControl();
+                    LogInPopup.Child = new AuthorizationControl();
 
                     // open the Popup
                     LogInPopup.IsOpen = true;

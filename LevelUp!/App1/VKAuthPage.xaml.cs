@@ -19,12 +19,14 @@ namespace LevelUP
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
-    public sealed partial class AchievementsPage : LevelUP.Common.LayoutAwarePage
+    public sealed partial class VKAuthPage : LevelUP.Common.LayoutAwarePage
     {
-        public AchievementsPage()
+        String _imagePath;
+        String _message;
+
+        public VKAuthPage()
         {
             this.InitializeComponent();
-            
         }
 
         /// <summary>
@@ -38,7 +40,28 @@ namespace LevelUP
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected async override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            this.DefaultViewModel["UAwards"] = await AwardManager.UsersAwards(UserManager.UserId);
+
+            var award = await AwardManager.GetAward((int) navigationParameter);
+            _imagePath = award.ImagePath;
+            _message = String.Concat("Мой ребенок получил ",award.Title," за успехи в изучении английского алфавита");
+                try
+                {
+                    WebPage.Navigate(VKProvider.AuthorizationUri);
+                    WebPage.LoadCompleted += new LoadCompletedEventHandler(WebPage_LoadCompleted);
+
+                }
+                catch (FormatException ex)
+                {
+                    Logger.ShowMessage("Проблемы с соединением!");
+                }
+        }
+
+        private void WebPage_LoadCompleted(object sender, NavigationEventArgs e)
+        {
+            string Address = e.Uri.OriginalString.ToLower();
+            VKProvider provider = new VKProvider();
+            if (provider.URLParser(e.Uri))
+                provider.WallPost(_message, _imagePath);
         }
 
         /// <summary>
@@ -49,12 +72,6 @@ namespace LevelUP
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
-        }
-
-        private void btnShare_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Уведомления о отсутствии соединения
-            this.Frame.Navigate(typeof(VKAuthPage), (sender as Button).Tag);
         }
     }
 }

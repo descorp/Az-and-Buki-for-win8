@@ -29,14 +29,14 @@ namespace LevelUP
         {
             this.InitializeComponent();
 
-            var passitemssource1 = new PasswordBoxImageSource("ms-appx:///Assets/CH1.png", "ms-appx:///Assets/CH2.png",
-                "ms-appx:///Assets/CH3.png", "ms-appx:///Assets/CH4.png", "ms-appx:///Assets/CH5.png", "ms-appx:///Assets/CH6.png");
-            var passitemssource2 = new PasswordBoxImageSource("ms-appx:///Assets/CH1.png", "ms-appx:///Assets/CH2.png",
-                "ms-appx:///Assets/CH3.png", "ms-appx:///Assets/CH4.png", "ms-appx:///Assets/CH5.png", "ms-appx:///Assets/CH6.png");
-            var passitemssource3 = new PasswordBoxImageSource("ms-appx:///Assets/CH1.png", "ms-appx:///Assets/CH2.png",
-                "ms-appx:///Assets/CH3.png", "ms-appx:///Assets/CH4.png", "ms-appx:///Assets/CH5.png", "ms-appx:///Assets/CH6.png");
-            var passitemssource4 = new PasswordBoxImageSource("ms-appx:///Assets/CH1.png", "ms-appx:///Assets/CH2.png",
-                "ms-appx:///Assets/CH3.png", "ms-appx:///Assets/CH4.png", "ms-appx:///Assets/CH5.png", "ms-appx:///Assets/CH6.png");
+            var passitemssource1 = new PasswordBoxImageSource("ms-appx:///Icons/CH1.png", "ms-appx:///Icons/CH2.png",
+                "ms-appx:///Icons/CH3.png", "ms-appx:///Icons/CH4.png", "ms-appx:///Icons/CH5.png", "ms-appx:///Icons/CH6.png");
+            var passitemssource2 = new PasswordBoxImageSource("ms-appx:///Icons/CH1.png", "ms-appx:///Icons/CH2.png",
+                "ms-appx:///Icons/CH3.png", "ms-appx:///Icons/CH4.png", "ms-appx:///Icons/CH5.png", "ms-appx:///Icons/CH6.png");
+            var passitemssource3 = new PasswordBoxImageSource("ms-appx:///Icons/CH1.png", "ms-appx:///Icons/CH2.png",
+                "ms-appx:///Icons/CH3.png", "ms-appx:///Icons/CH4.png", "ms-appx:///Icons/CH5.png", "ms-appx:///Icons/CH6.png");
+            var passitemssource4 = new PasswordBoxImageSource("ms-appx:///Icons/CH1.png", "ms-appx:///Icons/CH2.png",
+                "ms-appx:///Icons/CH3.png", "ms-appx:///Icons/CH4.png", "ms-appx:///Icons/CH5.png", "ms-appx:///Icons/CH6.png");
 
             this.PassBox.ApplyTemplate();
             this.PassBox.SMItemSource1 = passitemssource1.Items;

@@ -7,7 +7,7 @@ using Windows.Networking.BackgroundTransfer;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace LevelUP
+namespace levelupspace
 {
     public class VKProvider
     {
@@ -17,12 +17,12 @@ namespace LevelUP
         private static int Accesskey = 8192;
         private string accessToken = "";
         private string userId = "";
-        private getWallUploadServerResponse ServerUploadResponse;
+        private string message;
 
         private static string RedirectLink = "http://oauth.vk.com/blank.html";
         private static string GetWallUploadLink = "https://api.vkontakte.ru/method/photos.getWallUploadServer?access_token={0}";
         private static string SaveWallPhotoLink = "https://api.vkontakte.ru/method/photos.saveWallPhoto?access_token={0}&server={1}&photo={2}&hash={3}";
-        private static string wallPostLink = "https://api.vkontakte.ru/method/wall.post?access_token={0}&attachments={1}";
+        private static string wallPostLink = "https://api.vkontakte.ru/method/wall.post?access_token={0}&attachments={1}&message={2}";
         private static string OAuthUrlLink = "http://oauth.vk.com/authorize?" +
             "client_id={0}" +
             "&scope={1}" +
@@ -67,69 +67,81 @@ namespace LevelUP
 
         public async void WallPost(String Message, String Picture)
         {
-           // GetWallUploadServer();
-            UploadPhoto(Picture);
+            message = Message;
+            var UploadResponse = await GetWallUploadServer();
+            UploadPhoto(UploadResponse, Picture);
         }
 
-        private async void GetWallUploadServer()
+        private async Task<JSONGetWallUploadServerResponse> GetWallUploadServer()
         {
-            WebRequest request = WebRequest.Create(new Uri(string.Format(GetWallUploadLink, accessToken)));
-            request.Method = "POST";
-            var Webresponse = await request.GetResponseAsync();
-            if (Webresponse != null)
-            {
-                Stream responseStream = Webresponse.GetResponseStream();
-                StreamReader responseReader = new System.IO.StreamReader(responseStream, Encoding.UTF8);
-                string responseString = responseReader.ReadToEnd();
-                ServerUploadResponse = JsonConvert.DeserializeObject<getWallUploadServerResponse>(responseString);
-            }
+            HttpProvider provider = new HttpProvider();
+            var response = await provider.POSTrequest(new Uri(string.Format(GetWallUploadLink, accessToken)));
+            return JsonConvert.DeserializeObject<JSONGetWallUploadServerResponse>(response);
         }
 
-        private async void UploadPhoto(String ImagePath)
+        private async void UploadPhoto(JSONGetWallUploadServerResponse UploadServerResponse, String ImagePath)
         {
-            WebRequest request = WebRequest.Create(new Uri(string.Format(GetWallUploadLink, accessToken)));
-            request.Method = "POST";
-            var Webresponse = await request.GetResponseAsync();
-            if (Webresponse != null)
-            {
-                Stream responseStream = Webresponse.GetResponseStream();
-                StreamReader responseReader = new System.IO.StreamReader(responseStream, Encoding.UTF8);
-                string responseString = responseReader.ReadToEnd();
-                ServerUploadResponse = JsonConvert.DeserializeObject<getWallUploadServerResponse>(responseString);
-            }
+            var file = await StorageFile.GetFileFromPathAsync(ImagePath);
+            var fileStream = await file.OpenStreamForReadAsync();
 
-            BackgroundUploader uploader = new BackgroundUploader();
-            var file = await StorageFile.GetFileFromPathAsync(ImagePath); 
-            UploadOperation upload = uploader.CreateUpload(new Uri(ServerUploadResponse.response.upload_url), file);
+            HttpProvider httpProvider = new HttpProvider();
 
-            HandleUpload(upload);
+            httpProvider.Complete += new EventHandler(FileUpload_Complete);
+            httpProvider.SendMultiPartRerquest(UploadServerResponse.response.upload_url, fileStream, file.Name);
         }
 
-
-        private async void HandleUpload(UploadOperation upload)
+        // <summary>
+        /// File-uploading is completed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void FileUpload_Complete(object sender, EventArgs e)
         {
-            try
-            {                
-                await upload.StartAsync();
-                
-                ResponseInformation response = upload.GetResponseInformation();                
-            }
-            catch (Exception ex)
-            {
-                Logger.ShowMessage("Ошибка соединения!");                
-            }
-        }
+            string jsonMessage = (e as HttpRresponseEventArgs).responseData;
+            
+            JSONUploadFileResponse UploadFileResponse = JsonConvert.DeserializeObject<JSONUploadFileResponse>(jsonMessage);
 
+            string SaveWallPhotoUrl = string.Format(SaveWallPhotoLink, accessToken, UploadFileResponse.server, UploadFileResponse.photo, UploadFileResponse.hash);
+
+            HttpProvider provider = new HttpProvider();
+            var SaveWallPhotoResponse = await provider.POSTrequest(new Uri(SaveWallPhotoUrl));
+
+            string str = SaveWallPhotoResponse.Replace("[", "").Replace("]", "");
+
+            JSONSaveWallPhotoResponse SaveWallResponse = JsonConvert.DeserializeObject<JSONSaveWallPhotoResponse>(str);
+
+
+            string WallPostUrl = string.Format(wallPostLink, accessToken, SaveWallResponse.response.id, message);
+            var WallPostResponse = await provider.POSTrequest(new Uri(WallPostUrl));
+            
+        }
         
     }
 
-    public class getWallUploadServerResponse
+    public class JSONGetWallUploadServerResponse
     {
-        public UploadServerResponse response { get; set; }
+        public JSONUploadServerResponse response { get; set; }
     }
 
-    public class UploadServerResponse
+    public class JSONUploadServerResponse
     {
         public string upload_url { get; set; }
+    }
+
+    public class JSONUploadFileResponse
+    {
+        public string server;
+        public string photo;
+        public string hash;
+    }
+
+    public class JSONSaveWallPhotoResponse
+    {
+        public WallPhotoInfo response { get; set; }
+    }
+    
+    public class WallPhotoInfo
+    {
+        public string id { get; set; }
     }
 }

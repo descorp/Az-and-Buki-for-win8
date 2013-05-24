@@ -11,7 +11,7 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace LevelUP.Common
+namespace levelupspace.Common
 {
     /// <summary>
     /// SuspensionManager записывает глобальное состояние сеанса, чтобы упростить управление жизненным циклом процессов

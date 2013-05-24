@@ -10,9 +10,9 @@ using System.IO;
 using Windows.Storage;
 
 
-namespace LevelUP
+namespace levelupspace
 {
-    public abstract class ABCItem : LevelUP.Common.BindableBase
+    public abstract class ABCItem : levelupspace.Common.BindableBase
     {
         public static Uri _baseUri = new Uri("ms-appx:///");
 
@@ -518,7 +518,7 @@ namespace LevelUP
     }
 
 
-    public class PasswordBoxItem : LevelUP.Common.BindableBase
+    public class PasswordBoxItem : levelupspace.Common.BindableBase
     {
         public PasswordBoxItem(String ImagePath)
         {

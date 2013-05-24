@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Data;
 
-namespace LevelUP.Common
+namespace levelupspace.Common
 {
     /// <summary>
     /// Реализация интерфейса <see cref="INotifyPropertyChanged"/> для упрощения моделей.

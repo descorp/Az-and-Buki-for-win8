@@ -7,7 +7,7 @@
     <ProjectGuid>{72C2A9B7-296F-4DFA-A123-EE484A91D9E6}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LevelUP</RootNamespace>
+    <RootNamespace>levelupspace</RootNamespace>
     <AssemblyName>LevelUP</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="DataModel\AwardManager.cs" />
     <Compile Include="DataModel\GameClass.cs" />
+    <Compile Include="DataModel\HttpProvider.cs" />
     <Compile Include="DataModel\UserManager.cs" />
     <Compile Include="DataModel\VKclass.cs" />
     <Compile Include="GamePage.xaml.cs">
@@ -206,6 +207,7 @@
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Userlogo.png" />
     <Content Include="Icons\vkbtn.png" />
+    <Content Include="Icons\vkbtn_hover.png" />
     <Content Include="Sounds\tray again.wav" />
     <Content Include="Sounds\grate job.wav" />
     <Content Include="Sounds\yey.wav" />
@@ -286,6 +288,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Facebook">
+      <HintPath>..\packages\Facebook.6.3.2\lib\win8\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook.Client">
+      <HintPath>..\packages\Facebook.Client.0.5.0-alpha\lib\win8\Facebook.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.5\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>

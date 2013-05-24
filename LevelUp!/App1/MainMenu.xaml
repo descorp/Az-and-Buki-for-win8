@@ -1,11 +1,11 @@
 ﻿<common:LayoutAwarePage
     x:Name="pageRoot"
-    x:Class="LevelUP.MainMenu"
+    x:Class="levelupspace.MainMenu"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:LevelUP"
-    xmlns:common="using:LevelUP.Common"
+    xmlns:local="using:levelupspace"
+    xmlns:common="using:levelupspace.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -55,7 +55,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="20">
                 <Image Height="80" Margin="0" Width="79" Source="Assets/MedalImgl.png"/>
-                <Button x:Name="btnHighScores" Content="Рекорды" Width="350" Height="70" Background="{StaticResource ABCBackgroundThemeBrush}" FontSize="29.333" FontWeight="Normal" Click="btnHighScores_Click" Style="{StaticResource ButtonABCStyle}" Margin="40,5,5,5"/>
+                <Button x:Name="btnHighScores" Content="Достижения" Width="350" Height="70" Background="{StaticResource ABCBackgroundThemeBrush}" FontSize="29.333" FontWeight="Normal" Click="btnHighScores_Click" Style="{StaticResource ButtonABCStyle}" Margin="40,5,5,5"/>
                
             </StackPanel>
         </StackPanel>

@@ -1,4 +1,4 @@
-﻿using LevelUP.Common;
+﻿using levelupspace.Common;
 
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону "Приложение таблицы" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234226
 
-namespace LevelUP
+namespace levelupspace
 {
     /// <summary>
     /// Обеспечивает зависящее от конкретного приложения поведение, дополняющее класс Application по умолчанию.

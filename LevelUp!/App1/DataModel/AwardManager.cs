@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace LevelUP
+namespace levelupspace
 {
     public class AwardItem: ABCItem
     {

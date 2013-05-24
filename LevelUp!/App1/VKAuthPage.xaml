@@ -1,11 +1,11 @@
 ﻿<common:LayoutAwarePage
     x:Name="pageRoot"
-    x:Class="LevelUP.VKAuthPage"
+    x:Class="levelupspace.VKAuthPage"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:LevelUP"
-    xmlns:common="using:LevelUP.Common"
+    xmlns:local="using:levelupspace"
+    xmlns:common="using:levelupspace.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -34,7 +34,7 @@
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
-        <WebView x:Name="WebPage" Visibility="Visible" Grid.Row="1" />
+        <WebView x:Name="WebPage" Visibility="Visible" Grid.Row="1" Margin="120,0,30,30" />
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->

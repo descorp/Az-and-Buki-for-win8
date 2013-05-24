@@ -17,12 +17,12 @@ using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
-namespace LevelUP
+namespace levelupspace
 {
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
-    public sealed partial class UserSignOnPage : LevelUP.Common.LayoutAwarePage
+    public sealed partial class UserSignOnPage : levelupspace.Common.LayoutAwarePage
     {
         String logofilePath;
         public UserSignOnPage()

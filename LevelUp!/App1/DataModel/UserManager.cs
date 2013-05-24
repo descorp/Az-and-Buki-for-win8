@@ -10,15 +10,10 @@ using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography;
 
-namespace LevelUP
+namespace levelupspace
 {
     public class UserManager
     {
-        private bool IsInternetConnection()
-        {
-            var connectionProfile = Windows.Networking.Connectivity.NetworkInformation.GetInternetConnectionProfile();
-            return (connectionProfile != null);
-        }
 
         UserManager()
         { 

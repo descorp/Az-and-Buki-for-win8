@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Navigation;
 
 // Шаблон элемента пользовательского элемента управления задокументирован по адресу http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace LevelUP
+namespace levelupspace
 {
     public sealed partial class GameAnswerControl : UserControl
     {

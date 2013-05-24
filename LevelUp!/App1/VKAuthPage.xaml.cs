@@ -14,12 +14,12 @@ using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
-namespace LevelUP
+namespace levelupspace
 {
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
-    public sealed partial class VKAuthPage : LevelUP.Common.LayoutAwarePage
+    public sealed partial class VKAuthPage : levelupspace.Common.LayoutAwarePage
     {
         String _imagePath;
         String _message;
@@ -40,10 +40,12 @@ namespace LevelUP
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected async override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+            if (HttpProvider.IsInternetConnection())
+            {
 
-            var award = await AwardManager.GetAward((int) navigationParameter);
-            _imagePath = award.ImagePath;
-            _message = String.Concat("Мой ребенок получил ",award.Title," за успехи в изучении английского алфавита");
+                var award = await AwardManager.GetAward((int)navigationParameter);
+                _imagePath = award.ImagePath;
+                _message = String.Concat("Мой ребенок получил ", award.Title, " за успехи в изучении английского алфавита");
                 try
                 {
                     WebPage.Navigate(VKProvider.AuthorizationUri);
@@ -53,7 +55,15 @@ namespace LevelUP
                 catch (FormatException ex)
                 {
                     Logger.ShowMessage("Проблемы с соединением!");
+                    this.Frame.Navigate(typeof(AchievementsPage));
                 }
+            }
+            else
+            {
+                Logger.ShowMessage("Нет интернет-соединения!");
+                this.Frame.Navigate(typeof(AchievementsPage));
+            }
+            
         }
 
         private void WebPage_LoadCompleted(object sender, NavigationEventArgs e)

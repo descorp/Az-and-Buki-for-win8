@@ -17,13 +17,13 @@ using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
-namespace LevelUP
+namespace levelupspace
 {
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
     
-    public sealed partial class MainMenu : LevelUP.Common.LayoutAwarePage
+    public sealed partial class MainMenu : levelupspace.Common.LayoutAwarePage
     {
         Popup LogInPopup;
 

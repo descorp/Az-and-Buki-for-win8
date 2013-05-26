@@ -125,10 +125,12 @@
       <DependentUpon>AlphabetDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AwardManager.cs" />
+    <Compile Include="DataModel\FacebookProvider.cs" />
     <Compile Include="DataModel\GameClass.cs" />
     <Compile Include="DataModel\HttpProvider.cs" />
+    <Compile Include="DataModel\SocialProvider.cs" />
     <Compile Include="DataModel\UserManager.cs" />
-    <Compile Include="DataModel\VKclass.cs" />
+    <Compile Include="DataModel\VKProvider.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
@@ -170,8 +172,8 @@
     <Compile Include="GameAnswerControl.xaml.cs">
       <DependentUpon>GameAnswerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VKAuthPage.xaml.cs">
-      <DependentUpon>VKAuthPage.xaml</DependentUpon>
+    <Compile Include="SharePage.xaml.cs">
+      <DependentUpon>SharePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +208,8 @@
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Userlogo.png" />
+    <Content Include="Icons\fbbtn.png" />
+    <Content Include="Icons\fbbtn_hover.png" />
     <Content Include="Icons\vkbtn.png" />
     <Content Include="Icons\vkbtn_hover.png" />
     <Content Include="Sounds\tray again.wav" />
@@ -282,7 +286,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VKAuthPage.xaml">
+    <Page Include="SharePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

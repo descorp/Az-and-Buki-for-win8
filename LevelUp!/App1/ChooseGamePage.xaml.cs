@@ -61,7 +61,7 @@ namespace levelupspace
             this.Frame.Navigate(typeof(GamePage));
         }
 
-        private void GoBack(object sender, RoutedEventArgs e)
+        private new void GoBack(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainMenu));
         }

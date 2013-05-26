@@ -21,6 +21,9 @@ namespace levelupspace
     /// </summary>
     public sealed partial class AchievementsPage : levelupspace.Common.LayoutAwarePage
     {
+
+        Popup MessageBoxPopup;
+
         public AchievementsPage()
         {
             this.InitializeComponent();
@@ -39,6 +42,34 @@ namespace levelupspace
         protected async override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             this.DefaultViewModel["UAwards"] = await AwardManager.UsersAwards(UserManager.UserId);
+
+            if ((string)navigationParameter == "WallPostSent")
+            {
+
+                if (MessageBoxPopup == null)
+                {
+                    // create the Popup in code
+                    MessageBoxPopup = new Popup();
+
+
+                    // we are creating this in code and need to handle multiple instances
+                    // so we are attaching to the Popup.Closed event to remove our reference
+                    MessageBoxPopup.Closed += (senderPopup, argsPopup) =>
+                    {
+                        MessageBoxPopup = null;
+                    };
+
+                    MessageBoxPopup.HorizontalOffset = (Window.Current.Bounds.Width - 600) / 2;
+                    MessageBoxPopup.VerticalOffset = 350;
+
+                    // set the content to our UserControl
+                    MessageBoxPopup.Child = new TextPopup("Сообщение отправлено на твою стену!");
+
+                    // open the Popup
+                    MessageBoxPopup.IsOpen = true;
+                }
+                
+            }
         }
 
         /// <summary>
@@ -53,8 +84,21 @@ namespace levelupspace
 
         private void btnShare_Click(object sender, RoutedEventArgs e)
         {
-            //TODO Уведомления о отсутствии соединения
-            this.Frame.Navigate(typeof(VKAuthPage), (sender as Button).Tag);
+            
+            var parameters = new Dictionary<string, int>();
+            parameters["social"] = (int)Socials.VK;
+            parameters["award"] = (int)((sender as Button).Tag);
+            this.Frame.Navigate(typeof(SharePage), parameters);
+            
+        }
+
+        private void btnShareFB_Click(object sender, RoutedEventArgs e)
+        {
+            var parameters = new Dictionary<string, int>();
+            parameters["social"] = (int)Socials.Facebook;
+            parameters["award"] = (int)((sender as Button).Tag);
+            this.Frame.Navigate(typeof(SharePage), parameters);
+
         }
     }
 }

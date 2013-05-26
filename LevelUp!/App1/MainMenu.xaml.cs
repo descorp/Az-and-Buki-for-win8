@@ -166,7 +166,7 @@ namespace levelupspace
             }
 
             if (UserManager.IsAutorized)
-                this.Frame.Navigate(typeof(AchievementsPage), UserManager.UserId);
+                this.Frame.Navigate(typeof(AchievementsPage));
             else
             {
                 if ( MessageBoxPopup == null)

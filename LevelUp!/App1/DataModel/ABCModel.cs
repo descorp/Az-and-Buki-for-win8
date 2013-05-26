@@ -28,6 +28,12 @@ namespace levelupspace
             set;
         }
 
+        public bool IsNative
+        {
+            get;
+            set;
+        }
+
     }
 
     class AlphabetLocalization

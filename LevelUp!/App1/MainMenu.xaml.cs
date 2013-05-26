@@ -150,6 +150,7 @@ namespace levelupspace
             btnLogOn.Visibility = Visibility.Visible;
             btnLogIn.Content = "Вход";
             tbUserName.Text = "Вход не выполнен";
+            imgProfile.Source = new BitmapImage(new Uri("ms-appx:///Assets/Userlogo.png"));  
             UserManager.LogOut();
             
         }

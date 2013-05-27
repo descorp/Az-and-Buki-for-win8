@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -12,11 +13,12 @@ namespace levelupspace
         public GameParamsControl()
         {
             this.InitializeComponent();
+            var res = new ResourceLoader();
 
             ObservableCollection<DifficultyItem> DLevels = new ObservableCollection<DifficultyItem>();
-            DLevels.Add(new DifficultyItem("easy level", "Легкий", "ms-appx:///Assets/EasyLevel.png"," "));
-            DLevels.Add(new DifficultyItem("medium level", "Средний", "ms-appx:///Assets/MediumLevel.png", " "));
-            DLevels.Add(new DifficultyItem("genius level", "Гений", "ms-appx:///Assets/HardLevel.png", " "));
+            DLevels.Add(new DifficultyItem("easy level", res.GetString("EasyLevel"), "ms-appx:///Assets/EasyLevel.png", " "));
+            DLevels.Add(new DifficultyItem("medium level", res.GetString("MeduimLevel"), "ms-appx:///Assets/MediumLevel.png", " "));
+            DLevels.Add(new DifficultyItem("genius level", res.GetString("HardLevel"), "ms-appx:///Assets/HardLevel.png", " "));
 
             cbDifficulty.ItemsSource = DLevels;
             cbDifficulty.SelectedIndex = 0;

@@ -3,6 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.ApplicationModel.Resources;
 
 namespace levelupspace
 {
@@ -57,7 +58,9 @@ namespace levelupspace
             }
             catch (Exception e)
             {
-                Logger.ShowMessage("Ошибка соединения!");  
+                var res = new ResourceLoader();
+
+                Logger.ShowMessage(res.GetString("ConnectionError"));  
             }
             return true;
         }

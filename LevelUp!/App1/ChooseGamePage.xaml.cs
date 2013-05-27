@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -30,8 +31,9 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+            var res = new ResourceLoader();
             ObservableCollection<GameItem> Games = new ObservableCollection<GameItem>();
-            Games.Add( new GameItem("Game 1", "С какой буквы начинается слово?", "ms-appx:///Assets/Gamelogo1.png", "Учим буквы и слова в игровой форме"));
+            Games.Add(new GameItem("Game 1", res.GetString("GameName"), "ms-appx:///Assets/Gamelogo1.png", res.GetString("GameDescription")));
 
             this.DefaultViewModel["Items"] = Games;
         }

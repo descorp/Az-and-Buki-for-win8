@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -26,8 +27,10 @@ namespace levelupspace
         public SharePage()
         {
             this.InitializeComponent();
-            
-            tbProgress.Text = "Подключение к серверу...";
+
+            var res = new ResourceLoader();
+
+            tbProgress.Text = res.GetString("ConnectingToServerMessage");
             Current = this;
         }
 
@@ -42,14 +45,17 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected async override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+            var res = new ResourceLoader();
             if (HttpProvider.IsInternetConnection())
             {
                 var parameters = (Dictionary<string, int>)navigationParameter;
 
                 var award = await AwardManager.GetAward((int)parameters["award"]);
 
+                
+
                 _imagePath = award.ImagePath;
-                _message = String.Concat("Мой ребенок получил ", award.Title, " за успехи в изучении английского алфавита");
+                _message = String.Format(res.GetString("PostMessage"), award.Title);
                 try
                 {  
                     switch (parameters["social"])
@@ -72,13 +78,13 @@ namespace levelupspace
                 }
                 catch (FormatException ex)
                 {
-                    Logger.ShowMessage("Проблемы с соединением!");
+                    Logger.ShowMessage(res.GetString("ConnectionError"));
                     this.Frame.Navigate(typeof(AchievementsPage));
                 }
             }
             else
             {
-                Logger.ShowMessage("Нет интернет-соединения!");
+                Logger.ShowMessage(res.GetString("NoInternetConnectionError"));
                 this.Frame.Navigate(typeof(AchievementsPage));
             }
             
@@ -93,10 +99,11 @@ namespace levelupspace
             
             provider.SentEvent += new EventHandler(PostSending_Completed);
 
+            var res = new ResourceLoader();
 
             if (provider.URLParser(e.Uri))
             {
-                tbProgress.Text = "Отправка сообщения...";
+                tbProgress.Text = res.GetString("SendingMessage");
                 tbProgress.Visibility = Visibility.Visible;
                 PBLoad.Visibility = Visibility.Visible;
 

@@ -212,6 +212,8 @@ namespace levelupspace
         private void cbLangs_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
         {
             LanguageProvider.CurrentLanguage = e.AddedItems[0] as LanguageItem;
+            var _Frame = Window.Current.Content as Frame;
+            _Frame.Navigate(typeof(MainMenu));
         }
     }
 }

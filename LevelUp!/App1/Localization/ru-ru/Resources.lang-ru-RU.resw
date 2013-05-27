@@ -204,4 +204,85 @@
   <data name="SignOnPageTitle.Text" xml:space="preserve">
     <value>Регистрация</value>
   </data>
+  <data name="AwerageGameResult" xml:space="preserve">
+    <value>Так держать!</value>
+  </data>
+  <data name="BadGameResult" xml:space="preserve">
+    <value>Кажется, тебе нужно еще поучиться</value>
+  </data>
+  <data name="btnLogIn.Content" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="btnSignOn.Content" xml:space="preserve">
+    <value>Присоединиться</value>
+  </data>
+  <data name="ConnectingToServerMessage" xml:space="preserve">
+    <value>Подключение к серверу...</value>
+  </data>
+  <data name="ConnectionError" xml:space="preserve">
+    <value>Проблемы с соединением!</value>
+  </data>
+  <data name="EasyLevel" xml:space="preserve">
+    <value>Легкий</value>
+  </data>
+  <data name="ErrorWrongLogIn" xml:space="preserve">
+    <value>Неверный логин или пароль, попробуй еще раз!</value>
+  </data>
+  <data name="GameDescription" xml:space="preserve">
+    <value>Учим буквы и слова в игровой форме</value>
+  </data>
+  <data name="GameName" xml:space="preserve">
+    <value>Веселые слова</value>
+  </data>
+  <data name="GameQuestion" xml:space="preserve">
+    <value>Какое слово начинается с буквы {0} ?</value>
+  </data>
+  <data name="GoodGameResult" xml:space="preserve">
+    <value>Молодец! Отличный результат!</value>
+  </data>
+  <data name="HardLevel" xml:space="preserve">
+    <value>Гений</value>
+  </data>
+  <data name="LogInForPrizes" xml:space="preserve">
+    <value>Войди под своим именем, чтобы получать награды за блестящую игру</value>
+  </data>
+  <data name="LowAwerageGameResult" xml:space="preserve">
+    <value>Неплохо, но я верю, ты можешь лучше!</value>
+  </data>
+  <data name="MeduimLevel" xml:space="preserve">
+    <value>Средний</value>
+  </data>
+  <data name="NoInternetConnectionError" xml:space="preserve">
+    <value>Нет интернет-соединения!</value>
+  </data>
+  <data name="PerfectGameResult" xml:space="preserve">
+    <value>Умница, похоже, ты гений!</value>
+  </data>
+  <data name="PostMessage" xml:space="preserve">
+    <value>Мой ребенок получил {0} за успехи в изучении английского алфавита</value>
+  </data>
+  <data name="RightAnswer" xml:space="preserve">
+    <value>Молодец!</value>
+  </data>
+  <data name="SendingMessage" xml:space="preserve">
+    <value>Отправка сообщения...</value>
+  </data>
+  <data name="SignOnNotUniqueLoginError" xml:space="preserve">
+    <value>Это имя занято другим пользователем, придумай другое</value>
+  </data>
+  <data name="SignOnTooShortNameError" xml:space="preserve">
+    <value>Ты ввел слишком короткое имя, придумай другое</value>
+  </data>
+  <data name="SignOnUnexpectedError" xml:space="preserve">
+    <value>Что-то не получилось, попробуй в другой раз</value>
+  </data>
+  <data name="WallPostSentMessage" xml:space="preserve">
+    <value>Сообщение отправлено на твою стену!</value>
+  </data>
+  <data name="WrongAnswer" xml:space="preserve">
+    <value>Ой, кажется, ты ответил неправильно = (</value>
+  </data>
+  <data name="YouWonPrizeMessage" xml:space="preserve">
+    <value>За твои старания ты получаешь награду! Посмотреть все свои награды ты можешь в разделе Достижения</value>
+  </data>
 </root>

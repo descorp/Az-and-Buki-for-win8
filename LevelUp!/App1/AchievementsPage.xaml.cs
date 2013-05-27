@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -55,7 +56,8 @@ namespace levelupspace
                     MessageBoxPopup.VerticalOffset = 350;
 
                     // set the content to our UserControl
-                    MessageBoxPopup.Child = new TextPopup("Сообщение отправлено на твою стену!");
+                    var res = new ResourceLoader();
+                    MessageBoxPopup.Child = new TextPopup(res.GetString("WallPostSentMessage"));
 
                     // open the Popup
                     MessageBoxPopup.IsOpen = true;

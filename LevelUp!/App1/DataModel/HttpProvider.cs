@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 
 namespace levelupspace 
 {
@@ -34,7 +35,9 @@ namespace levelupspace
             }
             catch (Exception ex)
             {
-                Logger.ShowMessage("Ошибка соединения с сервером");
+                var res = new ResourceLoader();
+
+                Logger.ShowMessage(res.GetString("ConnectionError"));
             }
         }
 

@@ -45,7 +45,7 @@
                 <Image x:Name="imgProfile" Width="100" Height="100" Margin="10,0" Source="Assets/Userlogo.png"/>
                 <TextBlock x:Name="tbUserName" Grid.Column="1" VerticalAlignment="Top" Margin="10" HorizontalAlignment="Left" Text="Вход не выполнен" Style="{StaticResource TitleTextStyle}"/>
                 <Button x:Name="btnLogIn" Grid.Column="1" Content="Вход" Margin="10,10,10,40" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="{StaticResource ABCBackgroundThemeBrush}" Click="btnLogIn_Click"/>
-                <Button x:Name="btnLogOn" Grid.Column="1" Content="Присоединиться" Style="{StaticResource TextSecondaryButtonStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5" Click="btnLogOn_Click"/>
+                <Button x:Uid="btnSignOn" x:Name="btnLogOn" Grid.Column="1" Content="Присоединиться" Style="{StaticResource TextSecondaryButtonStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5" Click="btnLogOn_Click"/>
             </Grid>
         </Grid>
         <Grid Margin="50,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Top">

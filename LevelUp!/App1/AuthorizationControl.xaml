@@ -24,7 +24,7 @@
 			<ColumnDefinition Width="400*"/>
 		</Grid.ColumnDefinitions>
         <Button x:Name="backButton" Click="backButton_Click" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
-		<Button x:Name="btnSignIn" Content="Войти" Background="{StaticResource ABCBackgroundThemeBrush}" Margin="0,0,20,20" Grid.Row="2" HorizontalAlignment="Right" Grid.Column="1" Click="btnSignIn_Click" />        
+            <Button x:Name="btnSignIn" x:Uid="btnLogIn" Content="Войти" Background="{StaticResource ABCBackgroundThemeBrush}" Margin="0,0,20,20" Grid.Row="2" HorizontalAlignment="Right" Grid.Column="1" Click="btnSignIn_Click" />        
         
 		<TextBlock x:Uid="AutorizationCaption" Text="Введи свое имя и пароль" Style="{StaticResource PageSubheaderTextStyle}" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
 		<StackPanel Grid.Row="1" Margin="30,30,0,0" >

@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using Windows.ApplicationModel.Resources;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 
@@ -42,7 +43,8 @@ namespace levelupspace
                 }
                 else
                 {
-                    Logger.ShowMessage("Неверный логин или пароль, попробуй еще раз!");
+                    var res = new ResourceLoader();
+                    Logger.ShowMessage(res.GetString("ErrorWrongLogIn"));
                     return;
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.ApplicationModel.Resources;
 
 namespace levelupspace
 {
@@ -123,7 +124,8 @@ namespace levelupspace
             this.words = new ObservableCollection<WordItem>();
             var letterAnswerNumber = rand.Next(alphabet.LetterItems.Count - 1);
             this.letter = alphabet.LetterItems[letterAnswerNumber];
-            this.Question = "Какое слово начинается с буквы " + this.letter.Description + "?";
+            var res = new ResourceLoader();
+            this.Question = String.Format(res.GetString("GameQuestion"),this.letter.Description);
             WordItem word;
 
             for (int i = 0; i < 4; i++)

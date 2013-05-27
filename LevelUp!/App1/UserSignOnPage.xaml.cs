@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
@@ -64,6 +65,8 @@ namespace levelupspace
 
         private async void btnOk_Click(object sender, RoutedEventArgs e)
         {
+            var res = new ResourceLoader();
+
             if (tbName.Text.Length > 3)
             {
                 var uniquelogin = await UserManager.IsUniqueLoginAsync(tbName.Text);
@@ -89,18 +92,19 @@ namespace levelupspace
                         return;
                     }
 
-                    Logger.ShowMessage("Что-то не получилось, попробуй в другой раз");
+                    
+                    Logger.ShowMessage(res.GetString("SignOnUnexpectedError"));
 
                     return;
                 }
                 else
                 {
-                    Logger.ShowMessage("Это имя занято другим пользователем, придумай другое");
+                    Logger.ShowMessage(res.GetString("SignOnNotUniqueLoginError"));
                     return;
                 }
             }
             else
-                Logger.ShowMessage("Ты ввел слишком короткое имя, придумай другое");
+                Logger.ShowMessage(res.GetString("SignOnTooShortNameError"));
         }
 
         

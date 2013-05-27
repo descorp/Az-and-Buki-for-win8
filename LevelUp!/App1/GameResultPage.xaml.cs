@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,11 +34,11 @@ namespace levelupspace
         {
             var rate = (double)navigationParameter;
 
-            
+            var res = new ResourceLoader();
 
             int StarRate = 0;
 
-            tbStatus.Text = "Кажется, тебе нужно еще поучиться";
+            tbStatus.Text = res.GetString("BadGameResult");
             if (rate > 0.2)
             {
                 imgStar1.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
@@ -46,25 +47,25 @@ namespace levelupspace
             if (rate > 0.4)
             {
                 imgStar2.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
-                tbStatus.Text = "Уже неплохо! Я верю, ты можешь лучше!";
+                tbStatus.Text = res.GetString("LowAwerageGameResult");
                 StarRate = 2;
             }
             if (rate > 0.6)
             {
                 imgStar3.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
-                tbStatus.Text = "Так держать!";
+                tbStatus.Text = res.GetString("AwerageGameResult");
                 StarRate = 3;
             }
             if (rate > 0.8)
             {
                 imgStar4.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
-                tbStatus.Text = "Молодец! Отличный результат!";
+                tbStatus.Text = res.GetString("GoodGameResult");
                 StarRate = 4;
             }
             if (rate > 0.9)
             {
                 imgStar5.Source = new BitmapImage(new Uri(ABCItem._baseUri, "ms-appx:///Assets/FullStar.png"));
-                tbStatus.Text = "Умница, похоже, ты гений!";
+                tbStatus.Text = res.GetString("PerfectGameResult");
                 StarRate = 5;
             }
 
@@ -87,7 +88,7 @@ namespace levelupspace
                     MessageBoxPopup.VerticalOffset = 350;
 
                     // set the content to our UserControl
-                    MessageBoxPopup.Child = new TextPopup("Войди под своим именем, чтобы получать награды за блестящую игру");
+                    MessageBoxPopup.Child = new TextPopup(res.GetString("LogInForPrizes"));
 
                     // open the Popup
                     MessageBoxPopup.IsOpen = true;
@@ -100,7 +101,7 @@ namespace levelupspace
                 {
                     AwardManager.AddUserAward(award, UserManager.UserId);
                     this.DefaultViewModel["Award"] = award;
-                    tbAboutAchievements.Text = "За твои старания ты получаешь награду! Посмотреть все свои награды ты можешь в разделе Достижения";
+                    tbAboutAchievements.Text = res.GetString("YouWonPrizeMessage");
                 }
             }
             

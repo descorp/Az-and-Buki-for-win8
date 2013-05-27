@@ -55,12 +55,12 @@
                 <ColumnDefinition Width="420*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Click="backButton_Click" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
-            <Button x:Name="btnPlay" Content="Играть" Background="{StaticResource ABCBackgroundThemeBrush}" Margin="0,0,20,20" Grid.Row="2" HorizontalAlignment="Right" Grid.Column="1" Click="btnPlay_Click" />
+            <Button x:Name="btnPlay" x:Uid="btnPlay" Content="Играть" Background="{StaticResource ABCBackgroundThemeBrush}" Margin="0,0,20,20" Grid.Row="2" HorizontalAlignment="Right" Grid.Column="1" Click="btnPlay_Click" />
 
-            <TextBlock Text="Уровень игры" Style="{StaticResource PageSubheaderTextStyle}" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
+            <TextBlock x:Uid="Game level" Text="Уровень игры" Style="{StaticResource PageSubheaderTextStyle}" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
             <StackPanel Grid.Row="1" Margin="30,0,0,0" >
-                <TextBlock TextWrapping="Wrap" Text="Сложность" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,10" TextAlignment="{StaticResource FormTextAlignment}"/>
-                <TextBlock TextWrapping="Wrap" Text="Алфавит" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,10" TextAlignment="{StaticResource FormTextAlignment}"/>
+                <TextBlock x:Uid="Difficulty" TextWrapping="Wrap" Text="Сложность" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,10" TextAlignment="{StaticResource FormTextAlignment}"/>
+                <TextBlock x:Uid="Alphabet" TextWrapping="Wrap" Text="Алфавит" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,10" TextAlignment="{StaticResource FormTextAlignment}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" Margin="30,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             	<ComboBox x:Name="cbDifficulty" ItemTemplate="{StaticResource DifficultyItemTemplate}" Margin="0,5"/>

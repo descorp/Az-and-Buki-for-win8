@@ -12,7 +12,7 @@
         BorderThickness="3" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid>
             <TextBlock x:Name="tbMessage" Text="какой-то текст длинный длинный предлинный текстина hjvhgchfxcgf" VerticalAlignment="Center" TextAlignment="Center" Style="{StaticResource PageSubheaderTextStyle}" TextWrapping="Wrap" Margin="10,0,10,40"/>
-            <Button x:Name="btnNext" Click="btnNext_Click" Content="Дальше" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" Background="{StaticResource ABCBackgroundThemeBrush}"/>
+            <Button x:Name="btnNext" x:Uid="btnNext" Click="btnNext_Click" Content="Дальше" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" Background="{StaticResource ABCBackgroundThemeBrush}"/>
         </Grid>
     </Border>
 </UserControl>

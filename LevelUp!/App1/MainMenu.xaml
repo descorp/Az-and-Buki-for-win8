@@ -10,8 +10,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Page.Resources>
-    </Page.Resources>
+    <common:LayoutAwarePage.Resources>
+    	<DataTemplate x:Key="LangStringTemplate">
+    		<Grid>
+    			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding LanguageName}" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}" Margin="2"/>
+    		</Grid>
+    	</DataTemplate>
+</common:LayoutAwarePage.Resources>
 
     <!--
         This grid acts as a root panel for the page that defines two rows:
@@ -43,19 +48,27 @@
                 <Button x:Name="btnLogOn" Grid.Column="1" Content="Присоединиться" Style="{StaticResource TextSecondaryButtonStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5" Click="btnLogOn_Click"/>
             </Grid>
         </Grid>
+        <Grid Margin="50,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Top">
+        	<Grid.ColumnDefinitions>
+        		<ColumnDefinition Width="Auto"/>
+        		<ColumnDefinition Width="Auto"/>
+        	</Grid.ColumnDefinitions>
+        	<ComboBox x:Name="cbLangs" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" ItemTemplate="{StaticResource LangStringTemplate}" Padding="8,5" SelectionChanged="cbLangs_SelectionChanged"/>
+        	<TextBlock HorizontalAlignment="Center" x:Uid="Lang" TextWrapping="Wrap" Text="Язык" VerticalAlignment="Center" TextAlignment="{StaticResource FormTextAlignment}" Style="{StaticResource PageSubheaderTextStyle}" Margin="5,0,10,5"/>
+        </Grid>
         <Image HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Source="Assets/MainPageLogo.png" Width="400"/>
         <StackPanel HorizontalAlignment="Center" Grid.Row="2" Margin="-120,30,0,30">
             <StackPanel Orientation="Horizontal" Margin="20">
                 <Image Height="80" Margin="0" Width="80" Source="Assets/LearnImg.png"/>
-                <Button x:Name="btnAlphabets"  Content="Учим алфавит" Background="{StaticResource ABCBackgroundThemeBrush}" Width="350" Height="70" FontSize="29.333" FontWeight="Normal" Click="btnAlphabets_Click" Style="{StaticResource ButtonABCStyle}" Margin="40,5,5,5"/>
+                <Button x:Name="btnAlphabets" x:Uid="LearnABCs"  Content="Учим алфавит" Background="{StaticResource ABCBackgroundThemeBrush}" Width="350" Height="70" FontSize="29.333" FontWeight="Normal" Click="btnAlphabets_Click" Style="{StaticResource ButtonABCStyle}" Margin="40,5,5,5"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="20">
                 <Image Height="80" Margin="0" Width="80" Source="Assets/PlayImg.png"/>
-                <Button x:Name="btnPlay" Content="Играем" Width="350" Height="70" Background="{StaticResource ABCBackgroundThemeBrush}" FontSize="29.333" FontWeight="Normal" Click="btnPlay_Click" Style="{StaticResource ButtonABCStyle}" Margin="40,5,5,5"/>
+                <Button x:Name="btnPlay" x:Uid="Play" Content="Играем" Width="350" Height="70" Background="{StaticResource ABCBackgroundThemeBrush}" FontSize="29.333" FontWeight="Normal" Click="btnPlay_Click" Style="{StaticResource ButtonABCStyle}" Margin="40,5,5,5"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="20">
                 <Image Height="80" Margin="0" Width="79" Source="Assets/MedalImgl.png"/>
-                <Button x:Name="btnHighScores" Content="Достижения" Width="350" Height="70" Background="{StaticResource ABCBackgroundThemeBrush}" FontSize="29.333" FontWeight="Normal" Click="btnHighScores_Click" Style="{StaticResource ButtonABCStyle}" Margin="40,5,5,5"/>
+                <Button x:Name="btnHighScores" x:Uid="Achievements" Content="Достижения" Width="350" Height="70" Background="{StaticResource ABCBackgroundThemeBrush}" FontSize="29.333" FontWeight="Normal" Click="btnHighScores_Click" Style="{StaticResource ButtonABCStyle}" Margin="40,5,5,5"/>
                
             </StackPanel>
         </StackPanel>

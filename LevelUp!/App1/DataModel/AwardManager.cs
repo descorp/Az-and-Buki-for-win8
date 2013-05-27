@@ -1,10 +1,8 @@
 ﻿using SQLite;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -39,12 +37,18 @@ namespace levelupspace
             var LPath = ApplicationData.Current.LocalFolder.Path;
             for (int i = 0; i < AwardQuery.Count; i++)
             {
-                //TODO Do proper localization
+                var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
                 var LocalQuery = await db.QueryAsync<AwardLocalization>(
                                      "SELECT * FROM AwardLocalization WHERE AwardID=?", AwardQuery[i].AwardID);
+                var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
+                if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
+                
                 var AwardDataQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE ID=?", AwardQuery[i].AwardID);
+
+
                 var AwardData = AwardDataQuery.FirstOrDefault();
-                var localization = LocalQuery.FirstOrDefault();
+
+                
 
                 UserAwards.Add(new AwardItem(String.Concat("Award " + AwardQuery[i].AwardID.ToString()),
                                              localization.AwardName,
@@ -65,11 +69,14 @@ namespace levelupspace
             var AwardQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE ID=?", awardId);
             var Award = AwardQuery.FirstOrDefault();
 
-            //TODO Do proper localization
+            var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
+            
+            
             var LocalQuery = await db.QueryAsync<AwardLocalization>(
                                      "SELECT * FROM AwardLocalization WHERE AwardID=?", Award.ID);
-            
-            var localization = LocalQuery.FirstOrDefault();
+
+            var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
+            if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
 
             return new AwardItem(String.Concat("Award " + Award.ID.ToString()),
                                              localization.AwardName,
@@ -87,10 +94,12 @@ namespace levelupspace
 
             var AwardQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE Rate=?", Rate);
             var Award = AwardQuery.FirstOrDefault();
-            //TODO Do proper localization
+            
             var LocalQuery = await db.QueryAsync<AwardLocalization>(
                                      "SELECT * FROM AwardLocalization WHERE AwardID=?", Award.ID);
-            var localization = LocalQuery.FirstOrDefault();
+            var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
+            var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
+            if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
 
             return new AwardItem("Award " + Award.ID.ToString(),
                                 localization.AwardName,

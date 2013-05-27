@@ -11,11 +11,10 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <x:String x:Key="PageName">Игра</x:String>
         <CollectionViewSource
             x:Name="WordViewSource" 
-            Source="{Binding Words}"/>                       
-     </Page.Resources>
+            Source="{Binding Words}"/>
+    </Page.Resources>
 
     <!--
         This grid acts as a root panel for the page that defines two rows:
@@ -37,29 +36,29 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource PageName}" Style="{StaticResource PageHeaderTextStyle}"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" x:Uid="GamePageTitle" Text="Игра" Style="{StaticResource PageHeaderTextStyle}"/>
             <Border HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Margin="0,0,30,0" Padding="20" Height="80" Width="120" Background="{StaticResource ABCBackgroundThemeBrush}">
-            	<TextBlock x:Name="tbScores" TextWrapping="Wrap" Text="0" Style="{StaticResource PageHeaderTextStyle}" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="tbScores" TextWrapping="Wrap" Text="0" Style="{StaticResource PageHeaderTextStyle}" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Grid>
         <Grid Margin="120,0,0,20" Grid.Row="2">
-        	<Grid.ColumnDefinitions>
-        		<ColumnDefinition/>
-        		<ColumnDefinition Width="Auto"/>
-        	</Grid.ColumnDefinitions>
-        	<ProgressBar x:Name="pbLevels" HorizontalAlignment="Center" Height="10" VerticalAlignment="Center" Width="800" Margin="0"/>
-        	<Button x:Name="btnNextLevel" Content="Ответить" Click="btnNextLevel_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Background="{StaticResource ABCBackgroundThemeBrush}" Grid.Column="1" Margin="0,0,80,0"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ProgressBar x:Name="pbLevels" HorizontalAlignment="Center" Height="10" VerticalAlignment="Center" Width="800" Margin="0"/>
+            <Button x:Name="btnNextLevel" x:Uid="btnAnswer" Content="Ответить" Click="btnNextLevel_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Background="{StaticResource ABCBackgroundThemeBrush}" Grid.Column="1" Margin="0,0,80,0" Width="93"/>
         </Grid>
         <GridView 
             x:Name="gvAnswers" Grid.Row="1" Margin="120,10,30,10"  
                   SelectionMode="Single"
                   IsItemClickEnabled="True"
                   ItemsSource="{Binding Source={StaticResource WordViewSource}}"
-                  ItemClick="gvAnswers_ItemClick">            
+                  ItemClick="gvAnswers_ItemClick">
             <GridView.Header>
-                <TextBlock x:Name="tbQuestion" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}" Width="400"/>                    
+                <TextBlock x:Name="tbQuestion" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}" Width="400"/>
             </GridView.Header>
-            <GridView.ItemTemplate>                
+            <GridView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="20">
                         <Grid.RowDefinitions>

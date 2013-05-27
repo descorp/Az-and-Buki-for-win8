@@ -1,9 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using Newtonsoft.Json;
-using System.Text;
-using Windows.Networking.BackgroundTransfer;
 using System.Threading.Tasks;
 using Windows.Storage;
 

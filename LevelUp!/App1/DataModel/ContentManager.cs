@@ -8,7 +8,6 @@ using System.Collections.Specialized;
 using SQLite;
 using System.IO;
 using Windows.Storage;
-using Windows.UI.Xaml;
 
 
 namespace levelupspace
@@ -481,19 +480,22 @@ namespace levelupspace
             
             for (int i = 0; i < AlphabetQuery.Count; i++)
             {
-                //Do proper localization
+                
 
                 var LocalQuery = db.Query<AlphabetLocalization>(
-                                     "SELECT * FROM AlphabetLocalization WHERE AlphabetID=?", AlphabetQuery[i].ID);                  
-                var localization = LocalQuery.FirstOrDefault();
+                                     "SELECT * FROM AlphabetLocalization WHERE AlphabetID=?", AlphabetQuery[i].ID);
+
+                var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
+                var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
+                if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
 
                 var LPath = ApplicationData.Current.LocalFolder.Path;
 
                 var Aitem = new AlphabetItem(
                         String.Concat("Alphabet ", AlphabetQuery[i].ID.ToString()),
-                        LocalQuery.ElementAt(0).LanguageName,
+                        localization.LanguageName,
                         Path.Combine(LPath, AlphabetQuery[i].Logo),
-                        LocalQuery.ElementAt(0).Description,
+                        localization.Description,
                         AlphabetQuery[i].ID                    
                         );
 

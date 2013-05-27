@@ -33,14 +33,13 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" x:Uid="SharePageTitle" Text="Рассказать друзьям" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
+        <StackPanel Margin="120,0,30,5" Grid.Row="1">
+            <TextBlock x:Name="tbProgress" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,20"/>
         
-        <Grid Margin="120,0,30,5" Grid.Row="1">
-        	<TextBlock x:Name="tbProgress" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,20"/>
-        
-        	<ProgressBar x:Name="PBLoad" IsIndeterminate="True" VerticalAlignment="Top" Margin="0" Width="1216"/>
-        </Grid>
+        	<ProgressBar x:Name="PBLoad" VerticalAlignment="Top" Margin="0" Width="900" HorizontalAlignment="Left"/>
+        </StackPanel>
         <WebView x:Name="WebPage" Visibility="Visible" Grid.Row="2" Margin="120,0,30,30" />
         
         <VisualStateManager.VisualStateGroups>

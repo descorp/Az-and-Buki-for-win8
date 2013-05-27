@@ -11,7 +11,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <x:String x:Key="PageName">Результаты</x:String>
+
     </Page.Resources>
 
     <!--
@@ -34,7 +34,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource PageName}" Style="{StaticResource PageHeaderTextStyle}"/>
+            <TextBlock x:Name="pageTitle" x:Uid="Results" Grid.Column="1" Text="Результаты" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
         <StackPanel Margin="0,0,0,40" Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center">
         	<Image x:Name="imgStar1" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="Assets/EmptyStar.png"/>

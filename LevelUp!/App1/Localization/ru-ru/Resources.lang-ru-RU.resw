@@ -285,4 +285,7 @@
   <data name="YouWonPrizeMessage" xml:space="preserve">
     <value>За твои старания ты получаешь награду! Посмотреть все свои награды ты можешь в разделе Достижения</value>
   </data>
+  <data name="btnNextContent" xml:space="preserve">
+    <value>Дальше</value>
+  </data>
 </root>

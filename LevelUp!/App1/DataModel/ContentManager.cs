@@ -400,6 +400,7 @@ namespace levelupspace
                 var Aitem = matches.First();
                 if (Aitem.LetterItems.Count == 0)
                 {
+                    
                     var LetterQuery = db.Query<Letter>("SELECT * FROM Letter WHERE AlphabetID=?", Aitem.ID);
 
                     var LPath = ApplicationData.Current.LocalFolder.Path;

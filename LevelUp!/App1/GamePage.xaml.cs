@@ -58,6 +58,7 @@ namespace levelupspace
 
                     // open the Popup
                     GameParamsPopup.IsOpen = true;
+                    
                 }
             }
         }
@@ -189,6 +190,13 @@ namespace levelupspace
             {
                 AnswerResultPopup.IsOpen = false;
             }
+        }
+
+        private void pageRoot_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs args = new RoutedEventArgs();
+            if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
+            else if (e.Key == Windows.System.VirtualKey.Enter) this.btnNextLevel_Click(this, args);
         }
 
     }

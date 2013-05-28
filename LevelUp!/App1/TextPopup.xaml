@@ -6,13 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"    
-    HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" Height="250">
+    HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" Height="250" KeyDown="UserControl_KeyDown">
     <Border       
         BorderBrush="{StaticResource ABCBackgroundThemeBrush}" 
         BorderThickness="3" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid>
             <TextBlock x:Name="tbMessage" Text="какой-то текст длинный длинный предлинный текстина hjvhgchfxcgf" VerticalAlignment="Center" TextAlignment="Center" Style="{StaticResource PageSubheaderTextStyle}" TextWrapping="Wrap" Margin="10,0,10,40"/>
-            <Button x:Name="btnNext" x:Uid="btnNext" Click="btnNext_Click" Content="Дальше" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" Background="{StaticResource ABCBackgroundThemeBrush}"/>
+            <Button x:Name="btnNext" x:Uid="btnNext" Click="btnNext_Click" Content="Дальше" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" Background="{StaticResource ABCBackgroundThemeBrush}" TabIndex="1"/>
         </Grid>
     </Border>
 </UserControl>

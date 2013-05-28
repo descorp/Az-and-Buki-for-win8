@@ -143,5 +143,11 @@ namespace levelupspace
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
         }
+
+        private void pageRoot_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs args = new RoutedEventArgs();
+            if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
+        }
     }
 }

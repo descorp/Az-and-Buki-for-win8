@@ -130,5 +130,12 @@ namespace levelupspace
             }
 
         }
+
+        private void pageRoot_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs args = new RoutedEventArgs();
+            if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
+            else if (e.Key == Windows.System.VirtualKey.Enter) this.btnOk_Click(this, args);
+        }
     }
 }

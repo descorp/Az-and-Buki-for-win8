@@ -9,7 +9,7 @@
     xmlns:controls="using:SlotMachineControl"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" KeyDown="pageRoot_KeyDown">
 
     <Page.Resources>
         <DataTemplate x:Key="fvGraphPassTemplate">    
@@ -54,12 +54,12 @@
         		<Border BorderBrush="{StaticResource ABCBackgroundThemeBrush}" BorderThickness="1" VerticalAlignment="Top" Margin="0,50,0,0" HorizontalAlignment="Left">
         			<Image x:Name="imgUserLogo" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="0" Tapped="Image_Tapped" Source="Assets/Userlogo.png"/>
         		</Border>
-        		<Button x:Name="btnOk" x:Uid="btnNext" Content="Дальше" HorizontalAlignment="Center" Margin="0,0,0,-100" VerticalAlignment="Bottom" Background="{StaticResource ABCBackgroundThemeBrush}" Click="btnOk_Click" Padding="12,4" TabIndex="7" Grid.Row="1"/>
+        		<Button x:Name="btnOk" x:Uid="btnNext" Content="Дальше" HorizontalAlignment="Center" Margin="0,0,0,-100" VerticalAlignment="Bottom" Background="{StaticResource ABCBackgroundThemeBrush}" Click="btnOk_Click" Padding="12,4" TabIndex="3" Grid.Row="1"/>
         		<TextBlock HorizontalAlignment="Left" x:Name="ChooseAv" TextWrapping="Wrap" Text="Выбери аватар" VerticalAlignment="Top" Margin="0" Style="{StaticResource PageSubheaderTextStyle}"/>
         	</Grid>
             <StackPanel Grid.Column="1" Margin="0" Orientation="Vertical">
                 <TextBox x:Name="tbName" TextWrapping="Wrap" Margin="0,20" TabIndex="1" HorizontalAlignment="Left" Width="400"/>
-                <controls:SlotMachineControl x:Name="PassBox" fvBorderBrush="{StaticResource ABCBackgroundThemeBrush}"  SlotMashineItemTemplate="{StaticResource fvGraphPassTemplate}"/>
+                <controls:SlotMachineControl x:Name="PassBox" fvBorderBrush="{StaticResource ABCBackgroundThemeBrush}"  SlotMashineItemTemplate="{StaticResource fvGraphPassTemplate}" TabIndex="2"/>
             </StackPanel>
             <StackPanel Margin="0,0,20,0" Orientation="Vertical">
         		<TextBlock Margin="0,20" TextWrapping="Wrap" x:Uid="Name" Text="Имя" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}" TextAlignment="Right"/>

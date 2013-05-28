@@ -94,5 +94,11 @@ namespace levelupspace
             this.Frame.Navigate(typeof(SharePage), parameters);
 
         }
+
+        private void pageRoot_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs args = new RoutedEventArgs();
+            if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
+        }
     }
 }

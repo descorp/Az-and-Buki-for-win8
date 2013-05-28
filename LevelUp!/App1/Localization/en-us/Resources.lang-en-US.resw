@@ -285,4 +285,7 @@
   <data name="YouWonPrizeMessage" xml:space="preserve">
     <value>You are grtting award for your awesome game! All your awards you coud see at Achievements section</value>
   </data>
+  <data name="btnNextContent" xml:space="preserve">
+    <value>Close</value>
+  </data>
 </root>

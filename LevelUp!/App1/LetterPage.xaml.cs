@@ -96,6 +96,12 @@ namespace levelupspace
             gvWords = sender as GridView;
         }
 
+        private void pageRoot_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs args = new RoutedEventArgs();
+            if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
+        }
+
      
 
     }

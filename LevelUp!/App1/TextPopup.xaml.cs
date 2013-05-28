@@ -20,5 +20,11 @@ namespace levelupspace
             Popup p = this.Parent as Popup;
             p.IsOpen = false; // close the Popup
         }
+
+        private void UserControl_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs args = new RoutedEventArgs();
+            if (e.Key == Windows.System.VirtualKey.Escape||e.Key == Windows.System.VirtualKey.Enter) this.btnNext_Click(this, args);
+        }
     }
 }

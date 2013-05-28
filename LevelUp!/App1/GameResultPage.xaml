@@ -8,7 +8,7 @@
     xmlns:common="using:levelupspace.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" KeyDown="pageRoot_KeyDown">
 
     <Page.Resources>
 
@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}" TabIndex="1"/>
             <TextBlock x:Name="pageTitle" x:Uid="Results" Grid.Column="1" Text="Результаты" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
         <StackPanel Margin="0,0,0,40" Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center">

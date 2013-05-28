@@ -8,7 +8,7 @@
     xmlns:common="using:levelupspace.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" KeyDown="pageRoot_KeyDown">
 
     <Page.Resources>        
         <CollectionViewSource
@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}" TabIndex="2"/>
             <StackPanel Grid.Column="1" Margin="0,0,30,40" Orientation="Horizontal">
             	<Image HorizontalAlignment="Center" Height="50" VerticalAlignment="Bottom" Width="50" Margin="0,0,10,0" Source="Assets/MedalImgl.png"/>
                 <TextBlock x:Name="pageTitle" x:Uid="AchievementsPageName" Text="Достижения" Style="{StaticResource PageHeaderTextStyle}" Margin="0" Width="1216"/>
@@ -63,9 +63,9 @@
         						<ColumnDefinition Width="Auto"/>
         						<ColumnDefinition/>
         					</Grid.ColumnDefinitions>
-                            <Button x:Name="btnShareVK" Click="btnShare_Click" Content="" Tag="{Binding ID}" Style="{StaticResource VKShareButtonStyle}" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="4" Margin="5,5,2,5" Width="30" Height="30"/>
+                            <Button x:Name="btnShareVK" Click="btnShare_Click" Content="" Tag="{Binding ID}" Style="{StaticResource VKShareButtonStyle}" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="4" Margin="5,5,2,5" Width="30" Height="30" TabIndex="1"/>
         					<TextBlock x:Name="tbDescription" TextWrapping="Wrap" Text="{Binding Description}" Style="{StaticResource SubtitleTextStyle}" Margin="5" Grid.Column="2"/>
-                            <Button x:Name="btnShareFB" Click="btnShareFB_Click" Content="" Tag="{Binding ID}" Style="{StaticResource FBShareButtonStyle}" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="4" Margin="2,5,5,5" Width="30" Height="30" Grid.Column="1"/>
+                            <Button x:Name="btnShareFB" Click="btnShareFB_Click" Content="" Tag="{Binding ID}" Style="{StaticResource FBShareButtonStyle}" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="4" Margin="2,5,5,5" Width="30" Height="30" Grid.Column="1" TabIndex="2"/>
         				</Grid>
         			</Grid>
         		</DataTemplate>        		

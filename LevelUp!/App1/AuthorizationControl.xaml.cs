@@ -27,6 +27,7 @@ namespace levelupspace
             this.PassBox.SMItemSource2 = passitemssource2.Items;
             this.PassBox.SMItemSource3 = passitemssource3.Items;
             this.PassBox.SMItemSource4 = passitemssource4.Items;
+            
         }
 
 
@@ -54,6 +55,13 @@ namespace levelupspace
         {
             Popup p = this.Parent as Popup;
             p.IsOpen = false; // close the Popup
+        }
+
+        private void UserControl_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs args = new RoutedEventArgs();
+            if (e.Key == Windows.System.VirtualKey.Escape) this.backButton_Click(this, args);
+            else if (e.Key == Windows.System.VirtualKey.Enter) this.btnSignIn_Click(this, args);
         }
     }
 }

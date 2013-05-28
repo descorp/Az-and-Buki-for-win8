@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
@@ -46,6 +47,12 @@ namespace levelupspace
             var itemId = ((AlphabetItem)e.ClickedItem).UniqueId;
             this.Frame.Navigate(typeof(AlphabetDetailsPage), itemId);
 
+        }
+
+        private void pageRoot_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs args = new RoutedEventArgs();
+            if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
         }
     }
 }

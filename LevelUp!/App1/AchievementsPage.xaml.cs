@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -21,6 +14,9 @@ namespace levelupspace
     /// </summary>
     public sealed partial class AchievementsPage : levelupspace.Common.LayoutAwarePage
     {
+
+        Popup MessageBoxPopup;
+
         public AchievementsPage()
         {
             this.InitializeComponent();
@@ -39,6 +35,35 @@ namespace levelupspace
         protected async override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             this.DefaultViewModel["UAwards"] = await AwardManager.UsersAwards(UserManager.UserId);
+
+            if ((string)navigationParameter == "WallPostSent")
+            {
+
+                if (MessageBoxPopup == null)
+                {
+                    // create the Popup in code
+                    MessageBoxPopup = new Popup();
+
+
+                    // we are creating this in code and need to handle multiple instances
+                    // so we are attaching to the Popup.Closed event to remove our reference
+                    MessageBoxPopup.Closed += (senderPopup, argsPopup) =>
+                    {
+                        MessageBoxPopup = null;
+                    };
+
+                    MessageBoxPopup.HorizontalOffset = (Window.Current.Bounds.Width - 600) / 2;
+                    MessageBoxPopup.VerticalOffset = 350;
+
+                    // set the content to our UserControl
+                    var res = new ResourceLoader();
+                    MessageBoxPopup.Child = new TextPopup(res.GetString("WallPostSentMessage"));
+
+                    // open the Popup
+                    MessageBoxPopup.IsOpen = true;
+                }
+                
+            }
         }
 
         /// <summary>
@@ -53,8 +78,27 @@ namespace levelupspace
 
         private void btnShare_Click(object sender, RoutedEventArgs e)
         {
-            //TODO Уведомления о отсутствии соединения
-            this.Frame.Navigate(typeof(VKAuthPage), (sender as Button).Tag);
+            
+            var parameters = new Dictionary<string, int>();
+            parameters["social"] = (int)Socials.VK;
+            parameters["award"] = (int)((sender as Button).Tag);
+            this.Frame.Navigate(typeof(SharePage), parameters);
+            
+        }
+
+        private void btnShareFB_Click(object sender, RoutedEventArgs e)
+        {
+            var parameters = new Dictionary<string, int>();
+            parameters["social"] = (int)Socials.Facebook;
+            parameters["award"] = (int)((sender as Button).Tag);
+            this.Frame.Navigate(typeof(SharePage), parameters);
+
+        }
+
+        private void pageRoot_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs args = new RoutedEventArgs();
+            if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
         }
     }
 }

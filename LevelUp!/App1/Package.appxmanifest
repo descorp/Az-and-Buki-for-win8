@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="8907161e-cfa7-48fb-8687-0d958a2edac6" Publisher="CN=C8AC85BE-7ECB-4F8B-8119-556ED0F09C4F" Version="1.0.0.0" />
+  <Identity Name="8907161e-cfa7-48fb-8687-0d958a2edac6" Publisher="CN=kbelo_000" Version="1.0.0.0" />
   <Properties>
     <DisplayName>LevelUP!</DisplayName>
     <PublisherDisplayName>ProtonArt</PublisherDisplayName>
@@ -11,7 +11,8 @@
     <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
   </Prerequisites>
   <Resources>
-    <Resource Language="x-generate" />
+    <Resource Language="ru-RU" />
+    <Resource Language="en-US" />
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="LevelUP.App">

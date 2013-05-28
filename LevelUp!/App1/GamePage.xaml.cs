@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -66,6 +58,7 @@ namespace levelupspace
 
                     // open the Popup
                     GameParamsPopup.IsOpen = true;
+                    
                 }
             }
         }
@@ -96,8 +89,12 @@ namespace levelupspace
             this.Frame.Navigate(typeof(ChooseGamePage));
         }
 
-        private void GoBack(object sender, RoutedEventArgs e)
+        private new void GoBack(object sender, RoutedEventArgs e)
         {
+            if (AnswerResultPopup != null)
+            {
+                AnswerResultPopup.IsOpen = false;
+            }
             GoBack();
         }
 
@@ -105,7 +102,7 @@ namespace levelupspace
 
         private void btnNextLevel_Click(object sender, RoutedEventArgs e)
         {
-
+            if (GameParamsPopup != null) return;
             if (this.game.NextLevel(this.gvAnswers.SelectedIndex))
             {
                 if (AnswerResultPopup == null)
@@ -193,6 +190,13 @@ namespace levelupspace
             {
                 AnswerResultPopup.IsOpen = false;
             }
+        }
+
+        private void pageRoot_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs args = new RoutedEventArgs();
+            if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
+            else if (e.Key == Windows.System.VirtualKey.Enter) this.btnNextLevel_Click(this, args);
         }
 
     }

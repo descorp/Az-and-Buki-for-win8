@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>levelupspace</RootNamespace>
     <AssemblyName>LevelUP</AssemblyName>
-    <DefaultLanguage>ru-RU</DefaultLanguage>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>App1_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>LevelUP!_TemporaryKey.pfx</PackageCertificateKeyFile>
     <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
+    <PackageCertificateThumbprint>78B27453A75839CB70636748D48B9A6B1A78C598</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -125,10 +126,13 @@
       <DependentUpon>AlphabetDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AwardManager.cs" />
+    <Compile Include="DataModel\FacebookProvider.cs" />
     <Compile Include="DataModel\GameClass.cs" />
     <Compile Include="DataModel\HttpProvider.cs" />
+    <Compile Include="DataModel\LanguageItem.cs" />
+    <Compile Include="DataModel\SocialProvider.cs" />
     <Compile Include="DataModel\UserManager.cs" />
-    <Compile Include="DataModel\VKclass.cs" />
+    <Compile Include="DataModel\VKProvider.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
@@ -170,8 +174,8 @@
     <Compile Include="GameAnswerControl.xaml.cs">
       <DependentUpon>GameAnswerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VKAuthPage.xaml.cs">
-      <DependentUpon>VKAuthPage.xaml</DependentUpon>
+    <Compile Include="SharePage.xaml.cs">
+      <DependentUpon>SharePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -179,7 +183,9 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="Common\ReadMe.txt" />
-    <None Include="App1_TemporaryKey.pfx" />
+    <None Include="LevelUP!_TemporaryKey.pfx" />
+    <PRIResource Include="Localization\ru-ru\Resources.lang-ru-RU.resw" />
+    <PRIResource Include="Localization\en-us\Resources.lang-en-US.resw" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icons\CH1.png" />
@@ -206,6 +212,8 @@
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Userlogo.png" />
+    <Content Include="Icons\fbbtn.png" />
+    <Content Include="Icons\fbbtn_hover.png" />
     <Content Include="Icons\vkbtn.png" />
     <Content Include="Icons\vkbtn_hover.png" />
     <Content Include="Sounds\tray again.wav" />
@@ -282,7 +290,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VKAuthPage.xaml">
+    <Page Include="SharePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

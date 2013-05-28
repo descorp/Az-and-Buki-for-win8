@@ -1,9 +1,6 @@
 ﻿using SQLite;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Security.Cryptography.Core;
@@ -12,9 +9,10 @@ using Windows.Security.Cryptography;
 
 namespace levelupspace
 {
+
     public class UserManager
     {
-
+        private static string DBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db");
         UserManager()
         { 
         }
@@ -23,7 +21,7 @@ namespace levelupspace
         {
 
             Newby.Hash = ComputeMD5(Newby.Hash);
-            var db = new SQLiteAsyncConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
+            var db = new SQLiteAsyncConnection(DBPath);
 
             var Result =await db.InsertAsync(Newby);
             if (Result > 0)
@@ -50,7 +48,7 @@ namespace levelupspace
 
         public async static Task<bool> Authorize(string Name,string Pass)
         {
-            var db = new SQLiteAsyncConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
+            var db = new SQLiteAsyncConnection(DBPath);
 
             var User = await db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Name);
             if (User.Count == 0)
@@ -85,7 +83,7 @@ namespace levelupspace
 
         public async static Task<bool> IsUniqueLoginAsync(String Login)
         {
-            var db = new SQLiteAsyncConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
+            var db = new SQLiteAsyncConnection(DBPath);
             
             var UQuery = await db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Login);
             

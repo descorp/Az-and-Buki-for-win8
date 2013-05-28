@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage;
-using Windows.UI.Xaml;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Шаблон элемента пользовательского элемента управления задокументирован по адресу http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -28,9 +17,11 @@ namespace levelupspace
 
         private void UserControl_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            var res = new ResourceLoader();
+
             if (status)
             {
-                tbMessage.Text = "Молодец!";
+                tbMessage.Text = res.GetString("RightAnswer");
                 ImgEmotion.Source = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("ms-appx:///Assets/HappyFace.png", UriKind.Absolute));
 
                 
@@ -38,7 +29,7 @@ namespace levelupspace
             }
             else
             {
-                tbMessage.Text = "Ой, кажется, ты ответил неправильно = (";
+                tbMessage.Text = res.GetString("WrongAnswer");
                 ImgEmotion.Source = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("ms-appx:///Assets/SadFace.png", UriKind.Absolute));               
 
             }

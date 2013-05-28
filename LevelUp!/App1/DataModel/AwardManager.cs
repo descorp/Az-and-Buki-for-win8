@@ -1,10 +1,8 @@
 ﻿using SQLite;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -28,26 +26,33 @@ namespace levelupspace
 
     public class AwardManager
     {
+        private static string DBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db");
         public async static Task<ObservableCollection<AwardItem>> UsersAwards(int userId)
         {
             ObservableCollection<AwardItem> UserAwards = new ObservableCollection<AwardItem>();
 
-            var db = new SQLiteAsyncConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
-
+            var db = new SQLiteAsyncConnection(DBPath);
+            
             var AwardQuery = await db.QueryAsync<UserAward>("SELECT * FROM UserAward WHERE UserID=?", userId);
-
+            var LPath = ApplicationData.Current.LocalFolder.Path;
             for (int i = 0; i < AwardQuery.Count; i++)
             {
-                //TODO Do proper localization
+                var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
                 var LocalQuery = await db.QueryAsync<AwardLocalization>(
                                      "SELECT * FROM AwardLocalization WHERE AwardID=?", AwardQuery[i].AwardID);
+                var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
+                if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
+                
                 var AwardDataQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE ID=?", AwardQuery[i].AwardID);
+
+
                 var AwardData = AwardDataQuery.FirstOrDefault();
-                var localization = LocalQuery.FirstOrDefault();
+
+                
 
                 UserAwards.Add(new AwardItem(String.Concat("Award " + AwardQuery[i].AwardID.ToString()),
                                              localization.AwardName,
-                                             Path.Combine(ApplicationData.Current.LocalFolder.Path, AwardData.LogoPath),
+                                             Path.Combine(LPath, AwardData.LogoPath),
                                              localization.AwardDescription,
                                              AwardQuery[i].AwardID));
 
@@ -57,22 +62,25 @@ namespace levelupspace
 
         public async static Task<AwardItem> GetAward(int awardId)
         {
-            
+            var LPath = ApplicationData.Current.LocalFolder.Path;
 
-            var db = new SQLiteAsyncConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
+            var db = new SQLiteAsyncConnection(DBPath);
 
             var AwardQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE ID=?", awardId);
             var Award = AwardQuery.FirstOrDefault();
 
-            //TODO Do proper localization
+            var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
+            
+            
             var LocalQuery = await db.QueryAsync<AwardLocalization>(
                                      "SELECT * FROM AwardLocalization WHERE AwardID=?", Award.ID);
-            
-            var localization = LocalQuery.FirstOrDefault();
+
+            var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
+            if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
 
             return new AwardItem(String.Concat("Award " + Award.ID.ToString()),
                                              localization.AwardName,
-                                             Path.Combine(ApplicationData.Current.LocalFolder.Path, Award.LogoPath),
+                                             Path.Combine(LPath, Award.LogoPath),
                                              localization.AwardDescription,
                                              Award.ID);
         }
@@ -81,35 +89,31 @@ namespace levelupspace
         {
             if (Rate>5 || Rate <2)
                 return null;
-
-            var db = new SQLiteAsyncConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
+            var LPath = ApplicationData.Current.LocalFolder.Path;
+            var db = new SQLiteAsyncConnection(DBPath);
 
             var AwardQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE Rate=?", Rate);
             var Award = AwardQuery.FirstOrDefault();
-            //TODO Do proper localization
+            
             var LocalQuery = await db.QueryAsync<AwardLocalization>(
                                      "SELECT * FROM AwardLocalization WHERE AwardID=?", Award.ID);
-            var localization = LocalQuery.FirstOrDefault();
+            var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
+            var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
+            if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
 
             return new AwardItem("Award " + Award.ID.ToString(),
                                 localization.AwardName,
-                                Path.Combine(ApplicationData.Current.LocalFolder.Path, Award.LogoPath),
+                                Path.Combine(LPath, Award.LogoPath),
                                 localization.AwardDescription,
                                 Award.ID);
         }
 
         public async static void AddUserAward(AwardItem award, int UserId)
         {
-            var db = new SQLiteAsyncConnection(Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db"));
+            var db = new SQLiteAsyncConnection(DBPath);
 
             await db.InsertAsync(new UserAward() { AwardID = award.ID, 
                                                     UserID = UserId });
-        }
-
-        private static string DateTimeSQLite(DateTime datetime)
-        {
-            string dateTimeFormat = "{0}-{1}-{2} {3}:{4}:{5}.{6}";
-            return string.Format(dateTimeFormat, datetime.Year, datetime.Month, datetime.Day, datetime.Hour, datetime.Minute, datetime.Second, datetime.Millisecond);
         }
     }
 }

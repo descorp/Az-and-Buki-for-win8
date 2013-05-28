@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Achievements.Content" xml:space="preserve">
+    <value>Достижения</value>
+  </data>
+  <data name="AchievementsDescription.Text" xml:space="preserve">
+    <value>Здесь ты можешь посмотреть все свои награды, полученные в играх</value>
+  </data>
+  <data name="AchievementsPageName.Text" xml:space="preserve">
+    <value>Доска достижений</value>
+  </data>
+  <data name="Alphabet.Text" xml:space="preserve">
+    <value>Алфавит</value>
+  </data>
+  <data name="AlphabetPageName.Text" xml:space="preserve">
+    <value>Алфавит</value>
+  </data>
+  <data name="AlphabetsPageTitle.Text" xml:space="preserve">
+    <value>Выбери тему</value>
+  </data>
+  <data name="AutorizationCaption.Text" xml:space="preserve">
+    <value>Введи свое имя и пароль</value>
+  </data>
+  <data name="btnAnswer.Content" xml:space="preserve">
+    <value>Ответить</value>
+  </data>
+  <data name="btnLogInContent" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="btnLogOutContent" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="btnNext.Content" xml:space="preserve">
+    <value>Дальше</value>
+  </data>
+  <data name="btnPlay.Content" xml:space="preserve">
+    <value>Играть</value>
+  </data>
+  <data name="ChooseAv.Text" xml:space="preserve">
+    <value>Загрузи аватар</value>
+  </data>
+  <data name="Difficulty.Text" xml:space="preserve">
+    <value>Сложность</value>
+  </data>
+  <data name="Game level.Text" xml:space="preserve">
+    <value>Уровень игры</value>
+  </data>
+  <data name="GamePageTitle.Text" xml:space="preserve">
+    <value>Игра "Слова"</value>
+  </data>
+  <data name="GamesPageTitle.Text" xml:space="preserve">
+    <value>Выбери игру</value>
+  </data>
+  <data name="Greeting" xml:space="preserve">
+    <value>Привет, {0}!</value>
+  </data>
+  <data name="Lang.Text" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="LearnABCs.Content" xml:space="preserve">
+    <value>Учим алфавит</value>
+  </data>
+  <data name="Letter.Text" xml:space="preserve">
+    <value>Буква</value>
+  </data>
+  <data name="LogInPlease" xml:space="preserve">
+    <value>Войди под своим именем, чтобы просматривать и получать достижения</value>
+  </data>
+  <data name="Name.Text" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="NotLogedIn" xml:space="preserve">
+    <value>Вход не выполнен</value>
+  </data>
+  <data name="Pass.Text" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="Play.Content" xml:space="preserve">
+    <value>Играем</value>
+  </data>
+  <data name="Results.Text" xml:space="preserve">
+    <value>Результаты</value>
+  </data>
+  <data name="SharePageTitle.Text" xml:space="preserve">
+    <value>Поделиться с друзьями</value>
+  </data>
+  <data name="SignOnPageTitle.Text" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="AwerageGameResult" xml:space="preserve">
+    <value>Так держать!</value>
+  </data>
+  <data name="BadGameResult" xml:space="preserve">
+    <value>Кажется, тебе нужно еще поучиться</value>
+  </data>
+  <data name="btnLogIn.Content" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="btnSignOn.Content" xml:space="preserve">
+    <value>Присоединиться</value>
+  </data>
+  <data name="ConnectingToServerMessage" xml:space="preserve">
+    <value>Подключение к серверу...</value>
+  </data>
+  <data name="ConnectionError" xml:space="preserve">
+    <value>Проблемы с соединением!</value>
+  </data>
+  <data name="EasyLevel" xml:space="preserve">
+    <value>Легкий</value>
+  </data>
+  <data name="ErrorWrongLogIn" xml:space="preserve">
+    <value>Неверный логин или пароль, попробуй еще раз!</value>
+  </data>
+  <data name="GameDescription" xml:space="preserve">
+    <value>Учим буквы и слова в игровой форме</value>
+  </data>
+  <data name="GameName" xml:space="preserve">
+    <value>Веселые слова</value>
+  </data>
+  <data name="GameQuestion" xml:space="preserve">
+    <value>Какое слово начинается с буквы {0} ?</value>
+  </data>
+  <data name="GoodGameResult" xml:space="preserve">
+    <value>Молодец! Отличный результат!</value>
+  </data>
+  <data name="HardLevel" xml:space="preserve">
+    <value>Гений</value>
+  </data>
+  <data name="LogInForPrizes" xml:space="preserve">
+    <value>Войди под своим именем, чтобы получать награды за блестящую игру</value>
+  </data>
+  <data name="LowAwerageGameResult" xml:space="preserve">
+    <value>Неплохо, но я верю, ты можешь лучше!</value>
+  </data>
+  <data name="MeduimLevel" xml:space="preserve">
+    <value>Средний</value>
+  </data>
+  <data name="NoInternetConnectionError" xml:space="preserve">
+    <value>Нет интернет-соединения!</value>
+  </data>
+  <data name="PerfectGameResult" xml:space="preserve">
+    <value>Умница, похоже, ты гений!</value>
+  </data>
+  <data name="PostMessage" xml:space="preserve">
+    <value>Мой ребенок получил {0} за успехи в изучении английского алфавита</value>
+  </data>
+  <data name="RightAnswer" xml:space="preserve">
+    <value>Молодец!</value>
+  </data>
+  <data name="SendingMessage" xml:space="preserve">
+    <value>Отправка сообщения...</value>
+  </data>
+  <data name="SignOnNotUniqueLoginError" xml:space="preserve">
+    <value>Это имя занято другим пользователем, придумай другое</value>
+  </data>
+  <data name="SignOnTooShortNameError" xml:space="preserve">
+    <value>Ты ввел слишком короткое имя, придумай другое</value>
+  </data>
+  <data name="SignOnUnexpectedError" xml:space="preserve">
+    <value>Что-то не получилось, попробуй в другой раз</value>
+  </data>
+  <data name="WallPostSentMessage" xml:space="preserve">
+    <value>Сообщение отправлено на твою стену!</value>
+  </data>
+  <data name="WrongAnswer" xml:space="preserve">
+    <value>Ой, кажется, ты ответил неправильно = (</value>
+  </data>
+  <data name="YouWonPrizeMessage" xml:space="preserve">
+    <value>За твои старания ты получаешь награду! Посмотреть все свои награды ты можешь в разделе Достижения</value>
+  </data>
+  <data name="btnNextContent" xml:space="preserve">
+    <value>Дальше</value>
+  </data>
+</root>

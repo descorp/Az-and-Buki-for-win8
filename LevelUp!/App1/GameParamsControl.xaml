@@ -8,8 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="600">
-	<UserControl.Resources>
+    d:DesignWidth="600" KeyDown="UserControl_KeyDown">
+    <UserControl.Resources>
         <CollectionViewSource
             x:Name="DifficultyItemsSource"
             Source="{Binding Difficulties}"
@@ -18,34 +18,35 @@
             x:Name="AlphabetItemsSource"
             Source="{Binding Alphabets}"
             />
-        
-		<DataTemplate x:Key="DifficultyItemTemplate">
-			<Grid Width="300" Height="50">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="150"/>
-					<ColumnDefinition Width="150"/>
-				</Grid.ColumnDefinitions>
-				<TextBlock x:Name="tbLevelText" TextWrapping="Wrap" Text="{Binding Title}" VerticalAlignment="Center" Style="{StaticResource SubheaderTextStyle}" Margin="0,10" Grid.Column="1"/>
-				<Image x:Name="imgLevelImg" Source="{Binding Image}" Height="48" Width="150" Margin="0"/>
-			</Grid>
-		</DataTemplate>
-		<DataTemplate x:Key="AlphabetItemTemplate">
-			<Grid Height="50">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="50"/>
-					<ColumnDefinition Width="250"/>
-				</Grid.ColumnDefinitions>
-				<TextBlock x:Name="tbAlphabelName" TextWrapping="Wrap" Text="{Binding Title}" VerticalAlignment="Center" Style="{StaticResource SubheaderTextStyle}" Grid.Column="1"/>
-				<Image x:Name="imgAlphabetLogo" Source="{Binding Image}" Margin="0" Height="48" Width="48"/>
-			</Grid>
-		</DataTemplate>
-	</UserControl.Resources>
+
+        <DataTemplate x:Key="DifficultyItemTemplate">
+            <Grid Width="300" Height="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="tbLevelText" TextWrapping="Wrap" Text="{Binding Title}" VerticalAlignment="Center" Style="{StaticResource SubheaderTextStyle}" Margin="0,10" Grid.Column="1"/>
+                <Image x:Name="imgLevelImg" Source="{Binding Image}" Height="48" Width="150" Margin="0"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="AlphabetItemTemplate">
+            <Grid Height="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="250"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="tbAlphabelName" TextWrapping="Wrap" Text="{Binding Title}" VerticalAlignment="Center" Style="{StaticResource SubheaderTextStyle}" Grid.Column="1"/>
+                <Image x:Name="imgAlphabetLogo" Source="{Binding Image}" Margin="0" Height="48" Width="48"/>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
 
     <Border 
         BorderBrush="{StaticResource ABCBackgroundThemeBrush}" 
         BorderThickness="3">
         <Grid Style="{StaticResource LayoutRootStyle}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="0"/>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -54,17 +55,17 @@
                 <ColumnDefinition Width="180*"/>
                 <ColumnDefinition Width="420*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="backButton_Click" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
-            <Button x:Name="btnPlay" Content="Играть" Background="{StaticResource ABCBackgroundThemeBrush}" Margin="0,0,20,20" Grid.Row="2" HorizontalAlignment="Right" Grid.Column="1" Click="btnPlay_Click" />
+            <Button x:Name="backButton" Click="backButton_Click" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="65,16" TabIndex="4" Grid.RowSpan="2"/>
+            <Button x:Name="btnPlay" x:Uid="btnPlay" Content="Играть" Background="{StaticResource ABCBackgroundThemeBrush}" Margin="0,0,20,20" Grid.Row="3" HorizontalAlignment="Right" Grid.Column="1" Click="btnPlay_Click" TabIndex="3" />
 
-            <TextBlock Text="Уровень игры" Style="{StaticResource PageSubheaderTextStyle}" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
-            <StackPanel Grid.Row="1" Margin="30,0,0,0" >
-                <TextBlock TextWrapping="Wrap" Text="Сложность" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,10" TextAlignment="{StaticResource FormTextAlignment}"/>
-                <TextBlock TextWrapping="Wrap" Text="Алфавит" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,10" TextAlignment="{StaticResource FormTextAlignment}"/>
+            <TextBlock x:Uid="Game level" Text="Уровень игры" Style="{StaticResource PageSubheaderTextStyle}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,25" Grid.RowSpan="2"/>
+            <StackPanel Grid.Row="2" Margin="30,0,0,0" >
+                <TextBlock x:Uid="Difficulty" TextWrapping="Wrap" Text="Сложность" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,10" TextAlignment="{StaticResource FormTextAlignment}"/>
+                <TextBlock x:Uid="Alphabet" TextWrapping="Wrap" Text="Алфавит" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,10" TextAlignment="{StaticResource FormTextAlignment}"/>
             </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="1" Margin="30,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            	<ComboBox x:Name="cbDifficulty" ItemTemplate="{StaticResource DifficultyItemTemplate}" Margin="0,5"/>
-            	<ComboBox x:Name="cbAlphabet" ItemTemplate="{StaticResource AlphabetItemTemplate}" Margin="0,5"/>
+            <StackPanel Grid.Row="2" Grid.Column="1" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <ComboBox x:Name="cbDifficulty" ItemTemplate="{StaticResource DifficultyItemTemplate}" Margin="0,5" TabIndex="1"/>
+                <ComboBox x:Name="cbAlphabet" ItemTemplate="{StaticResource AlphabetItemTemplate}" Margin="0,5" TabIndex="2"/>
             </StackPanel>
         </Grid>
     </Border>

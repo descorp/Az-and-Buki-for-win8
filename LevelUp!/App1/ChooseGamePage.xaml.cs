@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -40,8 +31,9 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+            var res = new ResourceLoader();
             ObservableCollection<GameItem> Games = new ObservableCollection<GameItem>();
-            Games.Add( new GameItem("Game 1", "С какой буквы начинается слово?", "ms-appx:///Assets/Gamelogo1.png", "Учим буквы и слова в игровой форме"));
+            Games.Add(new GameItem("Game 1", res.GetString("GameName"), "ms-appx:///Assets/Gamelogo1.png", res.GetString("GameDescription")));
 
             this.DefaultViewModel["Items"] = Games;
         }
@@ -61,9 +53,15 @@ namespace levelupspace
             this.Frame.Navigate(typeof(GamePage));
         }
 
-        private void GoBack(object sender, RoutedEventArgs e)
+        private new void GoBack(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainMenu));
+        }
+
+        private void pageRoot_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs args = new RoutedEventArgs();
+            if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
         }
     }
 }

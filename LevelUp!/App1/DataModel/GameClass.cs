@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
+using Windows.ApplicationModel.Resources;
 
 namespace levelupspace
 {
@@ -126,9 +122,16 @@ namespace levelupspace
         {
             this.Answer = rand.Next(3);
             this.words = new ObservableCollection<WordItem>();
-            var letterAnswerNumber = rand.Next(alphabet.LetterItems.Count - 1);
-            this.letter = alphabet.LetterItems[letterAnswerNumber];
-            this.Question = "Какое слово начинается с буквы " + this.letter.Description + "?";
+            var letterAnswerNumber = 0;
+            do
+            {
+                letterAnswerNumber = rand.Next(alphabet.LetterItems.Count - 1);
+
+                this.letter = alphabet.LetterItems[letterAnswerNumber];
+            } while (letter.WordItems.Count == 0);
+
+            var res = new ResourceLoader();
+            this.Question = String.Format(res.GetString("GameQuestion"),this.letter.Description);
             WordItem word;
 
             for (int i = 0; i < 4; i++)
@@ -145,7 +148,7 @@ namespace levelupspace
                         int letterIndex;
                         do
                             letterIndex = rand.Next(alphabet.LetterItems.Count - 1);
-                        while (letterIndex == letterAnswerNumber);
+                        while (letterIndex == letterAnswerNumber || alphabet.LetterItems[letterIndex].WordItems.Count==0);
 
 
                         var Curletter = alphabet.LetterItems[letterIndex];

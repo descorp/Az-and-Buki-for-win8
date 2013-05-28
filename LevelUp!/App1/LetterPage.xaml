@@ -8,7 +8,7 @@
     xmlns:common="using:levelupspace.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" KeyDown="pageRoot_KeyDown">
 
     <common:LayoutAwarePage.Resources>
         <CollectionViewSource
@@ -28,7 +28,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="btnPlayWord" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource PlayAppBarButtonStyle}" Click="btnPlayWord_Click" Tag="{Binding UniqueId}"/>
+                        <Button x:Name="btnPlayWord" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource PlayAppBarButtonStyle}" Click="btnPlayWord_Click" Tag="{Binding UniqueId}" TabIndex="1"/>
                         <Image x:Name="imgWordPicture" HorizontalAlignment="Center" Height="90" VerticalAlignment="Center" Source="{Binding Image}" Grid.Column="1" MaxWidth="400" Width="400"/>
                     </Grid>
                     <Image x:Name="imgWordValue" Height="400" Source="{Binding imgPicture}" Stretch="None" Width="400"/>
@@ -46,14 +46,14 @@
                     <Button x:Name="btnPlayLetter" HorizontalAlignment="Center" VerticalAlignment="Bottom"
                             Style="{StaticResource PlayAppBarButtonStyle}" 
                             
-                            Click="btnPlayLetter_Click"/>
+                            Click="btnPlayLetter_Click" TabIndex="1"/>
             	</StackPanel>
             	<GridView x:Name="gvWords" Margin="1,1,0,0" Grid.Column="1"
             		ItemTemplate="{StaticResource WordItemTemplate}"
             		ItemsSource="{Binding Source={StaticResource WordViewSource}}"
             		IsItemClickEnabled="True"
                                     
-            		SelectionMode="None" Padding="0" Loaded="gvWords_Loaded"/>
+            		SelectionMode="None" Padding="0" Loaded="gvWords_Loaded" TabIndex="2"/>
             </Grid>
         </DataTemplate>
 
@@ -78,12 +78,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button AutomationProperties.Name="" x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" x:Uid="Letter" Text="Буква" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
 
         <FlipView x:Name="fwLetters" Grid.Row="1"
                   ItemTemplate="{StaticResource LetterItemTemplate}"
-                  ItemsSource="{Binding Source={StaticResource LettersViewSource}}" Margin="120,10,30,30" SelectionChanged="fwLetters_SelectionChanged"/>
+                  ItemsSource="{Binding Source={StaticResource LettersViewSource}}" Margin="120,10,30,30" SelectionChanged="fwLetters_SelectionChanged" TabIndex="1"/>
 
 
         <VisualStateManager.VisualStateGroups>

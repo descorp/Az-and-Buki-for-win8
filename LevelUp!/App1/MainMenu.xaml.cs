@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.ApplicationModel.Resources;
+using Windows.Globalization;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -31,8 +25,14 @@ namespace levelupspace
 
         public MainMenu()
         {
+            
+
+            
             this.InitializeComponent();
             Current = this;
+
+            cbLangs.ItemsSource = LanguageProvider.AllLanguages;
+            cbLangs.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -57,7 +57,17 @@ namespace levelupspace
                 {
                     UserLogIn();
                 }
+                else
+                {
+                    var res = new ResourceLoader();
+
+                    btnLogOn.Visibility = Visibility.Visible;
+                    btnLogIn.Content = res.GetString("btnLogInContent"); ;
+                    tbUserName.Text = res.GetString("NotLogedIn");
+                    imgProfile.Source = new BitmapImage(new Uri("ms-appx:///Assets/Userlogo.png"));
+                }
             }
+            
         }
 
         /// <summary>
@@ -130,12 +140,13 @@ namespace levelupspace
         }
 
         public void UserLogIn()
-        {            
+        {
+            var res = new ResourceLoader();
 
-            btnLogIn.Content = "Выход";
+            btnLogIn.Content = res.GetString("btnLogOutContent");
             btnLogOn.Visibility = Visibility.Collapsed;
             var Name = (String)ApplicationData.Current.LocalSettings.Values["UserName"];
-            tbUserName.Text = "Привет, " + Name + "!";
+            tbUserName.Text = String.Format(res.GetString("Greeting"),Name);
             var LogoPath = (String)ApplicationData.Current.LocalSettings.Values["UserLogo"];
             if (LogoPath != "ms-appx:///Assets/Userlogo.png")
             {
@@ -147,9 +158,12 @@ namespace levelupspace
 
         public void UserLogOut()
         {
+            var res = new ResourceLoader();
+
             btnLogOn.Visibility = Visibility.Visible;
-            btnLogIn.Content = "Вход";
-            tbUserName.Text = "Вход не выполнен";
+            btnLogIn.Content = res.GetString("btnLogInContent");;
+            tbUserName.Text = res.GetString("NotLogedIn");
+            imgProfile.Source = new BitmapImage(new Uri("ms-appx:///Assets/Userlogo.png"));  
             UserManager.LogOut();
             
         }
@@ -166,7 +180,7 @@ namespace levelupspace
             }
 
             if (UserManager.IsAutorized)
-                this.Frame.Navigate(typeof(AchievementsPage), UserManager.UserId);
+                this.Frame.Navigate(typeof(AchievementsPage));
             else
             {
                 if ( MessageBoxPopup == null)
@@ -186,12 +200,20 @@ namespace levelupspace
                     MessageBoxPopup.VerticalOffset = 350;
 
                     // set the content to our UserControl
-                    MessageBoxPopup.Child = new TextPopup("Войди под своим именем, чтобы просматривать и получать достижения");
+                    var res = new ResourceLoader();
+                    MessageBoxPopup.Child = new TextPopup(res.GetString("LogInPlease"));
 
                     // open the Popup
                     MessageBoxPopup.IsOpen = true;
                 }
             }
+        }
+
+        private void cbLangs_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
+        {
+            LanguageProvider.CurrentLanguage = e.AddedItems[0] as LanguageItem;
+            var _Frame = Window.Current.Content as Frame;
+            _Frame.Navigate(typeof(MainMenu));
         }
     }
 }

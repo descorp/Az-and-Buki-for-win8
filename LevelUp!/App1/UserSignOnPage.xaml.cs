@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -72,6 +65,8 @@ namespace levelupspace
 
         private async void btnOk_Click(object sender, RoutedEventArgs e)
         {
+            var res = new ResourceLoader();
+
             if (tbName.Text.Length > 3)
             {
                 var uniquelogin = await UserManager.IsUniqueLoginAsync(tbName.Text);
@@ -97,18 +92,19 @@ namespace levelupspace
                         return;
                     }
 
-                    Logger.ShowMessage("Что-то не получилось, попробуй в другой раз");
+                    
+                    Logger.ShowMessage(res.GetString("SignOnUnexpectedError"));
 
                     return;
                 }
                 else
                 {
-                    Logger.ShowMessage("Это имя занято другим пользователем, придумай другое");
+                    Logger.ShowMessage(res.GetString("SignOnNotUniqueLoginError"));
                     return;
                 }
             }
             else
-                Logger.ShowMessage("Ты ввел слишком короткое имя, придумай другое");
+                Logger.ShowMessage(res.GetString("SignOnTooShortNameError"));
         }
 
         
@@ -134,6 +130,13 @@ namespace levelupspace
                 
             }
 
+        }
+
+        private void pageRoot_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs args = new RoutedEventArgs();
+            if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
+            else if (e.Key == Windows.System.VirtualKey.Enter) this.btnOk_Click(this, args);
         }
     }
 }

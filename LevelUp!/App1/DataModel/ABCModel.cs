@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SQLite;
 
 namespace levelupspace
@@ -23,6 +20,12 @@ namespace levelupspace
 
         
         public string Logo
+        {
+            get;
+            set;
+        }
+
+        public bool IsNative
         {
             get;
             set;

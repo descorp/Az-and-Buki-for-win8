@@ -8,13 +8,9 @@
     xmlns:common="using:levelupspace.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" KeyDown="pageRoot_KeyDown">
 
     <common:LayoutAwarePage.Resources>
-
-        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
-        <x:String x:Key="PageName">Игры</x:String>
-
         <CollectionViewSource
             x:Name="GameItemsSource"
             Source="{Binding Items}"/>
@@ -52,7 +48,7 @@
                   ItemsSource="{Binding Source={StaticResource GameItemsSource}}" 
                   IsItemClickEnabled="True"
                   ItemClick="GridView_ItemClick"
-                  Margin="120,10,30,30"/>
+                  Margin="120,10,30,30" TabIndex="1"/>
 
         <!-- Back button and page title -->
         <Grid>
@@ -60,8 +56,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource PageName}" Style="{StaticResource PageHeaderTextStyle}"/>
+            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}" TabIndex="2"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" x:Uid="GamesPageTitle" Text="Игры" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>

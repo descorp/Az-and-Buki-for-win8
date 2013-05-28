@@ -1,0 +1,20 @@
+<pack>
+	<awards>
+		<image Name="A1.jpg"/>
+		<image Name="A1.png"/>
+		...
+	</awards>
+	<A1>
+		<image Name="logo.png"/>
+		<letters>
+			<image Name="A1L1.png" />
+			<sound Name="A1L1A.wav" />
+			...
+		</letters>
+		<words>
+			<image Name="A1L1W1.png" />
+			<sound Name="A1L1W1.wav" />
+			...
+		</words>
+	</A1>
+</pack>

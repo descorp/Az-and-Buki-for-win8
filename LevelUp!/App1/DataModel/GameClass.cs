@@ -122,8 +122,14 @@ namespace levelupspace
         {
             this.Answer = rand.Next(3);
             this.words = new ObservableCollection<WordItem>();
-            var letterAnswerNumber = rand.Next(alphabet.LetterItems.Count - 1);
-            this.letter = alphabet.LetterItems[letterAnswerNumber];
+            var letterAnswerNumber = 0;
+            do
+            {
+                letterAnswerNumber = rand.Next(alphabet.LetterItems.Count - 1);
+
+                this.letter = alphabet.LetterItems[letterAnswerNumber];
+            } while (letter.WordItems.Count == 0);
+
             var res = new ResourceLoader();
             this.Question = String.Format(res.GetString("GameQuestion"),this.letter.Description);
             WordItem word;
@@ -142,7 +148,7 @@ namespace levelupspace
                         int letterIndex;
                         do
                             letterIndex = rand.Next(alphabet.LetterItems.Count - 1);
-                        while (letterIndex == letterAnswerNumber);
+                        while (letterIndex == letterAnswerNumber || alphabet.LetterItems[letterIndex].WordItems.Count==0);
 
 
                         var Curletter = alphabet.LetterItems[letterIndex];

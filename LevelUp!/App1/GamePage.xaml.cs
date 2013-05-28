@@ -90,6 +90,10 @@ namespace levelupspace
 
         private new void GoBack(object sender, RoutedEventArgs e)
         {
+            if (AnswerResultPopup != null)
+            {
+                AnswerResultPopup.IsOpen = false;
+            }
             GoBack();
         }
 

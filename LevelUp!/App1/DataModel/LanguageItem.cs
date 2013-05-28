@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
 using Windows.Globalization;
+using Windows.System.UserProfile;
 
 namespace levelupspace
 {
@@ -61,6 +62,8 @@ namespace levelupspace
             get
             {
                 var LItem = new LanguageItem();
+                if (ApplicationLanguages.PrimaryLanguageOverride.Length == 0)
+                    ApplicationLanguages.PrimaryLanguageOverride = "en-US";
                 LItem.LanguageCode = ApplicationLanguages.PrimaryLanguageOverride;
                 CultureInfo cInfo = new CultureInfo(ApplicationLanguages.PrimaryLanguageOverride);
                 LItem.LanguageName = cInfo.NativeName;

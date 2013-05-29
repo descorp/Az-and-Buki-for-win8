@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"    
-    HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" Height="250" KeyDown="UserControl_KeyDown">
+    HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" Height="250" KeyDown="UserControl_KeyDown" Loaded="UserControl_Loaded">
     <Border       
         BorderBrush="{StaticResource ABCBackgroundThemeBrush}" 
         BorderThickness="3" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">

@@ -63,5 +63,10 @@ namespace levelupspace
             if (e.Key == Windows.System.VirtualKey.Escape) this.backButton_Click(this, args);
             else if (e.Key == Windows.System.VirtualKey.Enter) this.btnSignIn_Click(this, args);
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            tbName.Focus(Windows.UI.Xaml.FocusState.Pointer);
+        }
     }
 }

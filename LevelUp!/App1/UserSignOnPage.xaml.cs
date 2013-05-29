@@ -120,9 +120,8 @@ namespace levelupspace
             
             if (file != null)
             {
-                var LocalFolder = ApplicationData.Current.LocalFolder;
-                var UserFolder = await LocalFolder.CreateFolderAsync("Users", CreationCollisionOption.OpenIfExists);
-                var logofile = await file.CopyAsync(UserFolder, "UL.png");
+                var folder = StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.LocalFolder.Path,"Users")).GetResults();
+                var logofile = await file.CopyAsync(folder, "UL.png");
 
                 logofilePath = logofile.Path;
 

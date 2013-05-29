@@ -59,7 +59,6 @@ namespace levelupspace
                     // open the Popup
                     GameParamsPopup.IsOpen = true;
                     
-                    
                 }
             }
         }

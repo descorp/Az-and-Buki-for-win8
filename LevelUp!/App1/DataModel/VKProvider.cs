@@ -1,20 +1,16 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using Newtonsoft.Json;
-using System.Text;
-using Windows.Networking.BackgroundTransfer;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.ApplicationModel.Resources;
 
 namespace levelupspace
 {
-    public class VKProvider
+    public class VKProvider : SocialProvider
     {
         private static int appId = 3664063;
         private static string Scope = "wall,messages,photos";
-        private static string PKey = "8YVM4CrD0CHTaqx57gC5";
-        private static int Accesskey = 8192;
         private string accessToken = "";
         private string userId = "";
         private string message;
@@ -30,12 +26,14 @@ namespace levelupspace
             "&display=touch" +
             "&response_type=token";
 
-        public static Uri AuthorizationUri
+        public override event EventHandler SentEvent;
+
+        public VKProvider()
         {
-            get { return new Uri(string.Format(OAuthUrlLink, appId, Scope), UriKind.Absolute); }
+           _uri = new Uri(string.Format(OAuthUrlLink, appId, Scope), UriKind.Absolute);
         }
 
-        public bool URLParser(Uri URi)
+        public override bool URLParser(Uri URi)
         {
             
             if (!URi.AbsoluteUri.StartsWith(RedirectLink)) return false;
@@ -60,12 +58,14 @@ namespace levelupspace
             }
             catch (Exception e)
             {
-                Logger.ShowMessage("Ошибка соединения!");  
+                var res = new ResourceLoader();
+
+                Logger.ShowMessage(res.GetString("ConnectionError"));  
             }
             return true;
         }
 
-        public async void WallPost(String Message, String Picture)
+        public override async void WallPost(String Message, String Picture)
         {
             message = Message;
             var UploadResponse = await GetWallUploadServer();
@@ -113,7 +113,9 @@ namespace levelupspace
 
             string WallPostUrl = string.Format(wallPostLink, accessToken, SaveWallResponse.response.id, message);
             var WallPostResponse = await provider.POSTrequest(new Uri(WallPostUrl));
-            
+
+            EventArgs eventArgs = new EventArgs();
+            if (SentEvent != null) SentEvent(this, eventArgs);
         }
         
     }

@@ -1,2 +1,0 @@
-login: 	levelup_admin
-pass: 	KIicfn6_}-JQ

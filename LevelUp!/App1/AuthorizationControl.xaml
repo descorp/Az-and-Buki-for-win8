@@ -8,7 +8,7 @@
     x:Class="levelupspace.AuthorizationControl"
     mc:Ignorable="d"
     d:DesignHeight="400"
-    d:DesignWidth="600" KeyDown="UserControl_KeyDown" Loaded="UserControl_Loaded">
+    d:DesignWidth="600" KeyDown="UserControl_KeyDown">
 
     <Border 
         BorderBrush="{StaticResource ABCBackgroundThemeBrush}" 

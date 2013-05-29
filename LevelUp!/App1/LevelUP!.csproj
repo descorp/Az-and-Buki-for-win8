@@ -106,8 +106,8 @@
     <SDKReference Include="Microsoft.VCLibs, version=11.0">
       <Name>Microsoft Visual C++ Runtime Package</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.WinRT, Version=3.7.16.2">
-      <Name>SQLite for Windows Runtime</Name>
+    <SDKReference Include="SQLite.WinRT, Version=3.7.17">
+      <Name>SQLite for Windows Runtime %28SQLite.WinRT, Version=3.7.17%29</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
@@ -297,16 +297,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Facebook">
-      <HintPath>..\packages\Facebook.6.3.2\lib\win8\Facebook.dll</HintPath>
-    </Reference>
-    <Reference Include="Facebook.Client">
-      <HintPath>..\packages\Facebook.Client.0.5.0-alpha\lib\win8\Facebook.Client.dll</HintPath>
+      <HintPath>..\packages\Facebook.6.4.0\lib\win8\Facebook.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.5\lib\netcore45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX">
-      <HintPath>..\packages\SharpDX.2.4.2\lib\win8\SharpDX.dll</HintPath>
+      <HintPath>..\..\..\RestSharp\packages\Newtonsoft.Json.4.5.5\lib\sl4-windowsphone71\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />

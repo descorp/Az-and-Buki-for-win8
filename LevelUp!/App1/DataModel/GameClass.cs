@@ -60,10 +60,10 @@ namespace levelupspace
 
         private AlphabetItem abcToTest;
 
-        public GameClass(Dificulty difficultyLevel, string AlphabetID)
+        public GameClass(Dificulty difficultyLevel, string AlphabetID, String DBPath)
         {
             this.DifficultyLevel = difficultyLevel;
-            this.abcToTest = ContentManager.GetAlphabet(AlphabetID);
+            this.abcToTest = ContentManager.GetAlphabet(AlphabetID, DBPath);
 
             Random r = new Random();
 

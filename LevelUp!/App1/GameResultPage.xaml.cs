@@ -96,10 +96,10 @@ namespace levelupspace
             }
             else
             {
-                AwardItem award = await AwardManager.GetAwardForRate(StarRate);
+                AwardItem award = await AwardManager.GetAwardForRate(StarRate, DBconnectionPath.Local);
                 if (award != null)
                 {
-                    AwardManager.AddUserAward(award, UserManager.UserId);
+                    AwardManager.AddUserAward(award, UserManager.UserId, DBconnectionPath.Local);
                     this.DefaultViewModel["Award"] = award;
                     tbAboutAchievements.Text = res.GetString("YouWonPrizeMessage");
                 }

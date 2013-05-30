@@ -1,7 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -10,12 +19,11 @@ namespace levelupspace
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
-    public sealed partial class AlphabetDetailsPage : levelupspace.Common.LayoutAwarePage
+    public sealed partial class DownloadsPage : levelupspace.Common.LayoutAwarePage
     {
-        public AlphabetDetailsPage()
+        public DownloadsPage()
         {
             this.InitializeComponent();
-            
         }
 
         /// <summary>
@@ -29,12 +37,6 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            var abc = ContentManager.GetAlphabet((String)navigationParameter, DBconnectionPath.Local);
-            if (abc != null)
-            {
-                this.DefaultViewModel["Alphabet"] = abc;
-                this.DefaultViewModel["Items"] = abc.LetterItems;
-            }
         }
 
         /// <summary>
@@ -45,19 +47,6 @@ namespace levelupspace
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
-
-        }
-
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var itemId = ((LetterItem)e.ClickedItem).UniqueId;
-            this.Frame.Navigate(typeof(LetterPage), itemId);
-        }
-
-        private void pageRoot_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
-        {
-            RoutedEventArgs args = new RoutedEventArgs();
-            if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
         }
     }
 }

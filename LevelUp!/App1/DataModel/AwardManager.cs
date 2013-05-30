@@ -26,8 +26,7 @@ namespace levelupspace
 
     public class AwardManager
     {
-        private static string DBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db");
-        public async static Task<ObservableCollection<AwardItem>> UsersAwards(int userId)
+        public async static Task<ObservableCollection<AwardItem>> UsersAwards(int userId, String DBPath)
         {
             ObservableCollection<AwardItem> UserAwards = new ObservableCollection<AwardItem>();
 
@@ -60,7 +59,7 @@ namespace levelupspace
             return UserAwards;
         }
 
-        public async static Task<AwardItem> GetAward(int awardId)
+        public async static Task<AwardItem> GetAward(int awardId, String DBPath)
         {
             var LPath = ApplicationData.Current.LocalFolder.Path;
 
@@ -85,7 +84,7 @@ namespace levelupspace
                                              Award.ID);
         }
 
-        public async static Task<AwardItem> GetAwardForRate(int Rate)
+        public async static Task<AwardItem> GetAwardForRate(int Rate, String DBPath)
         {
             if (Rate>5 || Rate <2)
                 return null;
@@ -108,7 +107,7 @@ namespace levelupspace
                                 Award.ID);
         }
 
-        public async static void AddUserAward(AwardItem award, int UserId)
+        public async static void AddUserAward(AwardItem award, int UserId, String DBPath)
         {
             var db = new SQLiteAsyncConnection(DBPath);
 

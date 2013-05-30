@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:levelupspace"
-    xmlns:localData="using:levelupspace.Data"
     RequestedTheme="Light">
 
     <Application.Resources>
@@ -21,9 +20,6 @@
             <!-- Ресурсы, зависящие от приложения -->
 
             <x:String x:Key="AppName">LevelUP!</x:String>
-            <ControlTemplate x:Key="ABCButtonTemplate" TargetType="Button">
-            	<Grid Background="{StaticResource ABCBackgroundThemeBrush}"/>
-            </ControlTemplate>
             
             <Style x:Key="ButtonABCStyle" TargetType="Button">
             	<Setter Property="Background" Value="{StaticResource ButtonBackgroundThemeBrush}"/>
@@ -104,7 +100,19 @@
             	</Setter>
             </Style>
             <TextAlignment x:Key="FormTextAlignment">Right</TextAlignment>
-            
+            <ControlTemplate x:Key="ABCButtonTemplate" TargetType="Button">
+                <Grid Background="{StaticResource ABCBackgroundThemeBrush}"/>
+            </ControlTemplate>
+            <DataTemplate x:Key="gvAlphabetsItemTemplate">
+                <Grid Width="200" Height="200">
+                    <Border BorderBrush="{StaticResource ABCBackgroundThemeBrush}" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Image Source="{Binding Image}"  HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200" Margin="0,0,0,-2"/>
+                    </Border>
+                    <StackPanel Margin="0,0,0,-1" Orientation="Vertical" Background="{StaticResource ABCBackgroundThemeBrush}" Opacity="0.6" VerticalAlignment="Bottom">
+                        <TextBlock Text="{Binding Title}"  TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="Black" Style="{StaticResource TitleTextStyle}" HorizontalAlignment="Center" Margin="0,20" Padding="0" UseLayoutRounding="False"/>
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

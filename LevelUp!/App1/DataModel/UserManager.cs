@@ -6,6 +6,9 @@ using Windows.Storage;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography;
+using Microsoft.WindowsAzure.MobileServices;
+using Newtonsoft.Json;
+using levelupspace.DataModel;
 
 namespace levelupspace
 {
@@ -14,7 +17,7 @@ namespace levelupspace
     {
         private static string DBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db");
         UserManager()
-        { 
+        {
         }
 
         public async static Task<int> AddUserAsync(User Newby)
@@ -23,7 +26,7 @@ namespace levelupspace
             Newby.Hash = ComputeMD5(Newby.Hash);
             var db = new SQLiteAsyncConnection(DBPath);
 
-            var Result =await db.InsertAsync(Newby);
+            var Result = await db.InsertAsync(Newby);
             if (Result > 0)
             {
                 var u = db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Newby.Name);
@@ -35,33 +38,33 @@ namespace levelupspace
 
                     await db.UpdateAsync(Newby);
                 }
-                
+
 
                 ApplicationData.Current.LocalSettings.Values["UserName"] = Newby.Name;
                 ApplicationData.Current.LocalSettings.Values["UserLogo"] = Newby.Avatar;
                 ApplicationData.Current.LocalSettings.Values["UserID"] = Newby.ID;
-                
+
                 return Newby.ID;
             }
             else return -1;
         }
 
-        public async static Task<bool> Authorize(string Name,string Pass)
+        public async static Task<bool> Authorize(string Name, string Pass)
         {
             var db = new SQLiteAsyncConnection(DBPath);
 
             var User = await db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Name);
             if (User.Count == 0)
                 return false;
-            if (String.Compare( ComputeMD5(String.Concat(Name,Pass)), User[0].Hash)!=0)
+            if (String.Compare(ComputeMD5(String.Concat(Name, Pass)), User[0].Hash) != 0)
                 return false;
-            
-            ApplicationData.Current.LocalSettings.Values["UserName"]=Name;
+
+            ApplicationData.Current.LocalSettings.Values["UserName"] = Name;
             ApplicationData.Current.LocalSettings.Values["UserLogo"] = User[0].Avatar;
             ApplicationData.Current.LocalSettings.Values["UserID"] = User[0].ID;
 
             return true;
-            
+
         }
 
         public static void LogOut()
@@ -84,9 +87,9 @@ namespace levelupspace
         public async static Task<bool> IsUniqueLoginAsync(String Login)
         {
             var db = new SQLiteAsyncConnection(DBPath);
-            
+
             var UQuery = await db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Login);
-            
+
             return UQuery.Count > 0 ? false : true;
         }
 
@@ -98,5 +101,6 @@ namespace levelupspace
             var res = CryptographicBuffer.EncodeToHexString(hashed);
             return res;
         }
+
     }
 }

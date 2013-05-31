@@ -1,16 +1,14 @@
 ﻿using System;
 using SQLite;
+using Newtonsoft.Json;
 
-namespace levelupspace
+namespace levelupspace.DataModel
 {
-    
 
     #region Alphabet
-
-    
     public class Alphabet
     {
-
+        [JsonProperty(PropertyName = "ID")]
         [PrimaryKey, AutoIncrement]
         public int ID
         {
@@ -18,14 +16,15 @@ namespace levelupspace
             set;
         }
 
-        
+        [JsonProperty(PropertyName = "Logo")]
         public string Logo
         {
             get;
             set;
         }
 
-        public bool IsNative
+        [JsonProperty(PropertyName = "Path")]
+        public string Path
         {
             get;
             set;
@@ -35,6 +34,7 @@ namespace levelupspace
 
     class AlphabetLocalization
     {
+        [JsonProperty(PropertyName = "ID")]
         [PrimaryKey, AutoIncrement]
         public int ID
         {
@@ -42,24 +42,150 @@ namespace levelupspace
             set;
         }
 
+        [JsonProperty(PropertyName = "AlphabetID")]
         public int AlphabetID
         {
             get;
             set;
         }
-        
+
+        [JsonProperty(PropertyName = "LanguageID")]
         public String LanguageID
         {
             get;
             set;
         }
+
+        [JsonProperty(PropertyName = "LanguageName")]
         public String LanguageName
         {
             get;
             set;
         }
 
+        [JsonProperty(PropertyName = "Description")]
         public string Description
+        {
+            get;
+            set;
+        }
+    }
+    #endregion
+
+    #region User
+    public class User
+    {
+        [JsonProperty(PropertyName = "ID")]
+        [PrimaryKey, AutoIncrement]
+        public int ID
+        {
+            get;
+            set;
+        }
+        [JsonProperty(PropertyName = "Name")]
+        public string Name
+        {
+            get;
+            set;
+        }
+        [JsonProperty(PropertyName = "Hash")]
+        public string Hash
+        {
+            get;
+            set;
+        }
+        [JsonProperty(PropertyName = "Avatar")]
+        public string Avatar
+        {
+            get;
+            set;
+        }
+
+    }
+    #endregion
+
+    #region Award
+    public class UserAward
+    {
+        [JsonProperty(PropertyName = "ID")]
+        [PrimaryKey, AutoIncrement]
+        public int ID
+        {
+            get;
+            set;
+        }
+        [JsonProperty(PropertyName = "UserID")]
+        public int UserID
+        {
+            get;
+            set;
+        }
+        [JsonProperty(PropertyName = "AwardID")]
+        public int AwardID
+        {
+            get;
+            set;
+        }
+    }
+
+    public class Award
+    {
+        [JsonProperty(PropertyName = "ID")]
+        [PrimaryKey, AutoIncrement]
+        public int ID
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "LogoPath")]
+        public string LogoPath
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "Rate")]
+        public int Rate
+        {
+            get;
+            set;
+        }
+    }
+
+    public class AwardLocalization
+    {
+        [JsonProperty(PropertyName = "ID")]
+        [PrimaryKey, AutoIncrement]
+        public int ID
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "AwardId")]
+        public int AwardId
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "LanguageID")]
+        public String LanguageID
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "AwardName")]
+        public String AwardName
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "AwardDescription")]
+        public String AwardDescription
         {
             get;
             set;
@@ -154,115 +280,4 @@ namespace levelupspace
     }
     #endregion
 
-    #region User
-    public class User
-    {
-        [PrimaryKey, AutoIncrement]
-        public int ID
-        {
-            get;
-            set;
-        }
-
-        public string Name
-        {
-            get;
-            set;
-        }
-
-        public string Hash
-        {
-            get;
-            set;
-        }
-        
-        public string Avatar
-        {
-            get;
-            set;
-        }
-
-    }
-    #endregion
-
-
-    #region Award
-    public class UserAward
-    {
-        [PrimaryKey, AutoIncrement]
-        public int ID
-        {
-            get;
-            set;
-        }
-
-        public int UserID
-        {
-            get;
-            set;
-        }
-
-        public int AwardID
-        {
-            get;
-            set;
-        }
-    }
-
-    public class Award
-    {
-        [PrimaryKey, AutoIncrement]
-        public int ID
-        {
-            get;
-            set;
-        }
-
-        public string LogoPath
-        {
-            get;
-            set;
-        }
-
-        public int Rate
-        {
-            get;
-            set;
-        }
-    }
-
-    public class AwardLocalization
-    {
-        [PrimaryKey, AutoIncrement]
-        public int ID
-        {
-            get;
-            set;
-        }
-
-        public int AwardId
-        {
-            get;
-            set;
-        }
-
-        public String LanguageID
-        {
-            get;
-            set;
-        }
-
-        public String AwardName
-        {
-            get;
-            set;
-        }
-
-        public String AwardDescription
-        {
-            get;
-            set;
-        }
-    }
-    #endregion
 }

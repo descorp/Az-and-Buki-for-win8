@@ -50,7 +50,7 @@ namespace levelupspace
             {
                 var parameters = (Dictionary<string, int>)navigationParameter;
 
-                var award = await AwardManager.GetAward((int)parameters["award"]);
+                var award = await AwardManager.GetAward((int)parameters["award"], DBconnectionPath.Local);
 
                 
 

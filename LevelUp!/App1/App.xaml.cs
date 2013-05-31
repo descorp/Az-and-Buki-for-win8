@@ -67,7 +67,11 @@ namespace levelupspace
                 // Если стек навигации не восстанавливается для перехода к первой странице,
                 // настройка новой страницы путем передачи необходимой информации в качестве параметра
                 // навигации
-                if (!rootFrame.Navigate(typeof(MainMenu)))
+                bool IsNotFirstStart = await ContentManager.IsContentDownloaded(DBconnectionPath.Local);
+
+                Type pagetype = IsNotFirstStart ? typeof(MainMenu) : typeof(DownloadsPage);
+                
+                if (!rootFrame.Navigate(pagetype))
                 {
                     throw new Exception("Failed to create initial page");
                 }

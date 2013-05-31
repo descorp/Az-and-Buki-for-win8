@@ -126,6 +126,7 @@
       <DependentUpon>AlphabetDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AwardManager.cs" />
+    <Compile Include="DataModel\DBconnectionPath.cs" />
     <Compile Include="DataModel\FacebookProvider.cs" />
     <Compile Include="DataModel\GameClass.cs" />
     <Compile Include="DataModel\HttpProvider.cs" />
@@ -133,6 +134,9 @@
     <Compile Include="DataModel\SocialProvider.cs" />
     <Compile Include="DataModel\UserManager.cs" />
     <Compile Include="DataModel\VKProvider.cs" />
+    <Compile Include="DownloadsPage.xaml.cs">
+      <DependentUpon>DownloadsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
@@ -241,6 +245,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DownloadsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -297,10 +305,19 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Facebook">
-      <HintPath>..\packages\Facebook.6.4.0\lib\win8\Facebook.dll</HintPath>
+      <HintPath>..\packages\Facebook.6.3.2\lib\win8\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook.Client">
+      <HintPath>..\packages\Facebook.Client.0.5.0-alpha\lib\win8\Facebook.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage">
+      <HintPath>..\..\Server\Microsoft.WindowsAzure.Storage.winmd</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\RestSharp\packages\Newtonsoft.Json.4.5.5\lib\sl4-windowsphone71\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.5\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>..\packages\SharpDX.2.4.2\lib\win8\SharpDX.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />

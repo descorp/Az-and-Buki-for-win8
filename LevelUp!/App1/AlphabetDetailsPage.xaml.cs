@@ -29,7 +29,7 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            var abc = ContentManager.GetAlphabet((String)navigationParameter);
+            var abc = ContentManager.GetAlphabet((String)navigationParameter, DBconnectionPath.Local);
             if (abc != null)
             {
                 this.DefaultViewModel["Alphabet"] = abc;

@@ -35,7 +35,7 @@ namespace levelupspace
         {
             if (tbName.Text.Length > 0)
             {
-                var result = await UserManager.Authorize(tbName.Text, PassBox.Key);
+                var result = await UserManager.Authorize(tbName.Text, PassBox.Key, DBconnectionPath.Local);
                 if (result)
                 {
                     rootPage.UserLogIn();

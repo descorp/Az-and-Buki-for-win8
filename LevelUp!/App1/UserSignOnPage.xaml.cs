@@ -70,15 +70,16 @@ namespace levelupspace
 
             if (tbName.Text.Length > 3)
             {
-                var uniquelogin = await UserManager.IsUniqueLoginAsync(tbName.Text);
+                var uniquelogin = await UserManager.IsUniqueLoginAsync(tbName.Text, DBconnectionPath.Local);
                 if (uniquelogin)
                 {
                     var newUserID = await UserManager.AddUserAsync(new User()
                         {
                             Name = tbName.Text,
                             Avatar = logofilePath,
-                            Hash = String.Concat(tbName.Text, PassBox.Key)
-                        });
+                        }, 
+                        PassBox.Key,
+                        DBconnectionPath.Local);
 
                     if (newUserID > 0)
                     {
@@ -121,7 +122,7 @@ namespace levelupspace
             
             if (file != null)
             {
-                var folder = StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.LocalFolder.Path,"Users")).GetResults();
+                var folder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.LocalFolder.Path,"Users"));
                 var logofile = await file.CopyAsync(folder, "UL.png");
 
                 logofilePath = logofile.Path;
@@ -137,6 +138,22 @@ namespace levelupspace
             RoutedEventArgs args = new RoutedEventArgs();
             if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
             else if (e.Key == Windows.System.VirtualKey.Enter) this.btnOk_Click(this, args);
+        }
+
+        private async void backButton_Click(object sender, RoutedEventArgs e)
+        {
+            var folder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.LocalFolder.Path, "Users"));
+            try
+            {
+                var logofile = await folder.GetFileAsync("UL.png");
+                await logofile.DeleteAsync();
+                GoBack(this, e);
+            }
+            catch
+            {
+                GoBack(this, e);
+            }
+
         }
     }
 }

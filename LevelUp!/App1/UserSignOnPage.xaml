@@ -37,7 +37,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <Button x:Name="backButton" Click="backButton_Click" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" x:Uid="SignOnPageTitle" Grid.Column="1" Text="Регистрация" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
         <Grid Grid.Row="1" Margin="0,-100,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">

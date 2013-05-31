@@ -77,7 +77,7 @@ namespace levelupspace
 
         public void SetGameState(int difficulty, string abcId)
         {
-            game = new GameClass((Dificulty)difficulty, abcId);            
+            game = new GameClass((Dificulty)difficulty, abcId, DBconnectionPath.Local);            
             this.DefaultViewModel["Words"] = game.Level.words;
 
             tbQuestion.Text = game.Level.Question;

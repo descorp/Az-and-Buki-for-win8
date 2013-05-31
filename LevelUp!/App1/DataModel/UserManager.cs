@@ -6,24 +6,25 @@ using Windows.Storage;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography;
-using Microsoft.WindowsAzure.MobileServices;
 using Newtonsoft.Json;
 using levelupspace.DataModel;
+using Windows.ApplicationModel.Resources;
 
 namespace levelupspace
 {
 
     public class UserManager
-    {
-        private static string DBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db");
-        UserManager()
-        {
-        }
 
-        public async static Task<int> AddUserAsync(User Newby)
+    {       
+        public async static Task<int> AddUserAsync(User Newby, String Pass, String DBPath)
         {
+            var Resources = new ResourceLoader();
+            
+            if (Newby.Name.Length == 0) throw new ArgumentOutOfRangeException("UserName", "Name can't be empty!");
+            if (Pass.Length == 0) throw new ArgumentOutOfRangeException("Pass", "Password can't be empty!");
+            if (Newby.Avatar.Length == 0) Newby.Avatar = "ms-appx:///Assets/Userlogo.png";
 
-            Newby.Hash = ComputeMD5(Newby.Hash);
+            Newby.Hash = ComputeMD5(Newby.Name+Pass);
             var db = new SQLiteAsyncConnection(DBPath);
 
             var Result = await db.InsertAsync(Newby);
@@ -49,9 +50,13 @@ namespace levelupspace
             else return -1;
         }
 
-        public async static Task<bool> Authorize(string Name, string Pass)
+
+        public async static Task<bool> Authorize(string Name,string Pass, String DBPath)
         {
             var db = new SQLiteAsyncConnection(DBPath);
+
+            if (Name.Length == 0) throw new ArgumentOutOfRangeException("UserName", "Name can't be empty!");
+            if (Pass.Length == 0) throw new ArgumentOutOfRangeException("Hash", "Password can't be empty!");
 
             var User = await db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Name);
             if (User.Count == 0)
@@ -84,7 +89,7 @@ namespace levelupspace
             get { return (int)ApplicationData.Current.LocalSettings.Values["UserID"]; }
         }
 
-        public async static Task<bool> IsUniqueLoginAsync(String Login)
+        public async static Task<bool> IsUniqueLoginAsync(String Login, String DBPath)
         {
             var db = new SQLiteAsyncConnection(DBPath);
 

@@ -3,7 +3,11 @@
   <metadata>
     <id>Facebook</id>
     <version>6.4.0</version>
+<<<<<<< HEAD
     <title>Facebook</title>
+=======
+    <title />
+>>>>>>> 5d883173482434fdbec52cd35c5d76b00415b24e
     <authors>Outercurve Foundation</authors>
     <owners>Outercurve Foundation</owners>
     <licenseUrl>https://raw.github.com/facebook-csharp-sdk/facebook-csharp-sdk/master/LICENSE.txt</licenseUrl>
@@ -11,8 +15,11 @@
     <iconUrl>http://csharpsdk.org/assets/img/logo75x75.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The Facebook SDK for .NET helps developers build web, desktop, phone and Windows Store applications that integrate with Facebook.</description>
+<<<<<<< HEAD
     <releaseNotes />
     <copyright />
+=======
+>>>>>>> 5d883173482434fdbec52cd35c5d76b00415b24e
     <language>en-US</language>
     <tags>Facebook fb</tags>
   </metadata>

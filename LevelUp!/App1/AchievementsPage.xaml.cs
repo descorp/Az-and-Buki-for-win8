@@ -34,7 +34,7 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected async override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            this.DefaultViewModel["UAwards"] = await AwardManager.UsersAwards(UserManager.UserId);
+            this.DefaultViewModel["UAwards"] = await AwardManager.UsersAwards(UserManager.UserId, DBconnectionPath.Local);
 
             if ((string)navigationParameter == "WallPostSent")
             {

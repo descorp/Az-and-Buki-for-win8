@@ -8,6 +8,8 @@ using System.Collections.Specialized;
 using SQLite;
 using System.IO;
 using Windows.Storage;
+using System.Threading.Tasks;
+using levelupspace.DataModel;
 
 
 namespace levelupspace
@@ -370,8 +372,7 @@ namespace levelupspace
 
     public sealed class ContentManager
     {
-        private static string DBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db");
-        private static ContentManager _ABCDataSource = new ContentManager();
+        private static ContentManager _ABCDataSource = new ContentManager(DBconnectionPath.Local);
         
 
         private ObservableCollection<AlphabetItem> _allAlphabets = new ObservableCollection<AlphabetItem>();
@@ -388,7 +389,7 @@ namespace levelupspace
             return _ABCDataSource.AllAlphabets;
         }
 
-        public static AlphabetItem GetAlphabet(string uniqueId)
+        public static AlphabetItem GetAlphabet(string uniqueId, String DBPath)
         {
             // Для небольших наборов данных можно использовать простой линейный поиск
             var matches = _ABCDataSource.AllAlphabets.Where((alphabet) => alphabet.UniqueId.Equals(uniqueId));
@@ -472,7 +473,7 @@ namespace levelupspace
             return w;            
         }
 
-        public ContentManager()
+        public ContentManager(String DBPath)
         {
            
             SQLiteConnection db = new SQLiteConnection(DBPath);
@@ -505,7 +506,7 @@ namespace levelupspace
            
         }
 
-        private static int ParseAlphabetID(string uniqueID)
+        public static int ParseAlphabetID(string uniqueID)
         {            
             if (uniqueID.Contains("Alphabet") == true)
             {
@@ -515,7 +516,7 @@ namespace levelupspace
             else return -1;
         }
 
-        private static int ParseLetterID(string uniqueID)
+        public static int ParseLetterID(string uniqueID)
         {
             if (uniqueID.Contains("Letter") == true)
             {
@@ -525,7 +526,7 @@ namespace levelupspace
             else return -1;
         }
 
-        private static int ParseWordID(string uniqueID)
+        public static int ParseWordID(string uniqueID)
         {
             if (uniqueID.Contains("Word") == true)
             {
@@ -533,6 +534,19 @@ namespace levelupspace
                 return int.Parse(pars[5]);
             }
             else return -1;
+        }
+
+        public async static Task<bool> IsContentDownloaded(String DBPath)
+        {
+            try
+            {
+                await StorageFile.GetFileFromPathAsync(DBPath);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
     }
 
@@ -565,10 +579,7 @@ namespace levelupspace
         }
 
 
-        public static void FirsRun()
-        {
-
-        }
+        
         
     }
 

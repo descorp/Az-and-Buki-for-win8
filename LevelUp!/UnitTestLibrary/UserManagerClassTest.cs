@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.Security.Cryptography.Core;
 using Windows.Security.Cryptography;
 using Windows.Storage.Streams;
+using levelupspace.DataModel;
 
 namespace UnitTestLibrary
 {

@@ -10,6 +10,7 @@ using Windows.Security.Cryptography.Core;
 using Windows.Security.Cryptography;
 using Windows.Storage.Streams;
 using levelupspace.DataModel;
+using AsyncAssert = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.Assert;
 
 namespace UnitTestLibrary
 {
@@ -27,7 +28,7 @@ namespace UnitTestLibrary
             String Pass = "123";
             newUser.Avatar = "ms-appx:///Assets/Userlogo.png";
 
-            await AssertEx.ThrowsExceptionAsync<ArgumentOutOfRangeException>(async () =>
+            await AsyncAssert.ThrowsException<ArgumentOutOfRangeException>(async () =>
                 {
                     await UserManager.AddUserAsync(newUser, Pass, DBconnectionPath.Test);
                 });
@@ -40,7 +41,7 @@ namespace UnitTestLibrary
             newUser.Avatar = "ms-appx:///Assets/Userlogo.png";
             String Pass = "";
 
-            await AssertEx.ThrowsExceptionAsync<ArgumentOutOfRangeException>(async () =>
+            await AsyncAssert.ThrowsException<ArgumentOutOfRangeException>(async () =>
             {
                 await UserManager.AddUserAsync(newUser, Pass, DBconnectionPath.Test);
             });
@@ -143,7 +144,7 @@ namespace UnitTestLibrary
         {
             String Name = "";
 
-            await AssertEx.ThrowsExceptionAsync<ArgumentOutOfRangeException>(async () =>
+            await AsyncAssert.ThrowsException<ArgumentOutOfRangeException>(async () =>
             {
                 await UserManager.Authorize(Name, "123", DBconnectionPath.Test);
             });
@@ -153,7 +154,7 @@ namespace UnitTestLibrary
         {
             String Name = "Sasha";
 
-            await AssertEx.ThrowsExceptionAsync<ArgumentOutOfRangeException>(async () =>
+            await AsyncAssert.ThrowsException<ArgumentOutOfRangeException>(async () =>
             {
                 await UserManager.Authorize(Name, "", DBconnectionPath.Test);
             });
@@ -209,28 +210,6 @@ namespace UnitTestLibrary
             Assert.IsFalse(Result);
         }
     }
-
-    public static class AssertEx
-    {
-        public static async Task ThrowsExceptionAsync<TException>(Func<Task> code)
-        {
-            try
-            {
-                await code();
-            }
-            catch (Exception ex)
-            {
-                if (ex.GetType() == typeof(TException))
-                    return;
-                throw new AssertFailedException("Incorrect type; expected ... got ...", ex);
-            }
-
-            throw new AssertFailedException("Did not see expected exception ...");
-        }
-    }
-    
-
-
 
 }
 

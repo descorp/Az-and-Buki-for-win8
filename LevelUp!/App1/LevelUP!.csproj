@@ -109,6 +109,9 @@
     <SDKReference Include="MobileServicesManagedClient, Version=0.2.0.0">
       <Name>Windows Azure Mobile Services Managed Client</Name>
     </SDKReference>
+    <SDKReference Include="SQLite.WinRT, Version=3.7.16.2">
+      <Name>SQLite for Windows Runtime</Name>
+    </SDKReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">

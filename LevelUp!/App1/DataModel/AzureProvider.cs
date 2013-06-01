@@ -13,7 +13,7 @@ using Microsoft.WindowsAzure.MobileServices;
 
 namespace levelupspace.DataModel
 {
-    class AzureDBProvider
+    public class AzureDBProvider
     {
 
         #region MobileService connection
@@ -58,7 +58,7 @@ namespace levelupspace.DataModel
         public async static void AddNewUser(User user)
         {
             //// This code inserts a new TodoItem into the database. When the operation completes
-            //// and Mobile Services has assigned an Id, the item is added to the CollectionView
+            //// and Mobile Services has assigned an Guid, the item is added to the CollectionView
             await UserTable .InsertAsync(user);
         }
 
@@ -74,18 +74,19 @@ namespace levelupspace.DataModel
 
         #region Packages data providing methods
 
-        public async static Task<List<Alphabet>> GetAllPackages(User user)
+        public async static Task<List<Alphabet>> GetAllPackages()
         {
             //// This code inserts a new TodoItem into the database. When the operation completes
-            //// and Mobile Services has assigned an Id, the item is added to the CollectionView
+            //// and Mobile Services has assigned an Guid, the item is added to the CollectionView
             AlphabetTable = MobileService.GetTable<Alphabet>();
             return await AlphabetTable.ToListAsync();
         }
 
-        public async static Task<List<AlphabetLocalization>> GetPackageLocalization(Alphabet alphabet, String LocalizationId)
+        public async static Task<AlphabetLocalization> GetPackageLocalization(Alphabet alphabet, String LocalizationId)
         {
             AlphabetLocalizationTable = MobileService.GetTable<AlphabetLocalization>();
-            return await AlphabetLocalizationTable.Where(local => local.AlphabetID == alphabet.ID && local.LanguageID == LocalizationId).ToListAsync();
+            var localization = await AlphabetLocalizationTable.Where(local => local.AlphabetID == alphabet.Guid && local.LanguageID == LocalizationId).ToListAsync();
+            return localization.First();
         }
 
         #endregion
@@ -95,7 +96,7 @@ namespace levelupspace.DataModel
         public async static void AddAwardToUser(User user, Award award)
         {
             //// This code inserts a new TodoItem into the database. When the operation completes
-            //// and Mobile Services has assigned an Id, the item is added to the CollectionView
+            //// and Mobile Services has assigned an Guid, the item is added to the CollectionView
             UserAward newAward = new UserAward() { AwardID = award.ID, UserID = user.ID };
             await UserAwardTable.InsertAsync(newAward);
         }
@@ -122,7 +123,7 @@ namespace levelupspace.DataModel
 
     }
 
-    class AzureStorageProvider
+    public class AzureStorageProvider
     {
         private static CloudStorageAccount storageAccount = 
             CloudStorageAccount.Parse("DefaultEndpointsProtocol=http;AccountName=[levelupstorage];AccountKey=[k9OkEg5CQHVD415z+s8xD/zx4lCKyWdBgWrDxqUnCsVbohmxgYVUUs8q4ZknpJdpgOEikk0damf2/lTSksSTZg==");
@@ -155,6 +156,13 @@ namespace levelupspace.DataModel
             // Retrieve reference to a blob named "myblob".
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageName);
             // Create or overwrite the "myblob" blob with contents from a local file.
+
+            var sas = container.GetSharedAccessSignature(new SharedAccessBlobPolicy()
+            {
+                Permissions = SharedAccessBlobPermissions.Read,
+                SharedAccessExpiryTime = DateTime.UtcNow + TimeSpan.FromMinutes(10)
+            });
+
             using (var fileStream = await file.OpenStreamForWriteAsync())
             {
                 await blockBlob.DownloadToStreamAsync(fileStream.AsOutputStream());
@@ -179,5 +187,4 @@ namespace levelupspace.DataModel
         }
 
     }
-
 }

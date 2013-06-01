@@ -11,11 +11,7 @@
     mc:Ignorable="d">
 
     <common:LayoutAwarePage.Resources>
-    	<DataTemplate x:Key="LangStringTemplate">
-    		<Grid>
-    			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding LanguageName}" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}" Margin="2"/>
-    		</Grid>
-    	</DataTemplate>
+    	
 </common:LayoutAwarePage.Resources>
 
     <!--

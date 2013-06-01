@@ -8,9 +8,16 @@ namespace levelupspace.DataModel
     #region Alphabet
     public class Alphabet
     {
-        [JsonProperty(PropertyName = "ID")]
         [PrimaryKey, AutoIncrement]
-        public int ID
+        [JsonProperty(PropertyName = "Id")]
+        public long Id
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "Guid")]        
+        public long Guid
         {
             get;
             set;
@@ -32,11 +39,11 @@ namespace levelupspace.DataModel
 
     }
 
-    class AlphabetLocalization
+    public class AlphabetLocalization
     {
-        [JsonProperty(PropertyName = "ID")]
+        [JsonProperty(PropertyName = "Guid")]
         [PrimaryKey, AutoIncrement]
-        public int ID
+        public long ID
         {
             get;
             set;
@@ -75,7 +82,7 @@ namespace levelupspace.DataModel
     #region User
     public class User
     {
-        [JsonProperty(PropertyName = "ID")]
+        [JsonProperty(PropertyName = "Guid")]
         [PrimaryKey, AutoIncrement]
         public int ID
         {
@@ -107,7 +114,7 @@ namespace levelupspace.DataModel
     #region Award
     public class UserAward
     {
-        [JsonProperty(PropertyName = "ID")]
+        [JsonProperty(PropertyName = "Guid")]
         [PrimaryKey, AutoIncrement]
         public int ID
         {
@@ -130,7 +137,7 @@ namespace levelupspace.DataModel
 
     public class Award
     {
-        [JsonProperty(PropertyName = "ID")]
+        [JsonProperty(PropertyName = "Guid")]
         [PrimaryKey, AutoIncrement]
         public int ID
         {
@@ -155,7 +162,7 @@ namespace levelupspace.DataModel
 
     public class AwardLocalization
     {
-        [JsonProperty(PropertyName = "ID")]
+        [JsonProperty(PropertyName = "Guid")]
         [PrimaryKey, AutoIncrement]
         public int ID
         {

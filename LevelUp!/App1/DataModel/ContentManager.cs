@@ -268,7 +268,7 @@ namespace levelupspace
 
     public class AlphabetItem: ABCItem
     {
-        public AlphabetItem(String uniqueId, String title, String imagePath, String description, int ID, bool IsNative=false)
+        public AlphabetItem(String uniqueId, String title, String imagePath, String description, long ID, bool IsNative=false)
             : base(uniqueId, title, imagePath, description)
         {
             this._id = ID;
@@ -282,8 +282,8 @@ namespace levelupspace
             get { return Native; }
         }
 
-        private int _id = 0;
-        public int ID
+        private long _id = 0;
+        public long ID
         {
             get { return _id; }
             set { this.SetProperty(ref this._id, value); }
@@ -473,36 +473,55 @@ namespace levelupspace
             return w;            
         }
 
-        public ContentManager(String DBPath)
+        public static async Task<IEnumerable<AlphabetItem>> DownloadFromAzureDB()
         {
-           
-            SQLiteConnection db = new SQLiteConnection(DBPath);
+            var AItems = new ObservableCollection<AlphabetItem>();
             
-            var AlphabetQuery = db.Query<Alphabet>("SELECT * FROM Alphabet");
+                var packages = await AzureDBProvider.GetAllPackages();
+
+                foreach (var pack in packages)
+                {
+                    var local = await AzureDBProvider.GetPackageLocalization(pack, LanguageProvider.CurrentLanguage.LanguageCode);
+
+                    AItems.Add(new AlphabetItem(String.Concat("Alphabet ", pack.Guid.ToString()),
+                            local.LanguageName,
+                            pack.Logo,
+                            local.Description,
+                            pack.Guid
+                        ));
+                }
+
+                return AItems;
+        }
+
+        public ContentManager(String DataSourcePath)
+        {
             
-            for (int i = 0; i < AlphabetQuery.Count; i++)
-            {
-                
+               SQLiteConnection db = new SQLiteConnection(DataSourcePath);
 
-                var LocalQuery = db.Query<AlphabetLocalization>(
-                                     "SELECT * FROM AlphabetLocalization WHERE AlphabetID=?", AlphabetQuery[i].ID);
+                var AlphabetQuery = db.Query<Alphabet>("SELECT * FROM Alphabet");
 
-                var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
-                var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
-                if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
+                for (int i = 0; i < AlphabetQuery.Count; i++)
+                {
+                    var LocalQuery = db.Query<AlphabetLocalization>(
+                                         "SELECT * FROM AlphabetLocalization WHERE AlphabetID=?", AlphabetQuery[i].Guid);
 
-                var LPath = ApplicationData.Current.LocalFolder.Path;
+                    var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
+                    var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
+                    if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
 
-                var Aitem = new AlphabetItem(
-                        String.Concat("Alphabet ", AlphabetQuery[i].ID.ToString()),
-                        localization.LanguageName,
-                        Path.Combine(LPath, AlphabetQuery[i].Logo),
-                        localization.Description,
-                        AlphabetQuery[i].ID                    
-                        );
+                    var LPath = ApplicationData.Current.LocalFolder.Path;
+
+                    var Aitem = new AlphabetItem(
+                            String.Concat("Alphabet ", AlphabetQuery[i].Guid.ToString()),
+                            localization.LanguageName,
+                            Path.Combine(LPath, AlphabetQuery[i].Logo),
+                            localization.Description,
+                            AlphabetQuery[i].Guid
+                            );
 
                     _allAlphabets.Add(Aitem);
-            }      
+                }
            
         }
 

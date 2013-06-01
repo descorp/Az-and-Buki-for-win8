@@ -20,7 +20,11 @@
             <!-- Ресурсы, зависящие от приложения -->
 
             <x:String x:Key="AppName">LevelUP!</x:String>
-            
+            <DataTemplate x:Key="LangStringTemplate">
+                <Grid>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding LanguageName}" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}" Margin="2"/>
+                </Grid>
+            </DataTemplate>
             <Style x:Key="ButtonABCStyle" TargetType="Button">
             	<Setter Property="Background" Value="{StaticResource ButtonBackgroundThemeBrush}"/>
             	<Setter Property="Foreground" Value="{StaticResource ButtonForegroundThemeBrush}"/>

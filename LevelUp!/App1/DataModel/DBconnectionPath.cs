@@ -9,5 +9,7 @@ namespace levelupspace
         public static String Local = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ABCdb.db");
         
         public static String Test = "Test.db";
+
+        public static String Azure = "Azure";
     }
 }

@@ -130,6 +130,11 @@ namespace levelupspace
                         files.Add(file);
                         string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
                         AzureStorageProvider.DownloadPackageFromStorage(file, blobName);
+
+                        //while (action.Status != AsyncStatus.Completed)
+                        //{
+
+                        //}
                     };
 
                     Unzip(files, ApplicationData.Current.LocalFolder.Path);
@@ -145,11 +150,7 @@ namespace levelupspace
             {
                 try
                 {
-                    Stream stream = await file.OpenStreamForWriteAsync();
-                    using (SevenZip.)
-                    {
-                        zlib.
-                    }       
+                      
                 }
                 catch (Exception ex)
                 {

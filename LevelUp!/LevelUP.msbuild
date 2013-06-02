@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Test">
+<ItemGroup>
+<BuildArtifactsDir Include="BuildArtifacts\"/>
+<SolutionFile Include="LevelUp!.sln" />
+
+</ItemGroup>
+
+<PropertyGroup>
+<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+<BuildPlatform Condition=" '$(BuildPlatform)' == '' ">x86</BuildPlatform>
+</PropertyGroup>
+
+<Target Name="Init" DependsOnTargets="Clean">
+<MakeDir Directories="@(BuildArtifactsDir)" />
+</Target>
+
+<Target Name="Clean">
+<RemoveDir Directories="@(BuildArtifactsDir)" />
+</Target>
+
+<Target Name="Compile" DependsOnTargets="Init">
+<MSBuild Projects="@(SolutionFile)" Targets="Rebuild"
+Properties="OutDir=%(BuildArtifactsDir.FullPath);Configuration=$(Configuration);Platform=$(BuildPlatform)" />
+</Target>
+
+<Target Name="Test" DependsOnTargets="Compile">
+<PropertyGroup>
+<TestSuccess>1</TestSuccess>
+</PropertyGroup>
+<Exec Command='"C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" C:\Users\kbelo_000\Documents\GitProjects\Az-and-Buki-for-win8\LevelUp!\UnitTestLibrary\TestPackages\UnitTestLibrary_1.0.0.0_x86_Debug_Test/UnitTestLibrary_1.0.0.0_x86_Debug.appx /InIsolation' >
+<Output TaskParameter="ExitCode" PropertyName="TestSuccess"/>
+</Exec>
+</Target>
+</Project>

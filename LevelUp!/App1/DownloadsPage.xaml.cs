@@ -12,6 +12,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using levelupspace.DataModel;
+using Windows.ApplicationModel.Resources;
+using Windows.Storage;
+using SevenZip.Sdk;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -22,35 +25,48 @@ namespace levelupspace
     /// </summary>
     public sealed partial class DownloadsPage : levelupspace.Common.LayoutAwarePage
     {
+        enum DownloadPageState { ChooseLang, ChoosePacks, Waiting };
+        private DownloadPageState state;
 
-        private int state = 0;
-
-        private void ChangeState(int state)
+        private void ChangeState(DownloadPageState state)
         {
+            this.state = state;
+            var res = new  ResourceLoader();
             switch (state)
             {
-                case 0: 
-                    pageTitle.Text = "Language";
-                    tbStatus.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                case DownloadPageState.ChooseLang:
+                    
+                    pageTitle.Text = res.GetString("TuningAppTitle");
+                    tbStatus.Text = res.GetString("DownLoadPageChooseLangText");
+                    tbStatus.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     pRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    gwDownLoadItems.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     break;
-                case 1: 
-                    pageTitle.Text = "Loading";
+                case DownloadPageState.Waiting:                    
+                    tbStatus.Text = res.GetString("PleaseWaitMessage");
                     tbStatus.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     pRing.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     cbLangs.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    gwDownLoadItems.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    btnChooseLang.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     break;
-                case 2: break;
+                case DownloadPageState.ChoosePacks:
+                    this.DefaultViewModel["HeaderText"] = res.GetString("ChoosePacksMessage");
+                    tbStatus.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    pRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    cbLangs.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    gwDownLoadItems.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    btnChooseLang.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    
+                    break;
             }
         }
 
         public DownloadsPage()
         {
             this.InitializeComponent();
-            gwDownLoadItems.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            
-           
-
+            cbLangs.ItemsSource = LanguageProvider.AllLanguages;
+            cbLangs.SelectedIndex = 0;
         }
          
         /// <summary>
@@ -64,6 +80,8 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+            if (navigationParameter == null) ChangeState(DownloadPageState.ChooseLang);
+            else ChangeState((DownloadPageState)navigationParameter);
         }
 
         /// <summary>
@@ -74,28 +92,69 @@ namespace levelupspace
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
+
         }
 
-        private async void LocalizationSelected(object sender, SelectionChangedEventArgs e)
+        private  void LocalizationSelected(object sender, SelectionChangedEventArgs e)
         {
-            string localization = cbLangs.SelectedItem.ToString();
-            state++;
-            ChangeState(state);
+            LanguageProvider.CurrentLanguage = cbLangs.SelectedItem as LanguageItem;
+            var _Frame = Window.Current.Content as Frame;
+            _Frame.Navigate(typeof(DownloadsPage));
+        }
 
-            List<Alphabet> packageList = await AzureDBProvider.GetAllPackages();
+        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        {
 
-            foreach (Alphabet package in packageList)
+            
+        }
+
+        private async void btnChooseLang_Click(object sender, RoutedEventArgs e)
+        {
+            switch (state)
             {
+                case DownloadPageState.ChooseLang:
+                    string localization = cbLangs.SelectedItem.ToString();
+                    
+                    ChangeState(DownloadPageState.Waiting);
+                    var ABCs = await ContentManager.DownloadFromAzureDB();
+                    this.DefaultViewModel["ABCItems"] = ABCs;                    
+                    ChangeState(DownloadPageState.ChoosePacks);
+                    break;
+                case DownloadPageState.ChoosePacks:
+                    ChangeState(DownloadPageState.Waiting);
+                    List<StorageFile> files = new List<StorageFile>();
+                    foreach ( AlphabetItem item in gwDownLoadItems.SelectedItems)
+                    {
+                        var Local = ApplicationData.Current.TemporaryFolder;
+                        var file = await Local.CreateFileAsync(item.ID.ToString()+"_pack",CreationCollisionOption.ReplaceExisting);
+                        files.Add(file);
+                        string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
+                        AzureStorageProvider.DownloadPackageFromStorage(file, blobName);
+                    };
 
+                    Unzip(files, ApplicationData.Current.LocalFolder.Path);
+
+                    break;
             }
+            
         }
 
-        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        private async void Unzip(List<StorageFile> files, string finalFolder)
         {
-            var ABCs = await ContentManager.DownloadFromAzureDB();
-            this.DefaultViewModel["ABCItems"] = ABCs;
-            this.pRing.Visibility = Visibility.Collapsed;
-            this.gwDownLoadItems.Visibility = Visibility.Visible;
+            foreach (StorageFile file in files)
+            {
+                try
+                {
+                    Stream stream = await file.OpenStreamForWriteAsync();
+                    using (SevenZip.)
+                    {
+                        zlib.
+                    }       
+                }
+                catch (Exception ex)
+                {
+                }
+            }
         }
     }
 }

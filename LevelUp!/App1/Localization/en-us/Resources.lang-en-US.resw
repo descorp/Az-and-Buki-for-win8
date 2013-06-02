@@ -288,4 +288,16 @@
   <data name="btnNextContent" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="ChoosePacksMessage" xml:space="preserve">
+    <value>Choose topics to learn</value>
+  </data>
+  <data name="DownLoadPageChooseLangText" xml:space="preserve">
+    <value>Hi! Glad to see you here! ) To start app, please, choose the app language</value>
+  </data>
+  <data name="PleaseWaitMessage" xml:space="preserve">
+    <value>Please, wait a little bit...</value>
+  </data>
+  <data name="TuningAppTitle" xml:space="preserve">
+    <value>Several settings before start</value>
+  </data>
 </root>

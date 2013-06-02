@@ -288,4 +288,16 @@
   <data name="btnNextContent" xml:space="preserve">
     <value>Дальше</value>
   </data>
+  <data name="ChoosePacksMessage" xml:space="preserve">
+    <value>Выбери темы, которые хочешь изучать</value>
+  </data>
+  <data name="DownLoadPageChooseLangText" xml:space="preserve">
+    <value>Привет! Рад тебя видеть! Для того, чтобы начать выбери язык приложения</value>
+  </data>
+  <data name="PleaseWaitMessage" xml:space="preserve">
+    <value>Подожди совсем немного...</value>
+  </data>
+  <data name="TuningAppTitle" xml:space="preserve">
+    <value>Несколько шагов, чтобы начать</value>
+  </data>
 </root>

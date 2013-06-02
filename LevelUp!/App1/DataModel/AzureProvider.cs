@@ -6,6 +6,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using System.IO;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -82,10 +83,18 @@ namespace levelupspace.DataModel
             return await AlphabetTable.ToListAsync();
         }
 
+        public async static Task<string> GetBlobName(int packageID)
+        {
+            List<Alphabet> list = await AlphabetTable.Where(pack => pack.Id == packageID).ToListAsync();
+            string fullPath = list.First().Path;
+            int lastSlash = fullPath.LastIndexOf("/");
+            return fullPath.Remove(0,lastSlash + 1);
+        }
+
         public async static Task<AlphabetLocalization> GetPackageLocalization(Alphabet alphabet, String LocalizationId)
         {
             AlphabetLocalizationTable = MobileService.GetTable<AlphabetLocalization>();
-            var localization = await AlphabetLocalizationTable.Where(local => local.AlphabetID == alphabet.Guid && local.LanguageID == LocalizationId).ToListAsync();
+            var localization = await AlphabetLocalizationTable.Where(local => local.AlphabetID == alphabet.Guid && local.LanguageID.Contains(LocalizationId)).ToListAsync();
             return localization.First();
         }
 
@@ -125,14 +134,15 @@ namespace levelupspace.DataModel
 
     public class AzureStorageProvider
     {
-        private static CloudStorageAccount storageAccount = 
-            CloudStorageAccount.Parse("DefaultEndpointsProtocol=http;AccountName=[levelupstorage];AccountKey=[k9OkEg5CQHVD415z+s8xD/zx4lCKyWdBgWrDxqUnCsVbohmxgYVUUs8q4ZknpJdpgOEikk0damf2/lTSksSTZg==");
+        private static string connectionString = "DefaultEndpointsProtocol=http;AccountName=levelupstorage;AccountKey=k9OkEg5CQHVD415z+s8xD/zx4lCKyWdBgWrDxqUnCsVbohmxgYVUUs8q4ZknpJdpgOEikk0damf2/lTSksSTZg==";
 
-        public static CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+        private static CloudStorageAccount storageAccount =
+            CloudStorageAccount.Parse(connectionString);
 
-        public static async void UploadAvatarToStorage(StorageFile file, String username)
+        private static CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+        public static  async void UploadAvatarToStorage(StorageFile file, String username)
         {
-
             // Retrieve reference to a previously created container.
             CloudBlobContainer container = blobClient.GetContainerReference("userpic");
 
@@ -149,30 +159,40 @@ namespace levelupspace.DataModel
 
         public static async void DownloadPackageFromStorage(StorageFile file, String packageName)
         {
-
             // Retrieve reference to a previously created container.
-            CloudBlobContainer container = blobClient.GetContainerReference("userpic");
+            CloudBlobContainer container = blobClient.GetContainerReference("packages");
 
             // Retrieve reference to a blob named "myblob".
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageName);
             // Create or overwrite the "myblob" blob with contents from a local file.
-
-            var sas = container.GetSharedAccessSignature(new SharedAccessBlobPolicy()
-            {
-                Permissions = SharedAccessBlobPermissions.Read,
-                SharedAccessExpiryTime = DateTime.UtcNow + TimeSpan.FromMinutes(10)
-            });
-
+            
             using (var fileStream = await file.OpenStreamForWriteAsync())
             {
+                
                 await blockBlob.DownloadToStreamAsync(fileStream.AsOutputStream());
             }
+        }
 
+        public static async Task<IAsyncAction> DownloadPackageFromStorageWithAction(StorageFile file, String packageName)
+        {
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference("packages");
+
+            // Retrieve reference to a blob named "myblob".
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageName);
+            // Create or overwrite the "myblob" blob with contents from a local file.
+            IAsyncAction action;
+            using (var fileStream = await file.OpenStreamForWriteAsync())
+            {
+               action = blockBlob.DownloadToStreamAsync(fileStream.AsOutputStream());
+               // action.Completed += new Windows.Foundation.AsyncActionCompletedHandler( );
+            }
+
+            return action;
         }
 
         public static async void DownloadAvatarFromStorage(StorageFile file, String userID)
         {
-
             // Retrieve reference to a previously created container.
             CloudBlobContainer container = blobClient.GetContainerReference("userpic");
 

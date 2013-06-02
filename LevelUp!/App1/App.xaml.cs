@@ -69,7 +69,7 @@ namespace levelupspace
                 // навигации
                 bool IsNotFirstStart = await ContentManager.IsContentDownloaded(DBconnectionPath.Local);
 
-                Type pagetype = IsNotFirstStart ? typeof(MainMenu) : typeof(DownloadsPage);
+                Type pagetype =  IsNotFirstStart ? typeof(MainMenu) : typeof(DownloadsPage);
                 
                 if (!rootFrame.Navigate(pagetype))
                 {

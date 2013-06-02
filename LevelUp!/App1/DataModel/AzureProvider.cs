@@ -157,7 +157,7 @@ namespace levelupspace.DataModel
             
         }
 
-        public static async void DownloadPackageFromStorage(StorageFile file, String packageName)
+        public static async void DownloadPackageFromStorage(StorageFile file, String packageName, EventHandler DownloadCompletedEvent=null)
         {
             // Retrieve reference to a previously created container.
             CloudBlobContainer container = blobClient.GetContainerReference("packages");
@@ -168,8 +168,14 @@ namespace levelupspace.DataModel
             
             using (var fileStream = await file.OpenStreamForWriteAsync())
             {
+                
                 await blockBlob.DownloadToStreamAsync(fileStream.AsOutputStream());
             }
+
+            
+            EventArgs args = new EventArgs();
+
+            if (DownloadCompletedEvent != null) DownloadCompletedEvent(null, args);
         }
 
         public static async Task<IAsyncAction> DownloadPackageFromStorageWithAction(StorageFile file, String packageName)
@@ -183,30 +189,12 @@ namespace levelupspace.DataModel
             IAsyncAction action;
             using (var fileStream = await file.OpenStreamForWriteAsync())
             {
-                
-                action = blockBlob.DownloadToStreamAsync(fileStream.AsOutputStream());
+               action = blockBlob.DownloadToStreamAsync(fileStream.AsOutputStream());
+               // action.Completed += new Windows.Foundation.AsyncActionCompletedHandler( );
             }
+
 
             return action;
-        }
-
-        public static async Task<Stream> DownloadPackageFromStorageWithStream(StorageFile file, String packageName)
-        {
-            // Retrieve reference to a previously created container.
-            CloudBlobContainer container = blobClient.GetContainerReference("packages");
-
-            // Retrieve reference to a blob named "myblob".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageName);
-            // Create or overwrite the "myblob" blob with contents from a local file.
-            IAsyncAction action;
-            Stream fileStream;
-            using (fileStream = await file.OpenStreamForWriteAsync())
-            {
-
-                action = blockBlob.DownloadToStreamAsync(fileStream.AsOutputStream());
-            }
-
-            return fileStream;
         }
 
         public static async void DownloadAvatarFromStorage(StorageFile file, String userID)

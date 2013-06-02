@@ -14,7 +14,6 @@ using Windows.UI.Xaml.Navigation;
 using levelupspace.DataModel;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
-using SevenZip.Sdk;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -31,18 +30,18 @@ namespace levelupspace
         private void ChangeState(DownloadPageState state)
         {
             this.state = state;
-            var res = new  ResourceLoader();
+            var res = new ResourceLoader();
             switch (state)
             {
                 case DownloadPageState.ChooseLang:
-                    
+
                     pageTitle.Text = res.GetString("TuningAppTitle");
                     tbStatus.Text = res.GetString("DownLoadPageChooseLangText");
                     tbStatus.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     pRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     gwDownLoadItems.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     break;
-                case DownloadPageState.Waiting:                    
+                case DownloadPageState.Waiting:
                     tbStatus.Text = res.GetString("PleaseWaitMessage");
                     tbStatus.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     pRing.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -57,7 +56,7 @@ namespace levelupspace
                     cbLangs.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     gwDownLoadItems.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     btnChooseLang.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                    
+
                     break;
             }
         }
@@ -68,7 +67,7 @@ namespace levelupspace
             cbLangs.ItemsSource = LanguageProvider.AllLanguages;
             cbLangs.SelectedIndex = 0;
         }
-         
+
         /// <summary>
         /// Заполняет страницу содержимым, передаваемым в процессе навигации. Также предоставляется любое сохраненное состояние
         /// при повторном создании страницы из предыдущего сеанса.
@@ -95,7 +94,7 @@ namespace levelupspace
 
         }
 
-        private  void LocalizationSelected(object sender, SelectionChangedEventArgs e)
+        private void LocalizationSelected(object sender, SelectionChangedEventArgs e)
         {
             LanguageProvider.CurrentLanguage = cbLangs.SelectedItem as LanguageItem;
             var _Frame = Window.Current.Content as Frame;
@@ -105,7 +104,7 @@ namespace levelupspace
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
 
-            
+
         }
 
         private async void btnChooseLang_Click(object sender, RoutedEventArgs e)
@@ -114,48 +113,52 @@ namespace levelupspace
             {
                 case DownloadPageState.ChooseLang:
                     string localization = cbLangs.SelectedItem.ToString();
-                    
+
                     ChangeState(DownloadPageState.Waiting);
                     var ABCs = await ContentManager.DownloadFromAzureDB();
-                    this.DefaultViewModel["ABCItems"] = ABCs;                    
+                    this.DefaultViewModel["ABCItems"] = ABCs;
                     ChangeState(DownloadPageState.ChoosePacks);
                     break;
                 case DownloadPageState.ChoosePacks:
                     ChangeState(DownloadPageState.Waiting);
                     List<StorageFile> files = new List<StorageFile>();
-                    foreach ( AlphabetItem item in gwDownLoadItems.SelectedItems)
+                    foreach (AlphabetItem item in gwDownLoadItems.SelectedItems)
                     {
                         var Local = ApplicationData.Current.TemporaryFolder;
-                        var file = await Local.CreateFileAsync(item.ID.ToString()+"_pack",CreationCollisionOption.ReplaceExisting);
+                        var file = await Local.CreateFileAsync(item.ID.ToString() + "_pack", CreationCollisionOption.ReplaceExisting);
                         files.Add(file);
                         string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
-                        AzureStorageProvider.DownloadPackageFromStorage(file, blobName);
-
-                        //while (action.Status != AsyncStatus.Completed)
-                        //{
-
-                        //}
+                        AzureStorageProvider.DownloadPackageFromStorage(file, blobName, FileDownloaded);
                     };
 
-                    Unzip(files, ApplicationData.Current.LocalFolder.Path);
+                    //Unzip(files, ApplicationData.Current.LocalFolder.Path);
 
                     break;
             }
-            
+
         }
 
-        private async void Unzip(List<StorageFile> files, string finalFolder)
+        private void FileDownloaded(object sender, EventArgs args)
         {
-            foreach (StorageFile file in files)
-            {
-                try
-                {
-                      
-                }
-                catch (Exception ex)
-                {
-                }
-            }
+            tbStatus.Text += " 1 more downloaded";
         }
+        //private async void Unzip(List<StorageFile> files, string finalFolder)
+        //{
+        //    foreach (StorageFile file in files)
+        //    {
+        //        try
+        //        {
+        //            Stream stream = await file.OpenStreamForWriteAsync();
+        //            using (SevenZip.)
+        //            {
+        //                zlib.
+        //            }       
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //        }
+        //    }
+
+
     }
 }

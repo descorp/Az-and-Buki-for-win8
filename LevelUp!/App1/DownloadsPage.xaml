@@ -38,7 +38,7 @@
         <Grid Grid.Row="1" Background="{StaticResource AppBarBackgroundThemeBrush}">
             <TextBlock x:Name="tbStatus" HorizontalAlignment="Center" Text="Подожди немного..." Style="{StaticResource PageSubheaderTextStyle}" VerticalAlignment="Top" Margin="0,100,0,40"/>
             <ProgressRing x:Name="pRing" HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Foreground="{StaticResource ABCBackgroundThemeBrush}" IsActive="True"/>
-            <GridView x:Name="gwDownLoadItems" Margin="120,0,0,0" ItemTemplate="{StaticResource gvAlphabetsItemTemplate}" 
+            <GridView x:Name="gwDownLoadItems" Margin="120,0,0,0" 
                       Visibility="Collapsed" 
                       ItemsSource="{Binding Source={StaticResource AlphabetsItemsViewSource}}"
                       SelectionMode="Multiple">
@@ -48,7 +48,32 @@
             				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding HeaderText}" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}"/>
                         </Grid>
             		</DataTemplate>
+            		<DataTemplate x:Key="LoadABCTemplate">
+            			<Grid Width="200" Height="256">
+            				<Grid.RowDefinitions>
+            					<RowDefinition Height="Auto"/>
+            					<RowDefinition Height="Auto"/>
+            				</Grid.RowDefinitions>
+            				<Border BorderBrush="{StaticResource ABCBackgroundThemeBrush}" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+            					<Image Source="{Binding Image}"  HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200" Margin="0,0,0,-2"/>
+            				</Border>
+            				<StackPanel Margin="0,0,0,-1" Orientation="Vertical" Background="{StaticResource ABCTransparentBackgroundThemeBrush}" Opacity="0.75" VerticalAlignment="Bottom">
+            					<TextBlock Text="{Binding Title}"  TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="Black" Style="{StaticResource PageSubheaderTextStyle}" HorizontalAlignment="Center" Margin="0,20" Padding="0" UseLayoutRounding="False"/>
+            				</StackPanel>
+                            <Grid x:Name="gridProgress" Grid.Row="1" Visibility="{Binding DownLoadProcessVisible}" Width="200" Height="56">
+            					<Grid.RowDefinitions>
+            						<RowDefinition Height="Auto"/>
+            						<RowDefinition Height="Auto"/>
+            					</Grid.RowDefinitions>
+                                <ProgressBar x:Name="pbAlphDownload" VerticalAlignment="Center" Margin="5,15" Maximum="{Binding DownLoadProgressMax}" Value="{Binding DownLoadProgessPos}"/>
+                                <TextBlock x:Name="tbAlphDownStat" TextWrapping="Wrap" Text="{Binding DownloadStatus}" Grid.Row="1" Style="{StaticResource TitleTextStyle}" Margin="5,0,0,0"/>
+            				</Grid>
+            			</Grid>
+            		</DataTemplate>
             	</GridView.Resources>
+            	<GridView.ItemTemplate>
+            		<StaticResource ResourceKey="LoadABCTemplate"/>
+            	</GridView.ItemTemplate>
             	<GridView.HeaderTemplate>
             		<StaticResource ResourceKey="HeaderDownLoadTemplate"/>
             	</GridView.HeaderTemplate>

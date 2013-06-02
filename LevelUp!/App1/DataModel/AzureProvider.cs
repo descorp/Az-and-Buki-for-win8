@@ -174,7 +174,7 @@ namespace levelupspace.DataModel
 
             
             EventArgs args = new EventArgs();
-
+            
             if (DownloadCompletedEvent != null) DownloadCompletedEvent(null, args);
         }
 

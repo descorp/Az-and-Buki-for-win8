@@ -109,6 +109,7 @@ namespace levelupspace
 
         private async void btnChooseLang_Click(object sender, RoutedEventArgs e)
         {
+            var res = new ResourceLoader();
             switch (state)
             {
                 case DownloadPageState.ChooseLang:
@@ -120,15 +121,18 @@ namespace levelupspace
                     ChangeState(DownloadPageState.ChoosePacks);
                     break;
                 case DownloadPageState.ChoosePacks:
-                    ChangeState(DownloadPageState.Waiting);
                     List<StorageFile> files = new List<StorageFile>();
-                    foreach (AlphabetItem item in gwDownLoadItems.SelectedItems)
+                    foreach (DownLoadAlphabetItem item in gwDownLoadItems.SelectedItems)
                     {
-                        var Local = ApplicationData.Current.TemporaryFolder;
-                        var file = await Local.CreateFileAsync(item.ID.ToString() + "_pack", CreationCollisionOption.ReplaceExisting);
-                        files.Add(file);
-                        string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
-                        AzureStorageProvider.DownloadPackageFromStorage(file, blobName, FileDownloaded);
+                        item.DownLoadProcessVisible = Windows.UI.Xaml.Visibility.Visible;
+                        item.DownLoadProgressMax = 50;
+                        item.DownLoadProgessPos = 10;
+                        item.DownloadStatus = res.GetString("PackageDownloadMessage"); 
+                        //var Local = ApplicationData.Current.TemporaryFolder;
+                        //var file = await Local.CreateFileAsync(item.ID.ToString() + "_pack", CreationCollisionOption.ReplaceExisting);
+                        //files.Add(file);
+                        //string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
+                        //AzureStorageProvider.DownloadPackageFromStorage(file, blobName, FileDownloaded);
                     };
 
                     //Unzip(files, ApplicationData.Current.LocalFolder.Path);
@@ -142,23 +146,5 @@ namespace levelupspace
         {
             tbStatus.Text += " 1 more downloaded";
         }
-        //private async void Unzip(List<StorageFile> files, string finalFolder)
-        //{
-        //    foreach (StorageFile file in files)
-        //    {
-        //        try
-        //        {
-        //            Stream stream = await file.OpenStreamForWriteAsync();
-        //            using (SevenZip.)
-        //            {
-        //                zlib.
-        //            }       
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //        }
-        //    }
-
-
     }
 }

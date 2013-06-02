@@ -112,8 +112,8 @@
                     <Border BorderBrush="{StaticResource ABCBackgroundThemeBrush}" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <Image Source="{Binding Image}"  HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200" Margin="0,0,0,-2"/>
                     </Border>
-                    <StackPanel Margin="0,0,0,-1" Orientation="Vertical" Background="{StaticResource ABCBackgroundThemeBrush}" Opacity="0.6" VerticalAlignment="Bottom">
-                        <TextBlock Text="{Binding Title}"  TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="Black" Style="{StaticResource TitleTextStyle}" HorizontalAlignment="Center" Margin="0,20" Padding="0" UseLayoutRounding="False"/>
+                    <StackPanel Margin="0,0,0,-1" Orientation="Vertical" Background="{StaticResource ABCBackgroundThemeBrush}" Opacity="0.8" VerticalAlignment="Bottom">
+                        <TextBlock Text="{Binding Title}"  TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="Black" Style="{StaticResource PageSubheaderTextStyle}" HorizontalAlignment="Center" Margin="0,20" Padding="0" UseLayoutRounding="False"/>
                     </StackPanel>
                 </Grid>
             </DataTemplate>

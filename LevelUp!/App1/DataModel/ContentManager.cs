@@ -10,6 +10,9 @@ using System.IO;
 using Windows.Storage;
 using System.Threading.Tasks;
 using levelupspace.DataModel;
+using Windows.UI.Xaml;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 
 namespace levelupspace
@@ -268,18 +271,11 @@ namespace levelupspace
 
     public class AlphabetItem: ABCItem
     {
-        public AlphabetItem(String uniqueId, String title, String imagePath, String description, long ID, bool IsNative=false)
+        public AlphabetItem(String uniqueId, String title, String imagePath, String description, long ID)
             : base(uniqueId, title, imagePath, description)
         {
             this._id = ID;
-            this.Native = IsNative;
             LetterItems.CollectionChanged += ItemsCollectionChanged;
-        }
-
-        private bool Native = false;
-        public bool IsNative
-        {
-            get { return Native; }
         }
 
         private long _id = 0;
@@ -368,7 +364,70 @@ namespace levelupspace
         }
     }
 
+    public class DownLoadAlphabetItem : AlphabetItem, INotifyPropertyChanged
+    {
+        public DownLoadAlphabetItem(String uniqueId, String title, String imagePath, String description, long ID)
+            : base(uniqueId, title, imagePath, description, ID)
+        {
+            this._downloadVisible = Visibility.Collapsed;
+            //this._downloadVisible = Visibility.Visible;
+        }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+
+        private Visibility _downloadVisible;
+        public Visibility DownLoadProcessVisible
+        {
+            get { return this._downloadVisible; }
+            set
+            {
+                this._downloadVisible = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private String _downloadStat;
+        public String DownloadStatus
+        {
+            get { return this._downloadStat; }
+            set 
+            { 
+                this._downloadStat = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private long _LoadPos;
+        public long DownLoadProgessPos
+        {
+            get { return this._LoadPos; }
+            set 
+            {
+                this._LoadPos = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private long _LoadMax;
+        public long DownLoadProgressMax
+        {
+            get { return this._LoadMax; }
+            set 
+            {
+                this._LoadMax = value; 
+                NotifyPropertyChanged();
+            }
+        }
+    }
 
     public sealed class ContentManager
     {
@@ -449,6 +508,8 @@ namespace levelupspace
             return null;
         }
 
+        
+
         public static LetterItem GetItem(string uniqueId)
         {
             // Для небольших наборов данных можно использовать простой линейный поиск
@@ -473,9 +534,9 @@ namespace levelupspace
             return w;            
         }
 
-        public static async Task<IEnumerable<AlphabetItem>> DownloadFromAzureDB()
+        public static async Task<IEnumerable<DownLoadAlphabetItem>> DownloadFromAzureDB()
         {
-            var AItems = new ObservableCollection<AlphabetItem>();
+            var AItems = new ObservableCollection<DownLoadAlphabetItem>();
             
                 var packages = await AzureDBProvider.GetAllPackages();
 
@@ -483,7 +544,7 @@ namespace levelupspace
                 {
                     var local = await AzureDBProvider.GetPackageLocalization(pack, LanguageProvider.CurrentLanguage.LanguageCode);
 
-                    AItems.Add(new AlphabetItem(String.Concat("Alphabet ", pack.Guid.ToString()),
+                    AItems.Add(new DownLoadAlphabetItem(String.Concat("Alphabet ", pack.Guid.ToString()),
                             local.LanguageName,
                             pack.Logo,
                             local.Description,

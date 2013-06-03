@@ -175,10 +175,10 @@ namespace levelupspace.DataModel
             
             EventArgs args = new EventArgs();
 
-            if (DownloadCompletedEvent != null) DownloadCompletedEvent(null, args);
+            if (DownloadCompletedEvent != null) DownloadCompletedEvent(file, args);
         }
 
-        public static async Task<IAsyncAction> DownloadPackageFromStorageWithAction(StorageFile file, String packageName)
+        public static async void DownloadPackageFromStorage(StorageFile file, String packageName, long Length, EventHandler DownloadCompletedEvent = null, EventHandler DownloadPartEvent = null)
         {
             // Retrieve reference to a previously created container.
             CloudBlobContainer container = blobClient.GetContainerReference("packages");
@@ -186,15 +186,31 @@ namespace levelupspace.DataModel
             // Retrieve reference to a blob named "myblob".
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageName);
             // Create or overwrite the "myblob" blob with contents from a local file.
-            IAsyncAction action;
+            long offset = 0;
+            long length = 4096;
             using (var fileStream = await file.OpenStreamForWriteAsync())
             {
-               action = blockBlob.DownloadToStreamAsync(fileStream.AsOutputStream());
-               // action.Completed += new Windows.Foundation.AsyncActionCompletedHandler( );
+                while (offset < Length)
+                {
+                    if (Length - offset < offset)
+                        length = Length - offset;
+                    else 
+                        length += 4096;
+
+                    await blockBlob.DownloadRangeToStreamAsync(fileStream.AsOutputStream(), offset, length);
+                    offset += length;
+                    if (DownloadPartEvent != null) 
+                    {
+                        FilePartDownloadedEvent arg = new FilePartDownloadedEvent(file.DisplayName, offset);
+                        DownloadPartEvent(null, arg);
+                    }
+                }
             }
 
 
-            return action;
+            EventArgs args = new EventArgs();
+
+            if (DownloadCompletedEvent != null) DownloadCompletedEvent(file, args);
         }
 
         public static async void DownloadAvatarFromStorage(StorageFile file, String userID)
@@ -212,5 +228,27 @@ namespace levelupspace.DataModel
 
         }
 
+    }
+
+    public class FilePartDownloadedEvent : EventArgs
+    {
+        string _fileName;
+        public string FileName
+        {
+            get { return _fileName; }
+            set { _fileName = value; }
+        }
+        long _offset;
+        public long Offset
+        {
+            get { return _offset; }
+            set { _offset = value; }
+        }
+
+        public FilePartDownloadedEvent(string FileName, long Offset)
+        {
+            _offset = Offset;
+            _fileName = FileName;
+        }
     }
 }

@@ -128,10 +128,9 @@ namespace levelupspace
                         var file = await Local.CreateFileAsync(item.ID.ToString() + "_pack", CreationCollisionOption.ReplaceExisting);
                         files.Add(file);
                         string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
-                        AzureStorageProvider.DownloadPackageFromStorage(file, blobName, FileDownloaded);
+                        AzureStorageProvider.DownloadPackageFromStorage(file, blobName, 5240420, FileDownloaded, FilePartDownloaded);
+                        //TODO:  remove hardcode and set normal file length
                     };
-
-                    //Unzip(files, ApplicationData.Current.LocalFolder.Path);
 
                     break;
             }
@@ -140,25 +139,18 @@ namespace levelupspace
 
         private void FileDownloaded(object sender, EventArgs args)
         {
-            tbStatus.Text += " 1 more downloaded";
+            var file = sender as StorageFile;
+            tbStatus.Text = file.DisplayName + " downloaded\r\n";
         }
-        //private async void Unzip(List<StorageFile> files, string finalFolder)
-        //{
-        //    foreach (StorageFile file in files)
-        //    {
-        //        try
-        //        {
-        //            Stream stream = await file.OpenStreamForWriteAsync();
-        //            using (SevenZip.)
-        //            {
-        //                zlib.
-        //            }       
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //        }
-        //    }
 
+        private void FilePartDownloaded(object sender, EventArgs args)
+        {
+            var argument = args as FilePartDownloadedEvent;
+            string offsetInKBytes = (argument.Offset / 1024) .ToString() + "KB ";
+            if (argument.Offset > 1024 * 1024) offsetInKBytes = ((double)argument.Offset / 1024 / 1024).ToString("F1") + "MB ";
+            double persent = (double)(argument.Offset) / (double)(5240420) * 100;
+            tbStatus.Text = offsetInKBytes + " downloaded - " + persent.ToString("F1");
+        }
 
     }
 }

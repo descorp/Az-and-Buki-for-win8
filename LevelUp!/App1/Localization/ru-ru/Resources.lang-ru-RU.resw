@@ -300,4 +300,7 @@
   <data name="TuningAppTitle" xml:space="preserve">
     <value>Несколько шагов, чтобы начать</value>
   </data>
+  <data name="PackageDownloadMessage" xml:space="preserve">
+    <value>Загружаю...</value>
+  </data>
 </root>

@@ -26,6 +26,7 @@ namespace levelupspace
     {
         enum DownloadPageState { ChooseLang, ChoosePacks, Waiting };
         private DownloadPageState state;
+        private List<DownLoadAlphabetItem> DownloadingPackagesCollection = new List<DownLoadAlphabetItem>();
 
         private void ChangeState(DownloadPageState state)
         {
@@ -109,6 +110,7 @@ namespace levelupspace
 
         private async void btnChooseLang_Click(object sender, RoutedEventArgs e)
         {
+            var res = new ResourceLoader();
             switch (state)
             {
                 case DownloadPageState.ChooseLang:
@@ -116,20 +118,27 @@ namespace levelupspace
 
                     ChangeState(DownloadPageState.Waiting);
                     var ABCs = await ContentManager.DownloadFromAzureDB();
+                    
                     this.DefaultViewModel["ABCItems"] = ABCs;
                     ChangeState(DownloadPageState.ChoosePacks);
                     break;
                 case DownloadPageState.ChoosePacks:
-                    ChangeState(DownloadPageState.Waiting);
-                    List<StorageFile> files = new List<StorageFile>();
-                    foreach (AlphabetItem item in gwDownLoadItems.SelectedItems)
+                    //List<StorageFile> files = new List<StorageFile>();
+                    
+                    foreach (DownLoadAlphabetItem item in gwDownLoadItems.SelectedItems)
                     {
+                        DownloadingPackagesCollection.Add(item);
                         var Local = ApplicationData.Current.TemporaryFolder;
                         var file = await Local.CreateFileAsync(item.ID.ToString() + "_pack", CreationCollisionOption.ReplaceExisting);
-                        files.Add(file);
+                        //files.Add(file);
                         string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
-                        AzureStorageProvider.DownloadPackageFromStorage(file, blobName, 5240420, FileDownloaded, FilePartDownloaded);
-                        //TODO:  remove hardcode and set normal file length
+                        //long blobSize = await AzureDBProvider.GetBlobSize((int)item.ID);
+                        item.FileName = file.DisplayName;
+                        AzureStorageProvider.DownloadPackageFromStorage(file, blobName, item.DownLoadProgressMax, FileDownloaded, FilePartDownloaded);
+                        item.DownLoadProcessVisible = Windows.UI.Xaml.Visibility.Visible;
+                        item.DownLoadProgessPos = 0;
+                        item.DownloadStatus = res.GetString("PackageDownloadMessage"); 
+                        
                     };
 
                     break;
@@ -139,18 +148,22 @@ namespace levelupspace
 
         private void FileDownloaded(object sender, EventArgs args)
         {
-            var file = sender as StorageFile;
-            tbStatus.Text = file.DisplayName + " downloaded\r\n";
+            var argument = args as FilePartDownloadedEvent;
+            var item = DownloadingPackagesCollection.Single(process => process.FileName == argument.FileName);
+            item.DownLoadProcessVisible = Windows.UI.Xaml.Visibility.Collapsed;
+            item.DownloadStatus = "Archivating . . .";
         }
+
 
         private void FilePartDownloaded(object sender, EventArgs args)
         {
             var argument = args as FilePartDownloadedEvent;
-            string offsetInKBytes = (argument.Offset / 1024) .ToString() + "KB ";
-            if (argument.Offset > 1024 * 1024) offsetInKBytes = ((double)argument.Offset / 1024 / 1024).ToString("F1") + "MB ";
-            double persent = (double)(argument.Offset) / (double)(5240420) * 100;
-            tbStatus.Text = offsetInKBytes + " downloaded - " + persent.ToString("F1");
+            var item = DownloadingPackagesCollection.Single(process => process.FileName == argument.FileName);
+            item.DownLoadProgessPos = argument.Offset;
+            //string offsetInKBytes = (argument.Offset / 1024) .ToString() + "KB ";
+            //if (argument.Offset > 1024 * 1024) offsetInKBytes = ((double)argument.Offset / 1024 / 1024).ToString("F1") + "MB ";
+            //double persent = (double)(argument.Offset) / (double)(5240420) * 100;
+            //tbStatus.Text = offsetInKBytes + " downloaded - " + persent.ToString("F1");
         }
-
     }
 }

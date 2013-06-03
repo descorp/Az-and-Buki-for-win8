@@ -300,4 +300,7 @@
   <data name="TuningAppTitle" xml:space="preserve">
     <value>Several settings before start</value>
   </data>
+  <data name="PackageDownloadMessage" xml:space="preserve">
+    <value>Downloading...</value>
+  </data>
 </root>

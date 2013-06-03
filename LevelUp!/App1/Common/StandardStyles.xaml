@@ -1839,7 +1839,7 @@
         </Setter>
     </Style>
     <SolidColorBrush x:Key="ABCBackgroundThemeBrush" Color="#FF73ACFF"/>
-    <SolidColorBrush x:Key="ABCTransparentBackgroundThemeBrush" Color="#FF73ACFF" Opacity="90"/>
+    <SolidColorBrush x:Key="ABCTransparentBackgroundThemeBrush" Color="#FF73ACFF" Opacity="95"/>
     
     <Style x:Key="VKShareButtonStyle" TargetType="Button">
     	<Setter Property="MinWidth" Value="0"/>

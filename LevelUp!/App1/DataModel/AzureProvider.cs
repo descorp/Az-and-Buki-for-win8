@@ -91,6 +91,17 @@ namespace levelupspace.DataModel
             return fullPath.Remove(0,lastSlash + 1);
         }
 
+        /// <summary>
+        /// Returns Size of blobe containes package
+        /// </summary>
+        /// <param name="packageID">Package ID in table</param>
+        /// <returns>Size of </returns>
+        public static async Task<long> GetBlobSize(int packageID)
+        {
+            List<Alphabet> list = await AlphabetTable.Where(pack => pack.Id == packageID).ToListAsync();
+            return list.First().Length;
+        }
+
         public async static Task<AlphabetLocalization> GetPackageLocalization(Alphabet alphabet, String LocalizationId)
         {
             AlphabetLocalizationTable = MobileService.GetTable<AlphabetLocalization>();
@@ -174,8 +185,8 @@ namespace levelupspace.DataModel
 
             
             EventArgs args = new EventArgs();
-
-            if (DownloadCompletedEvent != null) DownloadCompletedEvent(file, args);
+            
+            if (DownloadCompletedEvent != null) DownloadCompletedEvent(null, args);
         }
 
         public static async void DownloadPackageFromStorage(StorageFile file, String packageName, long Length, EventHandler DownloadCompletedEvent = null, EventHandler DownloadPartEvent = null)

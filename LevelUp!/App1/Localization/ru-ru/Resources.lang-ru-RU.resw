@@ -303,4 +303,13 @@
   <data name="PackageDownloadMessage" xml:space="preserve">
     <value>Загружаю...</value>
   </data>
+  <data name="CaptionPackage.Text" xml:space="preserve">
+    <value>Название:</value>
+  </data>
+  <data name="DescriptionPackage.Text" xml:space="preserve">
+    <value>Описание:</value>
+  </data>
+  <data name="SizePackage.Text" xml:space="preserve">
+    <value>Размер:</value>
+  </data>
 </root>

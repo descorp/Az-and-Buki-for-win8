@@ -24,7 +24,7 @@ namespace levelupspace
     /// </summary>
     public sealed partial class DownloadsPage : levelupspace.Common.LayoutAwarePage
     {
-        enum DownloadPageState { ChooseLang, ChoosePacks, Waiting };
+        enum DownloadPageState { ChooseLang, ChoosePacks, Waiting, Downloading };
         private DownloadPageState state;
 
         private void ChangeState(DownloadPageState state)
@@ -57,6 +57,10 @@ namespace levelupspace
                     gwDownLoadItems.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     btnChooseLang.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
+                    break;
+                case DownloadPageState.Downloading:
+                    btnChooseLang.IsEnabled = false;
+                    gwDownLoadItems.SelectionMode = ListViewSelectionMode.None;
                     break;
             }
         }
@@ -122,8 +126,9 @@ namespace levelupspace
                     break;
                 case DownloadPageState.ChoosePacks:
                     List<StorageFile> files = new List<StorageFile>();
+                    
                     foreach (DownLoadAlphabetItem item in gwDownLoadItems.SelectedItems)
-                    {
+                    {                        
                         item.DownLoadProcessVisible = Windows.UI.Xaml.Visibility.Visible;
                         item.DownLoadProgressMax = 50;
                         item.DownLoadProgessPos = 10;
@@ -134,6 +139,7 @@ namespace levelupspace
                         //string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
                         //AzureStorageProvider.DownloadPackageFromStorage(file, blobName, FileDownloaded);
                     };
+                    ChangeState(DownloadPageState.Downloading);
 
                     //Unzip(files, ApplicationData.Current.LocalFolder.Path);
 

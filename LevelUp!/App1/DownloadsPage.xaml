@@ -49,7 +49,11 @@
                         </Grid>
             		</DataTemplate>
             		<DataTemplate x:Key="LoadABCTemplate">
-            			<Grid Width="200" Height="256">
+            			<Grid Width="500" Height="246">
+            				<Grid.ColumnDefinitions>
+            					<ColumnDefinition Width="Auto"/>
+            					<ColumnDefinition/>
+            				</Grid.ColumnDefinitions>
             				<Grid.RowDefinitions>
             					<RowDefinition Height="Auto"/>
             					<RowDefinition Height="Auto"/>
@@ -57,17 +61,33 @@
             				<Border BorderBrush="{StaticResource ABCBackgroundThemeBrush}" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top">
             					<Image Source="{Binding Image}"  HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200" Margin="0,0,0,-2"/>
             				</Border>
-            				<StackPanel Margin="0,0,0,-1" Orientation="Vertical" Background="{StaticResource ABCTransparentBackgroundThemeBrush}" Opacity="0.75" VerticalAlignment="Bottom">
+            				<StackPanel Margin="0,0,0,-1" Orientation="Vertical" Background="{StaticResource ABCTransparentBackgroundThemeBrush}" Opacity="0.75" VerticalAlignment="Bottom" d:IsHidden="True">
             					<TextBlock Text="{Binding Title}"  TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="Black" Style="{StaticResource PageSubheaderTextStyle}" HorizontalAlignment="Center" Margin="0,20" Padding="0" UseLayoutRounding="False"/>
             				</StackPanel>
-                            <Grid x:Name="gridProgress" Grid.Row="1" Visibility="{Binding DownLoadProcessVisible}" Width="200" Height="56">
+                            <Grid x:Name="gridProgress" Grid.Row="1" Visibility="{Binding DownLoadProcessVisible}" Grid.ColumnSpan="2">
             					<Grid.RowDefinitions>
             						<RowDefinition Height="Auto"/>
             						<RowDefinition Height="Auto"/>
             					</Grid.RowDefinitions>
-                                <ProgressBar x:Name="pbAlphDownload" VerticalAlignment="Center" Margin="5,15" Maximum="{Binding DownLoadProgressMax}" Value="{Binding DownLoadProgessPos}"/>
+                                <ProgressBar x:Name="pbAlphDownload" VerticalAlignment="Center" Margin="10" Maximum="{Binding DownLoadProgressMax}" Value="{Binding DownLoadProgessPos}"/>
                                 <TextBlock x:Name="tbAlphDownStat" TextWrapping="Wrap" Text="{Binding DownloadStatus}" Grid.Row="1" Style="{StaticResource TitleTextStyle}" Margin="5,0,0,0"/>
             				</Grid>
+                            <Grid Grid.Column="1" Margin="15,0,0,0">
+                            	<Grid.ColumnDefinitions>
+                            		<ColumnDefinition Width="Auto"/>
+                            		<ColumnDefinition/>
+                            	</Grid.ColumnDefinitions>
+                            	<StackPanel Margin="0" Orientation="Vertical">
+                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" x:Uid="CaptionPackage" Text="Название:" VerticalAlignment="Top" Margin="2,2,2,10" Style="{StaticResource TitleTextStyle}" TextAlignment="{StaticResource FormTextAlignment}"/>
+                                    <TextBlock TextWrapping="Wrap" x:Uid="SizePackage" Text="Размер:" Margin="2,2,2,10" Style="{StaticResource TitleTextStyle}" TextAlignment="{StaticResource FormTextAlignment}"/>
+                                    <TextBlock HorizontalAlignment="Left" x:Uid="DescriptionPackage" TextWrapping="Wrap" Text="Описание:" VerticalAlignment="Top" Margin="2,2,2,10" Style="{StaticResource TitleTextStyle}" TextAlignment="{StaticResource FormTextAlignment}"/>
+                            	</StackPanel>
+                            	<StackPanel Margin="10,0" Orientation="Vertical" Grid.Column="2">
+                            		<TextBlock x:Name="tbName" TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource ItemTextStyle}" Margin="2,2,2,10"/>
+                            		<TextBlock x:Name="tbSize" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Style="{StaticResource ItemTextStyle}" Margin="2,2,2,10"/>
+                            		<TextBlock x:Name="tbDescription" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Description}" VerticalAlignment="Top" Style="{StaticResource ItemTextStyle}" Margin="2,2,2,10"/>
+                            	</StackPanel>
+                            </Grid>
             			</Grid>
             		</DataTemplate>
             	</GridView.Resources>
@@ -79,7 +99,7 @@
             	</GridView.HeaderTemplate>
             </GridView>
             <ComboBox x:Name="cbLangs" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" ItemTemplate="{StaticResource LangStringTemplate}" Padding="8,5" SelectionChanged="LocalizationSelected"  TabIndex="6"/>
-            <Button x:Name="btnChooseLang" x:Uid="btnNext" Click="btnChooseLang_Click" Style="{StaticResource ButtonABCStyle}" Background="{StaticResource ABCBackgroundThemeBrush}" HorizontalAlignment="Right" Margin="0,0,200,100" Width="100" Height="40" Content="Далее" VerticalAlignment="Bottom" />
+            <Button x:Name="btnChooseLang" x:Uid="btnNext" Click="btnChooseLang_Click" Style="{StaticResource ButtonABCStyle}" Background="{StaticResource ABCBackgroundThemeBrush}" HorizontalAlignment="Right" Margin="0,0,120,60" Width="100" Height="40" Content="Далее" VerticalAlignment="Bottom" />
         </Grid>
 
         <VisualStateManager.VisualStateGroups>

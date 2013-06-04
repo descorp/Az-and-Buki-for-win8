@@ -91,6 +91,17 @@ namespace levelupspace.DataModel
             return fullPath.Remove(0,lastSlash + 1);
         }
 
+        /// <summary>
+        /// Returns Size of blobe containes package
+        /// </summary>
+        /// <param name="packageID">Package ID in table</param>
+        /// <returns>Size of </returns>
+        public static async Task<long> GetBlobSize(int packageID)
+        {
+            List<Alphabet> list = await AlphabetTable.Where(pack => pack.Id == packageID).ToListAsync();
+            return list.First().Length;
+        }
+
         public async static Task<AlphabetLocalization> GetPackageLocalization(Alphabet alphabet, String LocalizationId)
         {
             AlphabetLocalizationTable = MobileService.GetTable<AlphabetLocalization>();
@@ -172,13 +183,12 @@ namespace levelupspace.DataModel
                 await blockBlob.DownloadToStreamAsync(fileStream.AsOutputStream());
             }
 
-            
             EventArgs args = new EventArgs();
             
             if (DownloadCompletedEvent != null) DownloadCompletedEvent(null, args);
         }
 
-        public static async Task<IAsyncAction> DownloadPackageFromStorageWithAction(StorageFile file, String packageName)
+        public static async void DownloadPackageFromStorage(StorageFile file, String packageName, long Length, EventHandler DownloadCompletedEvent = null, EventHandler DownloadPartEvent = null)
         {
             // Retrieve reference to a previously created container.
             CloudBlobContainer container = blobClient.GetContainerReference("packages");
@@ -186,15 +196,29 @@ namespace levelupspace.DataModel
             // Retrieve reference to a blob named "myblob".
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageName);
             // Create or overwrite the "myblob" blob with contents from a local file.
-            IAsyncAction action;
+            long offset = 0;
+            long length = Length / 100;
+            if (length < 4096)
+                length = 4096;
             using (var fileStream = await file.OpenStreamForWriteAsync())
             {
-               action = blockBlob.DownloadToStreamAsync(fileStream.AsOutputStream());
-               // action.Completed += new Windows.Foundation.AsyncActionCompletedHandler( );
+                while (offset < Length)
+                {
+                    if (Length - length < offset)
+                        length = Length - offset;
+
+                    await blockBlob.DownloadRangeToStreamAsync(fileStream.AsOutputStream(), offset, length);
+                    offset += length;
+                    if (DownloadPartEvent != null)
+                    {
+                        DownloadPartEvent(null, new FilePartDownloadedEvent(file.DisplayName, 0));
+                    }
+                    
+                }
             }
 
-
-            return action;
+            FilePartDownloadedEvent args = new FilePartDownloadedEvent(file.DisplayName, offset);
+            if (DownloadCompletedEvent != null) DownloadCompletedEvent(file, args);
         }
 
         public static async void DownloadAvatarFromStorage(StorageFile file, String userID)
@@ -212,5 +236,27 @@ namespace levelupspace.DataModel
 
         }
 
+    }
+
+    public class FilePartDownloadedEvent : EventArgs
+    {
+        string _fileName;
+        public string FileName
+        {
+            get { return _fileName; }
+            set { _fileName = value; }
+        }
+        long _offset;
+        public long Offset
+        {
+            get { return _offset; }
+            set { _offset = value; }
+        }
+
+        public FilePartDownloadedEvent(string FileName, long Offset)
+        {
+            _offset = Offset;
+            _fileName = FileName;
+        }
     }
 }

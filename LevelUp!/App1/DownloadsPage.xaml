@@ -84,7 +84,7 @@
                             	</StackPanel>
                             	<StackPanel Margin="10,0" Orientation="Vertical" Grid.Column="2">
                             		<TextBlock x:Name="tbName" TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource ItemTextStyle}" Margin="2,2,2,10"/>
-                            		<TextBlock x:Name="tbSize" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Style="{StaticResource ItemTextStyle}" Margin="2,2,2,10"/>
+                                    <TextBlock x:Name="tbSize" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SizeInBytes}" VerticalAlignment="Top" Style="{StaticResource ItemTextStyle}" Margin="2,2,2,10"/>
                             		<TextBlock x:Name="tbDescription" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Description}" VerticalAlignment="Top" Style="{StaticResource ItemTextStyle}" Margin="2,2,2,10"/>
                             	</StackPanel>
                             </Grid>

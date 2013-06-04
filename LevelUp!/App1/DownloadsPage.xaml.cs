@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -28,6 +29,7 @@ namespace levelupspace
     {
         
         private DownloadPageState state;
+        private List<DownLoadAlphabetItem> DownloadingPackagesCollection = new List<DownLoadAlphabetItem>();
 
         private async void ChangeState(DownloadPageState state)
         {
@@ -36,6 +38,7 @@ namespace levelupspace
             switch (state)
             {
                 case DownloadPageState.ChooseLang:
+
                     cbLangs.ItemsSource = LanguageProvider.AllLanguages;
                     cbLangs.SelectedIndex = 0;
                     cbLangs.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -127,29 +130,25 @@ namespace levelupspace
                 case DownloadPageState.ChooseLang:
                     ChangeState(DownloadPageState.Waiting);
                     string localization = cbLangs.SelectedItem.ToString();
-
-                                       
+                    var ABCs = await ContentManager.DownloadFromAzureDB();
+                    this.DefaultViewModel["ABCItems"] = ABCs;
                     ChangeState(DownloadPageState.ChoosePacks);
                     break;
                 case DownloadPageState.ChoosePacks:
-                    List<StorageFile> files = new List<StorageFile>();
-                    
                     foreach (DownLoadAlphabetItem item in gwDownLoadItems.SelectedItems)
-                    {                        
+                    {
+                        DownloadingPackagesCollection.Add(item);
+                        var Local = ApplicationData.Current.TemporaryFolder;
+                        var file = await Local.CreateFileAsync(item.ID.ToString() + "_pack", CreationCollisionOption.ReplaceExisting);
+                        string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
+                        item.FileName = file.DisplayName;
+                        AzureStorageProvider.DownloadPackageFromStorage(file, blobName, item.DownLoadProgressMax, FileDownloaded, FilePartDownloaded);
+                        item.DownLoadProgressMax = 102;
                         item.DownLoadProcessVisible = Windows.UI.Xaml.Visibility.Visible;
-                        item.DownLoadProgressMax = 50;
-                        item.DownLoadProgessPos = 10;
+                        item.DownLoadProgessPos = 0;
                         item.DownloadStatus = res.GetString("PackageDownloadMessage"); 
-                        //var Local = ApplicationData.Current.TemporaryFolder;
-                        //var file = await Local.CreateFileAsync(item.ID.ToString() + "_pack", CreationCollisionOption.ReplaceExisting);
-                        //files.Add(file);
-                        //string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
-                        //AzureStorageProvider.DownloadPackageFromStorage(file, blobName, FileDownloaded);
                     };
                     ChangeState(DownloadPageState.Downloading);
-
-                    //Unzip(files, ApplicationData.Current.LocalFolder.Path);
-
                     break;
             }
 
@@ -157,7 +156,31 @@ namespace levelupspace
 
         private void FileDownloaded(object sender, EventArgs args)
         {
-            tbStatus.Text += " 1 more downloaded";
+            var argument = args as FilePartDownloadedEvent;
+            var item = DownloadingPackagesCollection.Single(process => process.FileName == argument.FileName);
+            //item.DownLoadProcessVisible = Windows.UI.Xaml.Visibility.Collapsed;
+            //TODO: add localization
+            item.DownloadStatus = "Installing..";
+            item.DownLoadProgessPos++;
+            UnZIPer.Unzip(sender as StorageFile, FileUnZIPed);
+        }
+
+
+        private void FilePartDownloaded(object sender, EventArgs args)
+        {
+            var argument = args as FilePartDownloadedEvent;
+            var item = DownloadingPackagesCollection.Single(process => process.FileName == argument.FileName);
+            item.DownLoadProgessPos++;
+        }
+
+        private void FileUnZIPed(object sender, EventArgs args)
+        {
+            var argument = args as FilePartDownloadedEvent;
+            var item = DownloadingPackagesCollection.Single(process => process.FileName == argument.FileName);
+            item.DownLoadProgessPos++;
+            //TODO: add localization
+            item.DownloadStatus = "Done";
+            //TODO: add SQL insert
         }
     }
 }

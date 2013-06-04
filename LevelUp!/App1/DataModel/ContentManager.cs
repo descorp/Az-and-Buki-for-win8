@@ -366,11 +366,11 @@ namespace levelupspace
 
     public class DownLoadAlphabetItem : AlphabetItem, INotifyPropertyChanged
     {
-        public DownLoadAlphabetItem(String uniqueId, String title, String imagePath, String description, long ID)
+        public DownLoadAlphabetItem(String uniqueId, String title, String imagePath, String description, long ID, long Length)
             : base(uniqueId, title, imagePath, description, ID)
         {
             this._downloadVisible = Visibility.Collapsed;
-            //this._downloadVisible = Visibility.Visible;
+            this.DownLoadProgressMax = Length;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -381,6 +381,24 @@ namespace levelupspace
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public String SizeInBytes
+        {
+            get
+            {
+                string offsetInKBytes = (this._LoadMax / 1024).ToString() + "KB ";
+                if (this._LoadMax > 1024 * 1024)
+                    return ((double)this._LoadMax / 1024 / 1024).ToString("F1") + "MB ";
+                else return offsetInKBytes;
+            }
+        }
+
+        private string _fileName;
+        public string FileName
+        {
+            get { return _fileName; }
+            set { _fileName = value; }
         }
 
 
@@ -555,7 +573,8 @@ namespace levelupspace
                             local.LanguageName,
                             pack.Logo,
                             local.Description,
-                            pack.Guid
+                            pack.Guid,
+                            pack.Length
                         ));
                 }
 

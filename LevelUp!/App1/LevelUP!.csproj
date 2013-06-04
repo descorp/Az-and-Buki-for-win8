@@ -134,6 +134,7 @@
     <Compile Include="DataModel\HttpProvider.cs" />
     <Compile Include="DataModel\LanguageItem.cs" />
     <Compile Include="DataModel\SocialProvider.cs" />
+    <Compile Include="DataModel\UnZIPer.cs" />
     <Compile Include="DataModel\UserManager.cs" />
     <Compile Include="DataModel\VKProvider.cs" />
     <Compile Include="DownloadsPage.xaml.cs">

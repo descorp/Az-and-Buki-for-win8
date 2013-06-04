@@ -37,6 +37,13 @@ namespace levelupspace.DataModel
             set;
         }
 
+        [JsonProperty(PropertyName = "Length")]
+        public long Length
+        {
+            get;
+            set;
+        }
+
     }
 
     public class AlphabetLocalization

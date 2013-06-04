@@ -315,4 +315,10 @@
   <data name="SizePackage.Text" xml:space="preserve">
     <value>Размер:</value>
   </data>
+  <data name="PackageInstalledMessage" xml:space="preserve">
+    <value>Завершено</value>
+  </data>
+  <data name="PackageInstallingMessage" xml:space="preserve">
+    <value>Установка...</value>
+  </data>
 </root>

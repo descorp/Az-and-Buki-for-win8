@@ -394,11 +394,11 @@ namespace levelupspace
             }
         }
 
-        private string _fileName;
-        public string FileName
+        private string _packageFileName;
+        public string PackageFileName
         {
-            get { return _fileName; }
-            set { _fileName = value; }
+            get { return _packageFileName; }
+            set { _packageFileName = value; }
         }
 
 

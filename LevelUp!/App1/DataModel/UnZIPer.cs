@@ -111,7 +111,7 @@ namespace levelupspace.DataModel
             }
 
             if (EventHandler != null)
-                EventHandler(null, new FilePartDownloadedEvent(file.Name, 0));
+                EventHandler(null, new FileUnzippedEventArgs(file.Name, folderTree.First().Value.Path));
         }
     }
 

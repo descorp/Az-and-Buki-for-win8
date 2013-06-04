@@ -130,8 +130,6 @@ namespace levelupspace
                 case DownloadPageState.ChooseLang:
                     ChangeState(DownloadPageState.Waiting);
                     string localization = cbLangs.SelectedItem.ToString();
-                    var ABCs = await ContentManager.DownloadFromAzureDB();
-                    this.DefaultViewModel["ABCItems"] = ABCs;
                     ChangeState(DownloadPageState.ChoosePacks);
                     break;
                 case DownloadPageState.ChoosePacks:
@@ -141,9 +139,10 @@ namespace levelupspace
                         var Local = ApplicationData.Current.TemporaryFolder;
                         var file = await Local.CreateFileAsync(item.ID.ToString() + "_pack", CreationCollisionOption.ReplaceExisting);
                         string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
-                        item.FileName = file.DisplayName;
-                        AzureStorageProvider.DownloadPackageFromStorage(file, blobName, item.DownLoadProgressMax, FileDownloaded, FilePartDownloaded);
-                        item.DownLoadProgressMax = 102;
+                        item.PackageFileName = file.DisplayName;
+                        int numberOfParts = 20;
+                        AzureStorageProvider.DownloadPackageFromStorage(file, blobName, numberOfParts, item.DownLoadProgressMax, FileDownloaded, FilePartDownloaded);
+                        item.DownLoadProgressMax = numberOfParts + 3;
                         item.DownLoadProcessVisible = Windows.UI.Xaml.Visibility.Visible;
                         item.DownLoadProgessPos = 0;
                         item.DownloadStatus = res.GetString("PackageDownloadMessage"); 
@@ -156,11 +155,10 @@ namespace levelupspace
 
         private void FileDownloaded(object sender, EventArgs args)
         {
-            var argument = args as FilePartDownloadedEvent;
-            var item = DownloadingPackagesCollection.Single(process => process.FileName == argument.FileName);
-            //item.DownLoadProcessVisible = Windows.UI.Xaml.Visibility.Collapsed;
-            //TODO: add localization
-            item.DownloadStatus = "Installing..";
+            var res = new ResourceLoader();
+            var argument = args as FilePartDownloadedEventArgs;
+            var item = DownloadingPackagesCollection.Single(process => process.PackageFileName == argument.FileName);            
+            item.DownloadStatus = res.GetString("PackageInstallingMessage");
             item.DownLoadProgessPos++;
             UnZIPer.Unzip(sender as StorageFile, FileUnZIPed);
         }
@@ -168,19 +166,22 @@ namespace levelupspace
 
         private void FilePartDownloaded(object sender, EventArgs args)
         {
-            var argument = args as FilePartDownloadedEvent;
-            var item = DownloadingPackagesCollection.Single(process => process.FileName == argument.FileName);
+            var argument = args as FilePartDownloadedEventArgs;
+            var item = DownloadingPackagesCollection.Single(process => process.PackageFileName == argument.FileName);
             item.DownLoadProgessPos++;
         }
 
         private void FileUnZIPed(object sender, EventArgs args)
         {
-            var argument = args as FilePartDownloadedEvent;
-            var item = DownloadingPackagesCollection.Single(process => process.FileName == argument.FileName);
-            item.DownLoadProgessPos++;
-            //TODO: add localization
-            item.DownloadStatus = "Done";
-            //TODO: add SQL insert
+            var res = new ResourceLoader();
+            var argument = args as FileUnzippedEventArgs;
+            var item = DownloadingPackagesCollection.Single(process => process.PackageFileName == argument.FileName);
+            item.DownLoadProgessPos++;            
+            item.DownloadStatus = res.GetString("PackageInstalledMessage");
+
+            DBFiller.CreateDB(DBconnectionPath.Local);
+            
+            DBFiller.LoadPackageToDB(argument.FolderPath, DBconnectionPath.Local);
         }
     }
 }

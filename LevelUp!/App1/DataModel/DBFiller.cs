@@ -14,15 +14,10 @@ namespace levelupspace.DataModel
         {
             
             var folder = await StorageFolder.GetFolderFromPathAsync(PathToPack);
-            var file = await folder.GetFileAsync("letters.sql");
-            var LetterStrings = await FileIO.ReadLinesAsync(file);
-            
-            CreateDB(DBPath);
-            DBFiller.InsertStringsToDB(LetterStrings, DBPath);
-
-            file = await folder.GetFileAsync("words.sql");
-            var WordStrings = await FileIO.ReadLinesAsync(file);
-            DBFiller.InsertStringsToDB(WordStrings, DBPath);
+            var file = await folder.GetFileAsync("input.sql");
+            var SQLStrings = await FileIO.ReadLinesAsync(file);
+           
+            DBFiller.InsertStringsToDB(SQLStrings, DBPath);           
                       
         }
 

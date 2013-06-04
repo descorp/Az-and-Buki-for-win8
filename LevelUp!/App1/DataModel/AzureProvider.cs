@@ -188,16 +188,16 @@ namespace levelupspace.DataModel
             if (DownloadCompletedEvent != null) DownloadCompletedEvent(null, args);
         }
 
-        public static async void DownloadPackageFromStorage(StorageFile file, String packageName, long Length, EventHandler DownloadCompletedEvent = null, EventHandler DownloadPartEvent = null)
+        public static async void DownloadPackageFromStorage(StorageFile file, String packageNameInBlob, int numOfParts, long Length, EventHandler DownloadCompletedEvent = null, EventHandler DownloadPartEvent = null)
         {
             // Retrieve reference to a previously created container.
             CloudBlobContainer container = blobClient.GetContainerReference("packages");
 
             // Retrieve reference to a blob named "myblob".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageName);
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageNameInBlob);
             // Create or overwrite the "myblob" blob with contents from a local file.
             long offset = 0;
-            long length = Length / 100;
+            long length = Length / numOfParts;
             if (length < 4096)
                 length = 4096;
             using (var fileStream = await file.OpenStreamForWriteAsync())
@@ -211,13 +211,13 @@ namespace levelupspace.DataModel
                     offset += length;
                     if (DownloadPartEvent != null)
                     {
-                        DownloadPartEvent(null, new FilePartDownloadedEvent(file.DisplayName, 0));
+                        DownloadPartEvent(null, new FilePartDownloadedEventArgs(file.DisplayName, 0));
                     }
                     
                 }
             }
 
-            FilePartDownloadedEvent args = new FilePartDownloadedEvent(file.DisplayName, offset);
+            FilePartDownloadedEventArgs args = new FilePartDownloadedEventArgs(file.DisplayName, offset);
             if (DownloadCompletedEvent != null) DownloadCompletedEvent(file, args);
         }
 
@@ -238,7 +238,7 @@ namespace levelupspace.DataModel
 
     }
 
-    public class FilePartDownloadedEvent : EventArgs
+    public class FilePartDownloadedEventArgs : EventArgs
     {
         string _fileName;
         public string FileName
@@ -253,10 +253,43 @@ namespace levelupspace.DataModel
             set { _offset = value; }
         }
 
-        public FilePartDownloadedEvent(string FileName, long Offset)
+        public FilePartDownloadedEventArgs(string FileName, long Offset)
         {
             _offset = Offset;
             _fileName = FileName;
         }
+
     }
+
+    public class FileUnzippedEventArgs : EventArgs
+    {
+        string _fileName;
+        public string FileName
+        {
+            get { return _fileName; }
+            set { _fileName = value; }
+        }
+
+        public FileUnzippedEventArgs(string FileName, string FolderPath)
+        {
+            _fileName = FileName;
+            this._folderPath = FolderPath;
+        }
+
+        private String _folderPath;
+
+        public String FolderPath
+        {
+            get
+            {
+                return this._folderPath;
+            }
+
+            set
+            {
+                this._folderPath = value;
+            }
+        }
+    }
+
 }

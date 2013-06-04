@@ -371,7 +371,6 @@ namespace levelupspace
         {
             this._downloadVisible = Visibility.Collapsed;
             this.DownLoadProgressMax = Length;
-            //this._downloadVisible = Visibility.Visible;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -381,6 +380,17 @@ namespace levelupspace
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public String SizeInBytes
+        {
+            get
+            {
+                string offsetInKBytes = (this._LoadMax / 1024).ToString() + "KB ";
+                if (this._LoadMax > 1024 * 1024)
+                    return ((double)this._LoadMax / 1024 / 1024).ToString("F1") + "MB ";
+                else return offsetInKBytes;
             }
         }
 

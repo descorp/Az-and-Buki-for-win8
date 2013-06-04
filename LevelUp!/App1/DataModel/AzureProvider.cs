@@ -183,7 +183,6 @@ namespace levelupspace.DataModel
                 await blockBlob.DownloadToStreamAsync(fileStream.AsOutputStream());
             }
 
-            
             EventArgs args = new EventArgs();
             
             if (DownloadCompletedEvent != null) DownloadCompletedEvent(null, args);
@@ -198,29 +197,27 @@ namespace levelupspace.DataModel
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageName);
             // Create or overwrite the "myblob" blob with contents from a local file.
             long offset = 0;
-            long length = 4096;
+            long length = Length / 100;
+            if (length < 4096)
+                length = 4096;
             using (var fileStream = await file.OpenStreamForWriteAsync())
             {
                 while (offset < Length)
                 {
-                    if (Length - offset < offset)
+                    if (Length - length < offset)
                         length = Length - offset;
-                    else 
-                        length += 4096;
 
                     await blockBlob.DownloadRangeToStreamAsync(fileStream.AsOutputStream(), offset, length);
                     offset += length;
-                    if (DownloadPartEvent != null) 
+                    if (DownloadPartEvent != null)
                     {
-                        FilePartDownloadedEvent arg = new FilePartDownloadedEvent(file.DisplayName, offset);
-                        DownloadPartEvent(null, arg);
+                        DownloadPartEvent(null, new FilePartDownloadedEvent(file.DisplayName, 0));
                     }
+                    
                 }
             }
 
-
-            EventArgs args = new EventArgs();
-
+            FilePartDownloadedEvent args = new FilePartDownloadedEvent(file.DisplayName, offset);
             if (DownloadCompletedEvent != null) DownloadCompletedEvent(file, args);
         }
 

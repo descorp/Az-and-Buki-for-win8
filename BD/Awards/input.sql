@@ -1,0 +1,12 @@
+﻿ INSERT INTO [AwardLocalization]( AwardId     ,LanguageID     ,AwardName     ,AwardDescription ) VALUES (1     ,"ru-RU"     ,"Леденец"     ,"За первые успехи" ); 
+ INSERT INTO [AwardLocalization]( AwardId     ,LanguageID     ,AwardName     ,AwardDescription ) VALUES (2     ,"ru-RU"     ,"Мишка"     ,"За старание" ); 
+ INSERT INTO [AwardLocalization]( AwardId     ,LanguageID     ,AwardName     ,AwardDescription ) VALUES (4     ,"ru-RU"     ,"Медаль умника"     ,"За хорошие успехи в изучении английского" ); 
+ INSERT INTO [AwardLocalization]( AwardId     ,LanguageID     ,AwardName     ,AwardDescription ) VALUES (3     ,"ru-RU"     ,"Кубок гения"     ,"За идеальное знание английского алфавита" ); 
+ INSERT INTO [AwardLocalization]( AwardId     ,LanguageID     ,AwardName     ,AwardDescription ) VALUES (1     ,"en-US"     ,"Lollipop"     ,"For the first steps in knowledge" ); 
+ INSERT INTO [AwardLocalization]( AwardId     ,LanguageID     ,AwardName     ,AwardDescription ) VALUES (2     ,"en-US"     ,"Teddy bear"     ,"For enthusiastic diligence" ); 
+ INSERT INTO [AwardLocalization]( AwardId     ,LanguageID     ,AwardName     ,AwardDescription ) VALUES (4     ,"en-US"     ,"The medal of bright mind"     ,"For great success in learning english alphabet" ); 
+ INSERT INTO [AwardLocalization]( AwardId     ,LanguageID     ,AwardName     ,AwardDescription ) VALUES (3     ,"en-US"     ,"The cup of genius"     ,"For perfect results in learning english alphabet" ); 
+ INSERT INTO [Award](LogoPath,     Rate) VALUES ("Awards/A1.png",     2);
+ INSERT INTO [Award](LogoPath,     Rate) VALUES ("Awards/A2.png",     3);
+ INSERT INTO [Award](LogoPath,     Rate) VALUES ("Awards/A3.png",     5);
+ INSERT INTO [Award](LogoPath,     Rate) VALUES ("Awards/A4.png",     4);

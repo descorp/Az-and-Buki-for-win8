@@ -9,16 +9,26 @@ namespace levelupspace
 {
     public sealed partial class TextPopup : UserControl
     {
-        public TextPopup(String Text)
+        public EventHandler OKClickEvent=null;
+
+        public TextPopup(String Text, bool IsBackEnable = false)
         {
             this.InitializeComponent();
             tbMessage.Text = Text;
+            if (!IsBackEnable) backButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            Popup p = this.Parent as Popup;
-            p.IsOpen = false; // close the Popup
+            if (OKClickEvent != null)
+            {
+                var args = new EventArgs();
+                OKClickEvent(this, args);
+            }
+
+                Popup p = this.Parent as Popup;
+                p.IsOpen = false; // close the Popup
+       
         }
 
         private void UserControl_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -30,6 +40,12 @@ namespace levelupspace
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             btnNext.Focus(Windows.UI.Xaml.FocusState.Keyboard);
+        }
+
+        private void backButton_Click(object sender, RoutedEventArgs e)
+        {
+            Popup p = this.Parent as Popup;
+            p.IsOpen = false; // close the Popup
         }
     }
 }

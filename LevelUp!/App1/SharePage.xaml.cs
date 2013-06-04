@@ -76,7 +76,7 @@ namespace levelupspace
                     WebPage.LoadCompleted += new LoadCompletedEventHandler(WebPage_LoadCompleted);
 
                 }
-                catch (FormatException ex)
+                catch
                 {
                     Logger.ShowMessage(res.GetString("ConnectionError"));
                     this.Frame.Navigate(typeof(AchievementsPage));

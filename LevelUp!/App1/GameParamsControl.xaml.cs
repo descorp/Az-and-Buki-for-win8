@@ -24,6 +24,7 @@ namespace levelupspace
             cbDifficulty.SelectedIndex = 0;
 
             var abcs = ContentManager.GetAlphabets("AllAlphabets");
+            
 
             cbAlphabet.ItemsSource = abcs;
             cbAlphabet.SelectedIndex = 0;

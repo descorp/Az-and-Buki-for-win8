@@ -33,7 +33,7 @@ namespace levelupspace
                     GetRequestStreamCallback(fileName, postStream, ar, FileSendRequest);
                 }, null);
             }
-            catch (Exception ex)
+            catch
             {
                 var res = new ResourceLoader();
 
@@ -120,7 +120,7 @@ namespace levelupspace
 
                 if (Complete != null) Complete(this, eventArgs);
             }
-            catch (WebException e)
+            catch
             {
                 /*eventArgs.code = 500;
                 eventArgs.message = "Server error";*/

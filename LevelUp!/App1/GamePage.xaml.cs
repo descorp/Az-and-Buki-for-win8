@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -20,6 +21,7 @@ namespace levelupspace
 
         Popup GameParamsPopup;
         Popup AnswerResultPopup;
+        Popup DownLoadABCPopup;
 
         public static GamePage Current;
 
@@ -42,26 +44,66 @@ namespace levelupspace
         {
             if (pageState == null)
             {
-                if (GameParamsPopup == null)
+                
+                if (ContentManager.AlphabetsCount(DBconnectionPath.Local)==0)
                 {
-                    GameParamsPopup = new Popup();
-                    GameParamsPopup.Closed += (senderPopup, argsPopup) =>
+                    pbLevels.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    btnNextLevel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    
+
+                    if (DownLoadABCPopup == null)
                     {
-                        GameParamsPopup = null;
-                    };
+                        // create the Popup in code
+                        DownLoadABCPopup = new Popup();
 
-                    GameParamsPopup.HorizontalOffset = (Window.Current.Bounds.Width - 600) / 2;
-                    GameParamsPopup.VerticalOffset = (Window.Current.Bounds.Height - 440) / 2;
 
-                    // set the content to our UserControl
-                    GameParamsPopup.Child = new GameParamsControl();
+                        // we are creating this in code and need to handle multiple instances
+                        // so we are attaching to the Popup.Closed event to remove our reference
+                        DownLoadABCPopup.Closed += (senderPopup, argsPopup) =>
+                        {
+                            DownLoadABCPopup = null;
+                        };
 
-                    // open the Popup
-                    GameParamsPopup.IsOpen = true;
-                    
-                    
+                        DownLoadABCPopup.HorizontalOffset = (Window.Current.Bounds.Width - 600) / 2;
+                        DownLoadABCPopup.VerticalOffset = 350;
+
+                        // set the content to our UserControl
+                        var res = new ResourceLoader();
+
+                        var chidPopup = new TextPopup(res.GetString("ABCIsEmptyMessage"), true);
+                        chidPopup.OKClickEvent += DownLoadABCClicked;
+                        DownLoadABCPopup.Child = chidPopup;
+
+                        // open the Popup
+                        DownLoadABCPopup.IsOpen = true;
+                    }
                 }
+                else
+                    if (GameParamsPopup == null)
+                    {
+                        GameParamsPopup = new Popup();
+                        GameParamsPopup.Closed += (senderPopup, argsPopup) =>
+                        {
+                            GameParamsPopup = null;
+                        };
+
+                        GameParamsPopup.HorizontalOffset = (Window.Current.Bounds.Width - 600) / 2;
+                        GameParamsPopup.VerticalOffset = (Window.Current.Bounds.Height - 440) / 2;
+
+                        // set the content to our UserControl
+                        GameParamsPopup.Child = new GameParamsControl();
+
+                        // open the Popup
+                        GameParamsPopup.IsOpen = true;
+
+
+                    }
             }
+        }
+
+        private void DownLoadABCClicked(object sender, EventArgs args)
+        {
+            this.Frame.Navigate(typeof(DownloadsPage), DownloadPageState.ChoosePacks);
         }
 
         /// <summary>

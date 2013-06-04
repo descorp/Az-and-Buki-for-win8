@@ -448,14 +448,21 @@ namespace levelupspace
             return _ABCDataSource.AllAlphabets;
         }
 
+        public static int AlphabetsCount(String DBPath)
+        {
+            SQLiteConnection db = new SQLiteConnection(DBPath);
+            var command = db.CreateCommand("SELECT * From Alphabet");
+            return command.ExecuteNonQuery();
+        }
+
         public static AlphabetItem GetAlphabet(string uniqueId, String DBPath)
         {
             // Для небольших наборов данных можно использовать простой линейный поиск
             var matches = _ABCDataSource.AllAlphabets.Where((alphabet) => alphabet.UniqueId.Equals(uniqueId));
             if (matches.Count() == 1)
             {
-                var _Path = Path.Combine(DBPath);
-                SQLiteConnection db = new SQLiteConnection(_Path);
+                
+                SQLiteConnection db = new SQLiteConnection(DBPath);
 
                 var Aitem = matches.First();
                 if (Aitem.LetterItems.Count == 0)

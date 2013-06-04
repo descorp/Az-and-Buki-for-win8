@@ -20,22 +20,29 @@ using Windows.Storage;
 
 namespace levelupspace
 {
+    public enum DownloadPageState { ChooseLang, ChoosePacks, Waiting, Downloading };
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
+    /// 
     public sealed partial class DownloadsPage : levelupspace.Common.LayoutAwarePage
     {
-        enum DownloadPageState { ChooseLang, ChoosePacks, Waiting, Downloading };
+        
         private DownloadPageState state;
         private List<DownLoadAlphabetItem> DownloadingPackagesCollection = new List<DownLoadAlphabetItem>();
 
-        private void ChangeState(DownloadPageState state)
+        private async void ChangeState(DownloadPageState state)
         {
             this.state = state;
             var res = new ResourceLoader();
             switch (state)
             {
                 case DownloadPageState.ChooseLang:
+
+                    cbLangs.ItemsSource = LanguageProvider.AllLanguages;
+                    cbLangs.SelectedIndex = 0;
+                    cbLangs.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    btnChooseLang.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     pageTitle.Text = res.GetString("TuningAppTitle");
                     tbStatus.Text = res.GetString("DownLoadPageChooseLangText");
                     tbStatus.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -51,6 +58,9 @@ namespace levelupspace
                     btnChooseLang.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     break;
                 case DownloadPageState.ChoosePacks:
+                    
+                    var ABCs = await ContentManager.DownloadFromAzureDB();
+                    this.DefaultViewModel["ABCItems"] = ABCs;
                     this.DefaultViewModel["HeaderText"] = res.GetString("ChoosePacksMessage");
                     tbStatus.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     pRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
@@ -69,8 +79,7 @@ namespace levelupspace
         public DownloadsPage()
         {
             this.InitializeComponent();
-            cbLangs.ItemsSource = LanguageProvider.AllLanguages;
-            cbLangs.SelectedIndex = 0;
+            
         }
 
         /// <summary>
@@ -84,6 +93,7 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+            ChangeState(DownloadPageState.Waiting);
             if (navigationParameter == null) ChangeState(DownloadPageState.ChooseLang);
             else ChangeState((DownloadPageState)navigationParameter);
         }
@@ -118,26 +128,19 @@ namespace levelupspace
             switch (state)
             {
                 case DownloadPageState.ChooseLang:
-                    string localization = cbLangs.SelectedItem.ToString();
-
                     ChangeState(DownloadPageState.Waiting);
+                    string localization = cbLangs.SelectedItem.ToString();
                     var ABCs = await ContentManager.DownloadFromAzureDB();
-                    
                     this.DefaultViewModel["ABCItems"] = ABCs;
                     ChangeState(DownloadPageState.ChoosePacks);
                     break;
                 case DownloadPageState.ChoosePacks:
-
-                    //List<StorageFile> files = new List<StorageFile>();
-                    
                     foreach (DownLoadAlphabetItem item in gwDownLoadItems.SelectedItems)
                     {
                         DownloadingPackagesCollection.Add(item);
                         var Local = ApplicationData.Current.TemporaryFolder;
                         var file = await Local.CreateFileAsync(item.ID.ToString() + "_pack", CreationCollisionOption.ReplaceExisting);
-                        //files.Add(file);
                         string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
-                        //long blobSize = await AzureDBProvider.GetBlobSize((int)item.ID);
                         item.FileName = file.DisplayName;
                         AzureStorageProvider.DownloadPackageFromStorage(file, blobName, item.DownLoadProgressMax, FileDownloaded, FilePartDownloaded);
                         item.DownLoadProgressMax = 102;
@@ -146,7 +149,6 @@ namespace levelupspace
                         item.DownloadStatus = res.GetString("PackageDownloadMessage"); 
                     };
                     ChangeState(DownloadPageState.Downloading);
-
                     break;
             }
 
@@ -157,6 +159,7 @@ namespace levelupspace
             var argument = args as FilePartDownloadedEvent;
             var item = DownloadingPackagesCollection.Single(process => process.FileName == argument.FileName);
             //item.DownLoadProcessVisible = Windows.UI.Xaml.Visibility.Collapsed;
+            //TODO: add localization
             item.DownloadStatus = "Installing..";
             item.DownLoadProgessPos++;
             UnZIPer.Unzip(sender as StorageFile, FileUnZIPed);
@@ -175,7 +178,9 @@ namespace levelupspace
             var argument = args as FilePartDownloadedEvent;
             var item = DownloadingPackagesCollection.Single(process => process.FileName == argument.FileName);
             item.DownLoadProgessPos++;
-            item.DownloadStatus = "Done.";
+            //TODO: add localization
+            item.DownloadStatus = "Done";
+            //TODO: add SQL insert
         }
     }
 }

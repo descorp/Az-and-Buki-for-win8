@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -10,8 +13,11 @@ namespace levelupspace
     /// <summary>
     /// Основная страница, которая обеспечивает характеристики, являющимися общими для большинства приложений.
     /// </summary>
+    /// 
     public sealed partial class UserAlphabetsPage : levelupspace.Common.LayoutAwarePage
     {
+        Popup DownLoadABCPopup;
+
         public UserAlphabetsPage()
         {
             this.InitializeComponent();
@@ -29,7 +35,41 @@ namespace levelupspace
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             var abcs = ContentManager.GetAlphabets((String)navigationParameter) ;
-            this.DefaultViewModel["ABCItems"] = abcs;
+            if ((abcs as ObservableCollection<AlphabetItem>).Count==0)
+            {
+                if (DownLoadABCPopup == null)
+                {
+                    // create the Popup in code
+                    DownLoadABCPopup = new Popup();
+
+
+                    // we are creating this in code and need to handle multiple instances
+                    // so we are attaching to the Popup.Closed event to remove our reference
+                    DownLoadABCPopup.Closed += (senderPopup, argsPopup) =>
+                    {
+                        DownLoadABCPopup = null;
+                    };
+
+                    DownLoadABCPopup.HorizontalOffset = (Window.Current.Bounds.Width - 600) / 2;
+                    DownLoadABCPopup.VerticalOffset = 350;
+
+                    // set the content to our UserControl
+                    var res = new ResourceLoader();
+
+                    var chidPopup = new TextPopup(res.GetString("ABCIsEmptyMessage"), true);
+                    chidPopup.OKClickEvent += DownLoadABCClicked;
+                    DownLoadABCPopup.Child = chidPopup;
+
+                    // open the Popup
+                    DownLoadABCPopup.IsOpen = true;
+                }
+            }
+            else this.DefaultViewModel["ABCItems"] = abcs;
+        }
+
+        private void DownLoadABCClicked(object sender, EventArgs args)
+        {
+            this.Frame.Navigate(typeof(DownloadsPage), DownloadPageState.ChoosePacks);
         }
 
         /// <summary>

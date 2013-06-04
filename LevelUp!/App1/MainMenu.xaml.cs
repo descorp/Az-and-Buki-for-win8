@@ -23,6 +23,8 @@ namespace levelupspace
 
         Popup MessageBoxPopup;
 
+       
+
         public MainMenu()
         {         
             this.InitializeComponent();

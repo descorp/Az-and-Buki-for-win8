@@ -56,7 +56,7 @@ namespace levelupspace
                     }
                 }
             }
-            catch (Exception e)
+            catch
             {
                 var res = new ResourceLoader();
 

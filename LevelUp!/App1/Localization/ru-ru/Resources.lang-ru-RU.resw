@@ -303,6 +303,9 @@
   <data name="PackageDownloadMessage" xml:space="preserve">
     <value>Загружаю...</value>
   </data>
+  <data name="ABCIsEmptyMessage" xml:space="preserve">
+    <value>Похоже, ты еще не установил ни одного алфавита. Хочешь сделать это сейчас?</value>
+  </data>
   <data name="CaptionPackage.Text" xml:space="preserve">
     <value>Название:</value>
   </data>

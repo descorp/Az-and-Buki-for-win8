@@ -10,7 +10,7 @@ namespace levelupspace.DataModel
     {
         [PrimaryKey, AutoIncrement]
         [JsonProperty(PropertyName = "Id")]
-        public long Id
+        public int Id
         {
             get;
             set;
@@ -50,7 +50,7 @@ namespace levelupspace.DataModel
     {
         [JsonProperty(PropertyName = "Guid")]
         [PrimaryKey, AutoIncrement]
-        public long ID
+        public int ID
         {
             get;
             set;

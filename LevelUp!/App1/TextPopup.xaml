@@ -11,8 +11,13 @@
         BorderBrush="{StaticResource ABCBackgroundThemeBrush}" 
         BorderThickness="3" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid>
-            <TextBlock x:Name="tbMessage" Text="какой-то текст длинный длинный предлинный текстина hjvhgchfxcgf" VerticalAlignment="Center" TextAlignment="Center" Style="{StaticResource PageSubheaderTextStyle}" TextWrapping="Wrap" Margin="10,0,10,40"/>
-            <Button x:Name="btnNext" x:Uid="btnNext" Click="btnNext_Click" Content="Дальше" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" Background="{StaticResource ABCBackgroundThemeBrush}" TabIndex="1"/>
+        	<Grid.RowDefinitions>
+        		<RowDefinition Height="Auto"/>
+        		<RowDefinition/>
+        	</Grid.RowDefinitions>
+            <Button x:Name="backButton" Click="backButton_Click" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,0,0" TabIndex="4"/>
+            <TextBlock x:Name="tbMessage" Text="какой-то текст длинный длинный предлинный текстина hjvhgchfxcgf" VerticalAlignment="Center" TextAlignment="Center" Style="{StaticResource PageSubheaderTextStyle}" TextWrapping="Wrap" Margin="10,0,10,40" Grid.Row="1"/>
+            <Button x:Name="btnNext" x:Uid="btnNext" Click="btnNext_Click" Content="Дальше" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" Background="{StaticResource ABCBackgroundThemeBrush}" TabIndex="1" Grid.Row="1"/>
         </Grid>
     </Border>
 </UserControl>

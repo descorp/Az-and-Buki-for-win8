@@ -303,6 +303,9 @@
   <data name="PackageDownloadMessage" xml:space="preserve">
     <value>Downloading...</value>
   </data>
+  <data name="ABCIsEmptyMessage" xml:space="preserve">
+    <value>It seems like you haven't installed alphabets yet. Do you want to do it now?</value>
+  </data>
   <data name="CaptionPackage.Text" xml:space="preserve">
     <value>Name:</value>
   </data>

@@ -16,6 +16,7 @@ namespace levelupspace.DataModel
             set;
         }
 
+        [Ignore]
         [JsonProperty(PropertyName = "Guid")]        
         public long Guid
         {
@@ -30,6 +31,7 @@ namespace levelupspace.DataModel
             set;
         }
 
+        [Ignore]
         [JsonProperty(PropertyName = "Path")]
         public string Path
         {
@@ -37,6 +39,7 @@ namespace levelupspace.DataModel
             set;
         }
 
+        [Ignore]
         [JsonProperty(PropertyName = "Length")]
         public long Length
         {
@@ -44,6 +47,13 @@ namespace levelupspace.DataModel
             set;
         }
 
+        [Ignore]
+        [JsonProperty(PropertyName = "IsSystem")]
+        public bool IsSystem
+        {
+            get;
+            set;
+        }
     }
 
     public class AlphabetLocalization

@@ -38,7 +38,6 @@ namespace levelupspace
             switch (state)
             {
                 case DownloadPageState.ChooseLang:
-
                     cbLangs.ItemsSource = LanguageProvider.AllLanguages;
                     cbLangs.SelectedIndex = 0;
                     cbLangs.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -53,13 +52,21 @@ namespace levelupspace
                     tbStatus.Text = res.GetString("PleaseWaitMessage");
                     tbStatus.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     pRing.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    pageTitle.Text = res.GetString("WaitingAppTitle");
                     cbLangs.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     gwDownLoadItems.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     btnChooseLang.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     break;
                 case DownloadPageState.ChoosePacks:
-                    
+                    pageTitle.Text = res.GetString("DownloadingAppTitle");
                     var ABCs = await ContentManager.DownloadFromAzureDB();
+                    try
+                    {
+
+                    }
+                    catch
+                    {
+                    }
                     this.DefaultViewModel["ABCItems"] = ABCs;
                     this.DefaultViewModel["HeaderText"] = res.GetString("ChoosePacksMessage");
                     tbStatus.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
@@ -67,7 +74,6 @@ namespace levelupspace
                     cbLangs.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     gwDownLoadItems.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     btnChooseLang.Visibility = Windows.UI.Xaml.Visibility.Visible;
-
                     break;
                 case DownloadPageState.Downloading:
                     btnChooseLang.IsEnabled = false;
@@ -118,8 +124,6 @@ namespace levelupspace
 
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-
-
         }
 
         private async void btnChooseLang_Click(object sender, RoutedEventArgs e)
@@ -150,7 +154,6 @@ namespace levelupspace
                     ChangeState(DownloadPageState.Downloading);
                     break;
             }
-
         }
 
         private void FileDownloaded(object sender, EventArgs args)
@@ -177,11 +180,9 @@ namespace levelupspace
             var argument = args as FileUnzippedEventArgs;
             var item = DownloadingPackagesCollection.Single(process => process.PackageFileName == argument.FileName);
             item.DownLoadProgessPos++;            
-            item.DownloadStatus = res.GetString("PackageInstalledMessage");
-
             DBFiller.CreateDB(DBconnectionPath.Local);
-            
             DBFiller.LoadPackageToDB(argument.FolderPath, DBconnectionPath.Local);
+            item.DownloadStatus = res.GetString("PackageInstalledMessage");
         }
     }
 }

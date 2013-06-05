@@ -355,8 +355,6 @@ namespace levelupspace
             get { return this._letterItems; }
         }
 
-       
-
         private ObservableCollection<LetterItem> _topLetterItem = new ObservableCollection<LetterItem>();
         public ObservableCollection<LetterItem> TopLetterItems
         {
@@ -366,7 +364,7 @@ namespace levelupspace
 
     public class DownLoadAlphabetItem : AlphabetItem, INotifyPropertyChanged
     {
-        public DownLoadAlphabetItem(String uniqueId, String title, String imagePath, String description, long ID, long Length)
+        public DownLoadAlphabetItem(String uniqueId, String title, String imagePath, String description, long ID, long Length, bool IsSystem)
             : base(uniqueId, title, imagePath, description, ID)
         {
             this._downloadVisible = Visibility.Collapsed;
@@ -401,6 +399,12 @@ namespace levelupspace
             set { _packageFileName = value; }
         }
 
+        private bool _isSystem;
+        public bool IsSystem
+        {
+            get { return _isSystem; }
+            set { _isSystem = value; }
+        }
 
         private Visibility _downloadVisible;
         public Visibility DownLoadProcessVisible
@@ -451,7 +455,6 @@ namespace levelupspace
     {
         private static ContentManager _ABCDataSource = new ContentManager(DBconnectionPath.Local);
         
-
         private ObservableCollection<AlphabetItem> _allAlphabets = new ObservableCollection<AlphabetItem>();
         public ObservableCollection<AlphabetItem> AllAlphabets
         {
@@ -574,7 +577,8 @@ namespace levelupspace
                             pack.Logo,
                             local.Description,
                             pack.Guid,
-                            pack.Length
+                            pack.Length,
+                            pack.IsSystem
                         ));
                 }
 

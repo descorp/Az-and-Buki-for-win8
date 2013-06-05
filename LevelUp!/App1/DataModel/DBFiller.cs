@@ -16,7 +16,7 @@ namespace levelupspace.DataModel
             var folder = await StorageFolder.GetFolderFromPathAsync(PathToPack);
             var file = await folder.GetFileAsync("input.sql");
             var SQLStrings = await FileIO.ReadLinesAsync(file);
-           
+            
             DBFiller.InsertStringsToDB(SQLStrings, DBPath);           
                       
         }
@@ -25,14 +25,30 @@ namespace levelupspace.DataModel
         {
             var db = new SQLiteConnection(DBPath);
 
-            for (int i = 0; i < ListString.Count; i++)
+            foreach (string rawCommand in ListString) //(int i = 0; i < ListString.Count; i++)
             {
-                var command = db.CreateCommand(ListString[i]);
-                var result = command.ExecuteNonQuery();
-                if (result <= 0)
+                string parametString = rawCommand.Substring(rawCommand.IndexOf(") VALUES (") + 10);
+                if (parametString.LastIndexOf(");") > 0)
+                    parametString = parametString.Remove(parametString.LastIndexOf(");"));
+                else
+                    parametString = parametString.Remove(parametString.LastIndexOf(") ;"));
+
+                string[] rawArray = parametString.Split(new string[] { ",       ", ",      ", ",     ", ",    ", ",   ", "       ,", "      ,", "     ,", "    ,", "   ," }, StringSplitOptions.RemoveEmptyEntries);
+                string paramsTemplate = "";
+                List<string> array = new List<string>();
+
+                foreach (string s in rawArray)
                 {
-                    //Какая-то ошибка
+                    string trim = " \"";
+                    string temp = s.Trim(trim.ToCharArray());
+                    temp = temp.TrimEnd("\\".ToCharArray());
+                    paramsTemplate += "?, ";
+                    array.Add(temp);
                 }
+
+                paramsTemplate = paramsTemplate.Remove(paramsTemplate.Length - 2);
+                string command = rawCommand.Remove(rawCommand.IndexOf(") VALUES (") + 10) + paramsTemplate + " ); ";
+                db.CreateCommand(command, array.ToArray()).ExecuteNonQuery();
             }
         }
 
@@ -44,8 +60,10 @@ namespace levelupspace.DataModel
             db.CreateTable<AlphabetLocalization>();
             db.CreateTable<Word>();
             db.CreateTable<User>();
+            db.CreateTable<UserAward>();
             db.CreateTable<Award>();
             db.CreateTable<AwardLocalization>();
+            int n = db.CreateCommand("PRAGMA win1251 = \"UTF-8\"").ExecuteNonQuery();
         }
     }
 }

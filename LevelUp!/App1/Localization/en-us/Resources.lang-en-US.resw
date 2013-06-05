@@ -321,4 +321,10 @@
   <data name="PackageInstallingMessage" xml:space="preserve">
     <value>Installing..</value>
   </data>
+  <data name="DownloadingAppTitle" xml:space="preserve">
+    <value>Make a choise</value>
+  </data>
+  <data name="WaitingAppTitle" xml:space="preserve">
+    <value>Processing...</value>
+  </data>
 </root>

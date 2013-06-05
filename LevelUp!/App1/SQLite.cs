@@ -2658,7 +2658,7 @@ namespace SQLite
 
 		[DllImport("sqlite3", EntryPoint = "sqlite3_bind_double", CallingConvention=CallingConvention.Cdecl)]
 		public static extern int BindDouble (IntPtr stmt, int index, double val);
-
+//TODO: change CharSet.Unicode
 		[DllImport("sqlite3", EntryPoint = "sqlite3_bind_text16", CallingConvention=CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
 		public static extern int BindText (IntPtr stmt, int index, [MarshalAs(UnmanagedType.LPWStr)] string val, int n, IntPtr free);
 

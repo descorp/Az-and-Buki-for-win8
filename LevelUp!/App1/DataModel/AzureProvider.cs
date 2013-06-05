@@ -85,7 +85,7 @@ namespace levelupspace.DataModel
 
         public async static Task<string> GetBlobName(int packageID)
         {
-            List<Alphabet> list = await AlphabetTable.Where(pack => pack.Id == packageID).ToListAsync();
+            List<Alphabet> list = await AlphabetTable.Where(pack => pack.ID == packageID).ToListAsync();
             string fullPath = list.First().Path;
             int lastSlash = fullPath.LastIndexOf("/");
             return fullPath.Remove(0,lastSlash + 1);
@@ -98,7 +98,7 @@ namespace levelupspace.DataModel
         /// <returns>Size of </returns>
         public static async Task<long> GetBlobSize(int packageID)
         {
-            List<Alphabet> list = await AlphabetTable.Where(pack => pack.Id == packageID).ToListAsync();
+            List<Alphabet> list = await AlphabetTable.Where(pack => pack.ID == packageID).ToListAsync();
             return list.First().Length;
         }
 

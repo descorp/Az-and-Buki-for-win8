@@ -129,8 +129,9 @@ namespace levelupspace
             {
                 case DownloadPageState.ChooseLang:
                     ChangeState(DownloadPageState.Waiting);
-                    string localization = cbLangs.SelectedItem.ToString();
+                    
                     ChangeState(DownloadPageState.ChoosePacks);
+
                     break;
                 case DownloadPageState.ChoosePacks:
                     foreach (DownLoadAlphabetItem item in gwDownLoadItems.SelectedItems)

@@ -38,7 +38,7 @@
         <StackPanel Margin="120,0,30,5" Grid.Row="1">
             <TextBlock x:Name="tbProgress" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,20"/>
         
-        	<ProgressBar x:Name="PBLoad" VerticalAlignment="Top" Margin="0" Width="900" HorizontalAlignment="Left"/>
+        	<ProgressBar IsIndeterminate="True" x:Name="PBLoad" VerticalAlignment="Top" Margin="0" Width="900" HorizontalAlignment="Left"/>
         </StackPanel>
         <WebView x:Name="WebPage" Visibility="Visible" Grid.Row="2" Margin="120,0,30,30" />
         

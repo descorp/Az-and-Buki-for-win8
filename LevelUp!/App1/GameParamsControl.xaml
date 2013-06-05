@@ -6,9 +6,8 @@
     xmlns:local="using:levelupspace"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="600" KeyDown="UserControl_KeyDown" Loaded="UserControl_Loaded">
+    mc:Ignorable="d"    
+    KeyDown="UserControl_KeyDown" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <CollectionViewSource
             x:Name="DifficultyItemsSource"
@@ -43,8 +42,8 @@
 
     <Border 
         BorderBrush="{StaticResource ABCBackgroundThemeBrush}" 
-        BorderThickness="3">
-        <Grid Style="{StaticResource LayoutRootStyle}">
+        BorderThickness="3" Height="300" Width="700">
+        <Grid Style="{StaticResource LayoutRootStyle}" > 
             <Grid.RowDefinitions>
                 <RowDefinition Height="0"/>
                 <RowDefinition Height="80"/>

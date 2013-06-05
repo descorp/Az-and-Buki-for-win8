@@ -469,8 +469,8 @@ namespace levelupspace
         public static int AlphabetsCount(String DBPath)
         {
             SQLiteConnection db = new SQLiteConnection(DBPath);
-            var command = db.CreateCommand("SELECT * From Alphabet");
-            return command.ExecuteNonQuery();
+            var command = db.CreateCommand("SELECT COUNT(ID) From Alphabet");
+            return command.ExecuteScalar<int>();
         }
 
         public static AlphabetItem GetAlphabet(string uniqueId, String DBPath)
@@ -591,7 +591,7 @@ namespace levelupspace
                 for (int i = 0; i < AlphabetQuery.Count; i++)
                 {
                     var LocalQuery = db.Query<AlphabetLocalization>(
-                                         "SELECT * FROM AlphabetLocalization WHERE AlphabetID=?", AlphabetQuery[i].Guid);
+                                         "SELECT * FROM AlphabetLocalization WHERE AlphabetID=?", AlphabetQuery[i].ID);
 
                     var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
                     var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
@@ -600,11 +600,11 @@ namespace levelupspace
                     var LPath = ApplicationData.Current.LocalFolder.Path;
 
                     var Aitem = new AlphabetItem(
-                            String.Concat("Alphabet ", AlphabetQuery[i].Guid.ToString()),
+                            String.Concat("Alphabet ", AlphabetQuery[i].ID.ToString()),
                             localization.LanguageName,
                             Path.Combine(LPath, AlphabetQuery[i].Logo),
                             localization.Description,
-                            AlphabetQuery[i].Guid
+                            AlphabetQuery[i].ID
                             );
 
                     _allAlphabets.Add(Aitem);

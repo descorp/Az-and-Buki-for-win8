@@ -100,8 +100,15 @@ namespace levelupspace
         }
 
         public static int UserId
+            
         {
-            get { return (int)ApplicationData.Current.LocalSettings.Values["UserID"]; }
+
+            get
+            {
+                if (IsAutorized)
+                    return (int)ApplicationData.Current.LocalSettings.Values["UserID"];
+                else return -1;
+            }
         }
 
         public async static Task<bool> IsUniqueLoginAsync(String Login, String DBPath)

@@ -96,7 +96,12 @@ namespace levelupspace
             }
             else
             {
-                AwardItem award = await AwardManager.GetAwardForRate(StarRate, DBconnectionPath.Local);
+                AwardItem award=null;
+                try
+                {
+                    award = await AwardManager.GetAwardForRate(StarRate, DBconnectionPath.Local);
+                }
+                catch { };
                 if (award != null)
                 {
                     AwardManager.AddUserAward(award, UserManager.UserId, DBconnectionPath.Local);

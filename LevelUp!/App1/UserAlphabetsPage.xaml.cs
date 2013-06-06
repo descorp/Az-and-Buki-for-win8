@@ -69,6 +69,12 @@ namespace levelupspace
 
         private void DownLoadABCClicked(object sender, EventArgs args)
         {
+            if (!HttpProvider.IsInternetConnection())
+            {
+                var res = new ResourceLoader();
+                Logger.ShowMessage(res.GetString("NoInternetConnectionError"));
+                return;
+            }
             this.Frame.Navigate(typeof(DownloadsPage), DownloadPageState.ChoosePacks);
         }
 

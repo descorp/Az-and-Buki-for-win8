@@ -41,7 +41,8 @@
             <GridView x:Name="gwDownLoadItems" Margin="120,0,0,0" 
                       Visibility="Collapsed" 
                       ItemsSource="{Binding Source={StaticResource AlphabetsItemsViewSource}}"
-                      SelectionMode="Multiple">
+                      SelectionMode="Multiple"
+                      SelectionChanged="gwDownLoadItems_SelectionChanged">
             	<GridView.Resources>
             		<DataTemplate x:Key="HeaderDownLoadTemplate">
             			<Grid Width="400" Height="400">

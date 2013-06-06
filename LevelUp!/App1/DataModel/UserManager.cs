@@ -27,20 +27,12 @@ namespace levelupspace
             Newby.Hash = ComputeMD5(Newby.Name+Pass);
             var db = new SQLiteAsyncConnection(DBPath);
 
+            AzureDBProvider.AddNewUser(Newby);
             var Result = await db.InsertAsync(Newby);
+            
+
             if (Result > 0)
             {
-                var u = db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Newby.Name);
-                Newby.ID = u.Result[0].ID;
-                if (Newby.Avatar != "ms-appx:///Assets/Userlogo.png")
-                {
-
-                    Newby.Avatar = String.Concat("Users/UL", Newby.ID.ToString(), ".png");
-
-                    await db.UpdateAsync(Newby);
-                }
-
-
                 ApplicationData.Current.LocalSettings.Values["UserName"] = Newby.Name;
                 ApplicationData.Current.LocalSettings.Values["UserLogo"] = Newby.Avatar;
                 ApplicationData.Current.LocalSettings.Values["UserID"] = Newby.ID;
@@ -54,21 +46,44 @@ namespace levelupspace
         public async static Task<bool> Authorize(string Name,string Pass, String DBPath)
         {
             var db = new SQLiteAsyncConnection(DBPath);
+            var userFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Users", CreationCollisionOption.OpenIfExists);
+            string hash = ComputeMD5(String.Concat(Name, Pass));
 
             if (Name.Length == 0) throw new ArgumentOutOfRangeException("UserName", "Name can't be empty!");
             if (Pass.Length == 0) throw new ArgumentOutOfRangeException("Hash", "Password can't be empty!");
 
             var User = await db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Name);
             if (User.Count == 0)
-                return false;
-            if (String.Compare(ComputeMD5(String.Concat(Name, Pass)), User[0].Hash) != 0)
-                return false;
+            {
+                if (!HttpProvider.IsInternetConnection()) return false;
+                User userFromAzure = await AzureDBProvider.GetUser(Name, hash);
+                if (userFromAzure != null)
+                {
+                    userFromAzure.Avatar = "ms-appx:///Assets/Userlogo.png";
+                    await db.InsertAsync(userFromAzure);
+                    var DBUser = await db.QueryAsync<User>("SELECT * FROM User WHERE Name=?",userFromAzure.Name);
+                    //AzureStorageProvider.DownloadAvatarFromStorage(await userFolder.CreateFileAsync("UL" + Name, CreationCollisionOption.OpenIfExists), Name);
 
-            ApplicationData.Current.LocalSettings.Values["UserName"] = Name;
-            ApplicationData.Current.LocalSettings.Values["UserLogo"] = User[0].Avatar;
-            ApplicationData.Current.LocalSettings.Values["UserID"] = User[0].ID;
+                    ApplicationData.Current.LocalSettings.Values["UserName"] = DBUser[0].Name;
+                    ApplicationData.Current.LocalSettings.Values["UserLogo"] = DBUser[0].Avatar;
+                    ApplicationData.Current.LocalSettings.Values["UserID"] = DBUser[0].ID;
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                //return false;
+                if (String.Compare(hash, User[0].Hash) != 0)
+                    return false;
 
-            return true;
+                ApplicationData.Current.LocalSettings.Values["UserName"] = Name;
+                ApplicationData.Current.LocalSettings.Values["UserLogo"] = User[0].Avatar;
+                ApplicationData.Current.LocalSettings.Values["UserID"] = User[0].ID;
+
+                return true;
+            }
 
         }
 

@@ -253,7 +253,7 @@
     <value>Medium</value>
   </data>
   <data name="NoInternetConnectionError" xml:space="preserve">
-    <value>Please, check your internet connection</value>
+    <value>Please, check your internet connection. You need internet to continue</value>
   </data>
   <data name="PerfectGameResult" xml:space="preserve">
     <value>It seems, you are genius! Perfect work!</value>

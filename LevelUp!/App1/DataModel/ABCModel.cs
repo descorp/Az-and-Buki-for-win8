@@ -10,15 +10,15 @@ namespace levelupspace.DataModel
     {
         [PrimaryKey, AutoIncrement]
         [JsonProperty(PropertyName = "Id")]
-        public int Id
+        public int ID
         {
             get;
             set;
         }
 
-        [Ignore]
+
         [JsonProperty(PropertyName = "Guid")]        
-        public long Guid
+        public int Guid
         {
             get;
             set;
@@ -31,7 +31,7 @@ namespace levelupspace.DataModel
             set;
         }
 
-        [Ignore]
+        [Ignore()]
         [JsonProperty(PropertyName = "Path")]
         public string Path
         {
@@ -39,7 +39,7 @@ namespace levelupspace.DataModel
             set;
         }
 
-        [Ignore]
+        [Ignore()]
         [JsonProperty(PropertyName = "Length")]
         public long Length
         {
@@ -47,7 +47,6 @@ namespace levelupspace.DataModel
             set;
         }
 
-        [Ignore]
         [JsonProperty(PropertyName = "IsSystem")]
         public bool IsSystem
         {
@@ -227,6 +226,11 @@ namespace levelupspace.DataModel
             set;
         }
 
+        public int Guid
+        {
+            get;
+            set;
+        }
         
         public int AlphabetID
         {

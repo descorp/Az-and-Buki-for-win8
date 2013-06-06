@@ -58,22 +58,34 @@ namespace levelupspace
                     btnChooseLang.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     break;
                 case DownloadPageState.ChoosePacks:
+                    if (!HttpProvider.IsInternetConnection())
+                    {
+                        this.Frame.Navigate(typeof(MainMenu));
+                        Logger.ShowMessage(res.GetString("NoInternetConnectionError"));
+                        DBFiller.CreateDB(DBconnectionPath.Local);                        
+                        return;
+                    }
+
                     pageTitle.Text = res.GetString("DownloadingAppTitle");
                     var ABCs = await ContentManager.DownloadFromAzureDB();
                     try
                     {
-
+                        //TODO : remove librarys that already exist in 
                     }
                     catch
                     {
                     }
                     this.DefaultViewModel["ABCItems"] = ABCs;
+                    foreach (DownLoadAlphabetItem alph in ABCs)
+                        if (alph.IsSystem)
+                            gwDownLoadItems.SelectedItems.Add(alph);
                     this.DefaultViewModel["HeaderText"] = res.GetString("ChoosePacksMessage");
                     tbStatus.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     pRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     cbLangs.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     gwDownLoadItems.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     btnChooseLang.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    
                     break;
                 case DownloadPageState.Downloading:
                     btnChooseLang.IsEnabled = false;
@@ -133,8 +145,9 @@ namespace levelupspace
             {
                 case DownloadPageState.ChooseLang:
                     ChangeState(DownloadPageState.Waiting);
-                    string localization = cbLangs.SelectedItem.ToString();
+                    
                     ChangeState(DownloadPageState.ChoosePacks);
+
                     break;
                 case DownloadPageState.ChoosePacks:
                     foreach (DownLoadAlphabetItem item in gwDownLoadItems.SelectedItems)
@@ -183,6 +196,28 @@ namespace levelupspace
             DBFiller.CreateDB(DBconnectionPath.Local);
             DBFiller.LoadPackageToDB(argument.FolderPath, DBconnectionPath.Local);
             item.DownloadStatus = res.GetString("PackageInstalledMessage");
+
+            bool isEveryDownloadingsCompleted = true;
+            foreach (DownLoadAlphabetItem d in DownloadingPackagesCollection)
+                if (d.DownloadStatus != res.GetString("PackageInstalledMessage"))
+                    isEveryDownloadingsCompleted = false;
+
+            if (isEveryDownloadingsCompleted)
+                this.Frame.Navigate(typeof(MainMenu));
+        }
+
+        private void gwDownLoadItems_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void gwDownLoadItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var items = e.RemovedItems;
+            if (gwDownLoadItems.SelectionMode == ListViewSelectionMode.Multiple)
+            foreach (DownLoadAlphabetItem item in items)
+                if (item.IsSystem)
+                    gwDownLoadItems.SelectedItems.Add(item);
         }
     }
 }

@@ -55,7 +55,7 @@ namespace levelupspace
         public override async void WallPost(String Message, String ImagePath)
         {
             var fb = new FacebookClient(accessToken);
-
+            ImagePath = ImagePath.Replace('/','\\');
             FacebookMediaObject facebookUploader = new FacebookMediaObject { FileName = "funny-image.jpg", ContentType = "image/png" };
             
             var file = await StorageFile.GetFileFromPathAsync(ImagePath);

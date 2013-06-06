@@ -70,26 +70,30 @@ namespace levelupspace
 
             if (tbName.Text.Length > 3)
             {
-                var uniquelogin = await UserManager.IsUniqueLoginAsync(tbName.Text, DBconnectionPath.Local);
+                var uniquelogin = await AzureDBProvider.UserUnique(tbName.Text);  //UserManager.IsUniqueLoginAsync(tbName.Text, DBconnectionPath.Local);
                 if (uniquelogin)
                 {
+                    StorageFile file=null;
+
+                    if (logofilePath != "ms-appx:///Assets/Userlogo.png")
+                    {
+                        file = await StorageFile.GetFileFromPathAsync(logofilePath);
+                        logofilePath = String.Concat("Users/UL", tbName.Text, file.FileType);
+                        await file.RenameAsync(logofilePath);
+                        //AzureStorageProvider.UploadAvatarToStorage(file, tbName.Text);
+                    }
+
                     var newUserID = await UserManager.AddUserAsync(new User()
                         {
                             Name = tbName.Text,
-                            Avatar = logofilePath,
+                            Avatar = logofilePath
                         }, 
                         PassBox.Key,
                         DBconnectionPath.Local);
 
                     if (newUserID > 0)
                     {
-                        if (logofilePath != "ms-appx:///Assets/Userlogo.png")
-                        {
-                            var file = await StorageFile.GetFileFromPathAsync(logofilePath);
-
-                            await file.RenameAsync(String.Concat("UL", newUserID.ToString(), ".png"));
-                        }
-
+                        
                         this.Frame.Navigate(typeof(MainMenu), "Autorized");
                         return;
                     }
@@ -122,8 +126,8 @@ namespace levelupspace
             
             if (file != null)
             {
-                var folder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.LocalFolder.Path,"Users"));
-                var logofile = await file.CopyAsync(folder, "UL.png");
+                var folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Users",CreationCollisionOption.OpenIfExists);
+                var logofile = await file.CopyAsync(folder, String.Concat("UL", file.FileType), NameCollisionOption.ReplaceExisting);
 
                 logofilePath = logofile.Path;
 
@@ -142,10 +146,10 @@ namespace levelupspace
 
         private async void backButton_Click(object sender, RoutedEventArgs e)
         {
-            var folder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.LocalFolder.Path, "Users"));
+            var folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("User", CreationCollisionOption.OpenIfExists);
             try
             {
-                var logofile = await folder.GetFileAsync("UL.png");
+                var logofile = await folder.GetFileAsync("UL");
                 await logofile.DeleteAsync();
                 GoBack(this, e);
             }

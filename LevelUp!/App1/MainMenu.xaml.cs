@@ -29,7 +29,6 @@ namespace levelupspace
         {         
             this.InitializeComponent();
             Current = this;
-
             cbLangs.ItemsSource = LanguageProvider.AllLanguages;
             cbLangs.SelectedIndex = 0;
         }
@@ -127,6 +126,12 @@ namespace levelupspace
 
         private void btnLogOn_Click(object sender, RoutedEventArgs e)
         {
+            var res = new ResourceLoader();
+            if (!HttpProvider.IsInternetConnection())
+            {
+                Logger.ShowMessage(res.GetString("NoInternetConnectionError"));
+                return;
+            }
             if (LogInPopup != null)
             {
                 LogInPopup.IsOpen = false;

@@ -18,6 +18,7 @@ namespace levelupspace.DataModel
             var SQLStrings = await FileIO.ReadLinesAsync(file);
             
             DBFiller.InsertStringsToDB(SQLStrings, DBPath);           
+
                       
         }
 
@@ -27,28 +28,31 @@ namespace levelupspace.DataModel
 
             foreach (string rawCommand in ListString) //(int i = 0; i < ListString.Count; i++)
             {
-                string parametString = rawCommand.Substring(rawCommand.IndexOf(") VALUES (") + 10);
-                if (parametString.LastIndexOf(");") > 0)
-                    parametString = parametString.Remove(parametString.LastIndexOf(");"));
-                else
-                    parametString = parametString.Remove(parametString.LastIndexOf(") ;"));
-
-                string[] rawArray = parametString.Split(new string[] { ",       ", ",      ", ",     ", ",    ", ",   ", "       ,", "      ,", "     ,", "    ,", "   ," }, StringSplitOptions.RemoveEmptyEntries);
-                string paramsTemplate = "";
-                List<string> array = new List<string>();
-
-                foreach (string s in rawArray)
+                if (rawCommand.IndexOf(") VALUES (") > 5)
                 {
-                    string trim = " \"";
-                    string temp = s.Trim(trim.ToCharArray());
-                    temp = temp.TrimEnd("\\".ToCharArray());
-                    paramsTemplate += "?, ";
-                    array.Add(temp);
-                }
+                    string parametString = rawCommand.Substring(rawCommand.IndexOf(") VALUES (") + 10);
+                    if (parametString.LastIndexOf(");") > 0)
+                        parametString = parametString.Remove(parametString.LastIndexOf(");"));
+                    else
+                        parametString = parametString.Remove(parametString.LastIndexOf(") ;"));
 
-                paramsTemplate = paramsTemplate.Remove(paramsTemplate.Length - 2);
-                string command = rawCommand.Remove(rawCommand.IndexOf(") VALUES (") + 10) + paramsTemplate + " ); ";
-                db.CreateCommand(command, array.ToArray()).ExecuteNonQuery();
+                    string[] rawArray = parametString.Split(new string[] { ",       ", ",      ", ",     ", ",    ", ",   ", "       ,", "      ,", "     ,", "    ,", "   ," }, StringSplitOptions.RemoveEmptyEntries);
+                    string paramsTemplate = "";
+                    List<string> array = new List<string>();
+
+                    foreach (string s in rawArray)
+                    {
+                        string trim = " \"";
+                        string temp = s.Trim(trim.ToCharArray());
+                        temp = temp.TrimEnd("\\".ToCharArray());
+                        paramsTemplate += "?, ";
+                        array.Add(temp);
+                    }
+
+                    paramsTemplate = paramsTemplate.Remove(paramsTemplate.Length - 2);
+                    string command = rawCommand.Remove(rawCommand.IndexOf(") VALUES (") + 10) + paramsTemplate + " ); ";
+                    db.CreateCommand(command, array.ToArray()).ExecuteNonQuery();
+                }
             }
         }
 

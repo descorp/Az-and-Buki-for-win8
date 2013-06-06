@@ -61,15 +61,25 @@ namespace levelupspace.DataModel
             //// This code inserts a new TodoItem into the database. When the operation completes
             //// and Mobile Services has assigned an Guid, the item is added to the CollectionView
             await UserTable .InsertAsync(user);
+            var items = await UserTable.ToListAsync();
         }
 
-        public async static Task<bool> CheckThisLogin(string Name)
+        public async static Task<bool> UserUnique(string Name)
         {
             UserTable = MobileService.GetTable<User>();
             List<User> list = await UserTable.Where(user => user.Name == Name).ToListAsync();
-            return list.Count > 0;
+            return list.Count == 0;
         }
 
+        public static async Task<User> GetUser(string Name, string Hash)
+        {
+            UserTable = MobileService.GetTable<User>();
+            List<User> list = await UserTable.Where(user => user.Name == Name && user.Hash == Hash).ToListAsync();
+            if (list.Count > 0)
+                return list.First();
+            else
+                return null;
+        }
 
         #endregion
 
@@ -85,7 +95,7 @@ namespace levelupspace.DataModel
 
         public async static Task<string> GetBlobName(int packageID)
         {
-            List<Alphabet> list = await AlphabetTable.Where(pack => pack.Id == packageID).ToListAsync();
+            List<Alphabet> list = await AlphabetTable.Where(pack => pack.ID == packageID).ToListAsync();
             string fullPath = list.First().Path;
             int lastSlash = fullPath.LastIndexOf("/");
             return fullPath.Remove(0,lastSlash + 1);
@@ -98,7 +108,7 @@ namespace levelupspace.DataModel
         /// <returns>Size of </returns>
         public static async Task<long> GetBlobSize(int packageID)
         {
-            List<Alphabet> list = await AlphabetTable.Where(pack => pack.Id == packageID).ToListAsync();
+            List<Alphabet> list = await AlphabetTable.Where(pack => pack.ID == packageID).ToListAsync();
             return list.First().Length;
         }
 
@@ -158,7 +168,7 @@ namespace levelupspace.DataModel
             CloudBlobContainer container = blobClient.GetContainerReference("userpic");
 
             // Retrieve reference to a blob named "myblob".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(username);
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference("UL" + username);
 
             // Create or overwrite the "myblob" blob with contents from a local file.
 
@@ -192,7 +202,7 @@ namespace levelupspace.DataModel
         {
             // Retrieve reference to a previously created container.
             CloudBlobContainer container = blobClient.GetContainerReference("packages");
-
+            
             // Retrieve reference to a blob named "myblob".
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageNameInBlob);
             // Create or overwrite the "myblob" blob with contents from a local file.

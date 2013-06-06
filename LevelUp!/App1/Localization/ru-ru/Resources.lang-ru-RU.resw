@@ -253,7 +253,7 @@
     <value>Средний</value>
   </data>
   <data name="NoInternetConnectionError" xml:space="preserve">
-    <value>Нет интернет-соединения!</value>
+    <value>Нет интернет-соединения! Для продолжения необходимо подключение к интернету</value>
   </data>
   <data name="PerfectGameResult" xml:space="preserve">
     <value>Умница, похоже, ты гений!</value>

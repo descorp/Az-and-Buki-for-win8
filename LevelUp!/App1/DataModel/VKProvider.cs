@@ -68,8 +68,14 @@ namespace levelupspace
         public override async void WallPost(String Message, String Picture)
         {
             message = Message;
-            var UploadResponse = await GetWallUploadServer();
-            UploadPhoto(UploadResponse, Picture);
+            JSONGetWallUploadServerResponse UploadServerResponse=null;
+            try
+            {
+                UploadServerResponse = await GetWallUploadServer();
+                UploadPhoto(UploadServerResponse, Picture);
+            }
+            catch { };
+            
         }
 
         private async Task<JSONGetWallUploadServerResponse> GetWallUploadServer()

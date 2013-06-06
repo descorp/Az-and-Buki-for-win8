@@ -284,6 +284,7 @@ namespace levelupspace
             get { return _id; }
             set { this.SetProperty(ref this._id, value); }
         }
+
         
         private void ItemsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -369,6 +370,7 @@ namespace levelupspace
         {
             this._downloadVisible = Visibility.Collapsed;
             this.DownLoadProgressMax = Length;
+            this.IsSystem = IsSystem;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -472,8 +474,8 @@ namespace levelupspace
         public static int AlphabetsCount(String DBPath)
         {
             SQLiteConnection db = new SQLiteConnection(DBPath);
-            var command = db.CreateCommand("SELECT * From Alphabet");
-            return command.ExecuteNonQuery();
+            var command = db.CreateCommand("SELECT COUNT(ID) From Alphabet");
+            return command.ExecuteScalar<int>();
         }
 
         public static AlphabetItem GetAlphabet(string uniqueId, String DBPath)
@@ -499,16 +501,16 @@ namespace levelupspace
                         
                              
                         var Litem = new LetterItem(
-                                        String.Concat("Alphabet ", Aitem.ID.ToString(), " Letter ", LetterQuery[j].ID.ToString()),
+                                        String.Concat("Alphabet ", Aitem.ID.ToString(), " Letter ", LetterQuery[j].Guid.ToString()),
                                         LetterQuery[j].Value,
                                         Path.Combine(LPath, LetterQuery[j].Logo),
                                         LetterQuery[j].Value,
-                                        LetterQuery[j].ID,
+                                        LetterQuery[j].Guid,
                                         Aitem,
                                         Path.Combine(LPath, LetterQuery[j].Sound)
                                         );
 
-                        var WordQuery = db.Query<Word>("SELECT * FROM Word WHERE AlphabetID=? AND LetterID=?", Aitem.ID, LetterQuery[j].ID);
+                        var WordQuery = db.Query<Word>("SELECT * FROM Word WHERE AlphabetID=? AND LetterID=?", Aitem.ID, LetterQuery[j].Guid);
 
                         for (int k = 0; k < WordQuery.Count; k++)
                         {
@@ -590,7 +592,7 @@ namespace levelupspace
             
                SQLiteConnection db = new SQLiteConnection(DataSourcePath);
 
-                var AlphabetQuery = db.Query<Alphabet>("SELECT * FROM Alphabet");
+               var AlphabetQuery = db.Query<Alphabet>("SELECT * FROM Alphabet WHERE IsSystem = 0");
 
                 for (int i = 0; i < AlphabetQuery.Count; i++)
                 {
@@ -604,7 +606,7 @@ namespace levelupspace
                     var LPath = ApplicationData.Current.LocalFolder.Path;
 
                     var Aitem = new AlphabetItem(
-                            String.Concat("Alphabet ", AlphabetQuery[i].Guid.ToString()),
+                            String.Concat("Alphabet ", AlphabetQuery[i].Guid),
                             localization.LanguageName,
                             Path.Combine(LPath, AlphabetQuery[i].Logo),
                             localization.Description,

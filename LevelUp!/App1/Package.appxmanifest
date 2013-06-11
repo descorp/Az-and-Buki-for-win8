@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="53891ProtonArt.LevelUP" Publisher="CN=C8AC85BE-7ECB-4F8B-8119-556ED0F09C4F" Version="1.0.0.1" />
+  <Identity Name="53891ProtonArt.LevelUP" Publisher="CN=C8AC85BE-7ECB-4F8B-8119-556ED0F09C4F" Version="1.0.0.2" />
   <Properties>
     <DisplayName>LevelUP!</DisplayName>
     <PublisherDisplayName>ProtonArt</PublisherDisplayName>
@@ -16,7 +16,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="LevelUP.App">
-      <VisualElements DisplayName="LevelUP!" Logo="Assets/Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Learn alphabets" ForegroundText="light" BackgroundColor="#7CE3FF">
+      <VisualElements DisplayName="LevelUP!" Logo="Assets/Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Learn alphabets" ForegroundText="light" BackgroundColor="#76D9F2">
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="Assets\SplashScreen.png" />
         <InitialRotationPreference>

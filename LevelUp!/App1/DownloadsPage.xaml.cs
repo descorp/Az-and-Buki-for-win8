@@ -29,7 +29,7 @@ namespace levelupspace
     {
         
         private DownloadPageState state;
-        public List<DownLoadAlphabetItem> DownloadingPackagesCollection = new List<DownLoadAlphabetItem>();
+        private List<DownLoadAlphabetItem> DownloadingPackagesCollection = new List<DownLoadAlphabetItem>();
 
         private async void ChangeState(DownloadPageState state)
         {
@@ -134,6 +134,7 @@ namespace levelupspace
         {
             LanguageProvider.CurrentLanguage = cbLangs.SelectedItem as LanguageItem;
             var _Frame = Window.Current.Content as Frame;
+            if (_Frame != null)
             _Frame.Navigate(typeof(DownloadsPage));
         }
 
@@ -211,7 +212,6 @@ namespace levelupspace
             DownLoadAlphabetItem item = DownloadingPackagesCollection.First(process => process.PackageFileName == argument.FileName);
             if (item != null)
                 item.DownLoadProgessPos++;
-            
         }
 
         private void FileUnZIPed(object sender, EventArgs args)

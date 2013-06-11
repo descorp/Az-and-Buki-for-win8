@@ -540,10 +540,17 @@ namespace levelupspace
 
         
 
-        public static LetterItem GetItem(string uniqueId)
+        public static LetterItem GetItem(string uniqueId, String DBPath)
         {
-            // Для небольших наборов данных можно использовать простой линейный поиск
+           
             var matches = _ABCDataSource.AllAlphabets.SelectMany(group => group.LetterItems).Where((item) => item.UniqueId.Equals(uniqueId));
+            if (matches.Count()==0)
+            {
+                var AlphabetID = ParseAlphabetID(uniqueId);
+                var alpha = GetAlphabet("Alphabet " + AlphabetID.ToString(), DBPath);
+
+                return alpha.LetterItems.Where((item) => item.UniqueId.Equals(uniqueId)).FirstOrDefault();
+            }
             return matches.First();           
             
         }

@@ -18,6 +18,8 @@ namespace levelupspace
             
         }
 
+        private String ABCid;
+
         /// <summary>
         /// Заполняет страницу содержимым, передаваемым в процессе навигации. Также предоставляется любое сохраненное состояние
         /// при повторном создании страницы из предыдущего сеанса.
@@ -29,7 +31,12 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            var abc = ContentManager.GetAlphabet((String)navigationParameter, DBconnectionPath.Local);
+            
+            if (pageState == null)
+               ABCid = (String) navigationParameter;
+            else ABCid = (String)pageState["alphabetDetailPageID"];
+            
+            var abc = ContentManager.GetAlphabet(ABCid, DBconnectionPath.Local);
             if (abc != null)
             {
                 this.DefaultViewModel["Alphabet"] = abc;
@@ -45,7 +52,7 @@ namespace levelupspace
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
-
+            if (ABCid.Length > 0) pageState["alphabetDetailPageID"] = ABCid;
         }
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)

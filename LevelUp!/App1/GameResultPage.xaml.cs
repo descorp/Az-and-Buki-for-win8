@@ -20,7 +20,7 @@ namespace levelupspace
         {
             this.InitializeComponent();
         }
-
+        private double rate;
         /// <summary>
         /// Заполняет страницу содержимым, передаваемым в процессе навигации. Также предоставляется любое сохраненное состояние
         /// при повторном создании страницы из предыдущего сеанса.
@@ -32,7 +32,10 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override async void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            var rate = (double)navigationParameter;
+            if (pageState == null && navigationParameter != null)
+                rate = (double)navigationParameter;
+            else if (pageState.ContainsKey("rate"))
+                rate = (double)pageState["rate"];
 
             var res = new ResourceLoader();
 
@@ -104,7 +107,8 @@ namespace levelupspace
                 catch { };
                 if (award != null)
                 {
-                    AwardManager.AddUserAward(award, UserManager.UserId, DBconnectionPath.Local);
+                    if (pageState==null)
+                        AwardManager.AddUserAward(award, UserManager.UserId, DBconnectionPath.Local);
                     this.DefaultViewModel["Award"] = award;
                     tbAboutAchievements.Text = res.GetString("YouWonPrizeMessage");
                 }
@@ -120,6 +124,7 @@ namespace levelupspace
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
+            pageState["rate"] = this.rate;
         }
 
         private new void GoBack(object sender, RoutedEventArgs e)

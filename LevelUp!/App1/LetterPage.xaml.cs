@@ -15,6 +15,7 @@ namespace levelupspace
     public sealed partial class LetterPage : levelupspace.Common.LayoutAwarePage
     {
         GridView gvWords = null;
+
         public LetterPage()
         {
             this.InitializeComponent();
@@ -31,12 +32,12 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            if (pageState != null && pageState.ContainsKey("SelectedItem"))
+            if (pageState != null && pageState.ContainsKey("SelectedLetterItem"))
             {
-                navigationParameter = pageState["SelectedItem"];
+                navigationParameter = pageState["SelectedLetterItem"];
             }
 
-            LetterItem letter = ContentManager.GetItem((String)navigationParameter);
+            LetterItem letter = ContentManager.GetItem((String)navigationParameter, DBconnectionPath.Local);
             if (letter != null)
             {
                 this.DefaultViewModel["Letters"] = letter.Alphabet.LetterItems;
@@ -54,12 +55,12 @@ namespace levelupspace
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
             var selectedItem = (LetterItem)this.fwLetters.SelectedItem;
-            pageState["SelectedItem"] = selectedItem.UniqueId;
+            pageState["SelectedLetterItem"] = selectedItem.UniqueId;
         }
 
         private void fwLetters_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
         {
-            LetterItem letter = ContentManager.GetItem(((LetterItem)this.fwLetters.SelectedItem).UniqueId);
+            LetterItem letter = ContentManager.GetItem(((LetterItem)this.fwLetters.SelectedItem).UniqueId, DBconnectionPath.Local);
             if (letter != null)
             {
 

@@ -16,7 +16,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="LevelUP.App">
-      <VisualElements DisplayName="LevelUP!" Logo="Assets/Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Learn alphabets" ForegroundText="light" BackgroundColor="#7CE3FF">
+      <VisualElements DisplayName="LevelUP!" Logo="Assets/Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Learn alphabets" ForegroundText="light" BackgroundColor="#76D9F2">
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="Assets\SplashScreen.png" />
         <InitialRotationPreference>

@@ -42,14 +42,14 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            if (pageState == null)
+            if (pageState == null||pageState.Count==0)
             {
-                
-                if (ContentManager.AlphabetsCount(DBconnectionPath.Local)==0)
+
+                if (ContentManager.AlphabetsCount(DBconnectionPath.Local) == 0)
                 {
                     pbLevels.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     btnNextLevel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    
+
 
                     if (DownLoadABCPopup == null)
                     {
@@ -99,6 +99,16 @@ namespace levelupspace
 
                     }
             }
+            else
+            {
+                game = new GameClass();
+                game.LoadGameState(pageState);
+                this.DefaultViewModel["Words"] = game.Level.words;
+                tbQuestion.Text = game.Level.Question;
+                pbLevels.Maximum = game.LevelsCount;
+                pbLevels.Value = game.LevelNum;
+                tbScores.Text = game.Score.ToString();
+            }
         }
 
         private void DownLoadABCClicked(object sender, EventArgs args)
@@ -120,6 +130,7 @@ namespace levelupspace
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
+            if (game != null) game.SaveGameState(pageState);
         }
 
 

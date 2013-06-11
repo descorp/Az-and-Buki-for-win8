@@ -86,19 +86,17 @@ namespace levelupspace
 
         private void btnShare_Click(object sender, RoutedEventArgs e)
         {
-            
-            var parameters = new Dictionary<string, int>();
-            parameters["social"] = (int)Socials.VK;
-            parameters["award"] = (int)((sender as Button).Tag);
+
+            string parameters = ((sender as Button).Tag.ToString() + "/" + (int)Socials.VK).ToString();
+
             this.Frame.Navigate(typeof(SharePage), parameters);
             
         }
 
         private void btnShareFB_Click(object sender, RoutedEventArgs e)
         {
-            var parameters = new Dictionary<string, int>();
-            parameters["social"] = (int)Socials.Facebook;
-            parameters["award"] = (int)((sender as Button).Tag);
+            string parameters = ((sender as Button).Tag.ToString() + "/" + (int)Socials.Facebook).ToString();
+            
             this.Frame.Navigate(typeof(SharePage), parameters);
 
         }

@@ -21,6 +21,8 @@ namespace levelupspace
         String _imagePath;
         String _message;
         SocialProvider provider;
+        int awardID=-1;
+        int Net=-1;
 
         public static SharePage Current;
 
@@ -48,45 +50,62 @@ namespace levelupspace
             var res = new ResourceLoader();
             if (HttpProvider.IsInternetConnection())
             {
-                var parameters = (Dictionary<string, int>)navigationParameter;
+                var parameters = ((String)navigationParameter).Split('/');
 
-                var award = await AwardManager.GetAward((int)parameters["award"], DBconnectionPath.Local);
-
-                
-
-                _imagePath = award.ImagePath;
-                _message = String.Format(res.GetString("PostMessage"), award.Title);
-                try
-                {  
-                    switch (parameters["social"])
-                    {
-                    case (int)Socials.VK:
-                        provider = new VKProvider();                        
-                        break;
-                    case (int)Socials.Facebook:
-                        provider = new FacebookProvider(); 
-                        break;
-                    default:
-                        this.Frame.Navigate(typeof(AchievementsPage));
-                        break;
-                    }
-                    
-                    
-                    WebPage.Navigate(provider.LoginUri);
-                    WebPage.LoadCompleted += new LoadCompletedEventHandler(WebPage_LoadCompleted);
-
-                }
-                catch
+                if (pageState == null && parameters != null)
                 {
-                    Logger.ShowMessage(res.GetString("ConnectionError"));
+                    int.TryParse(parameters[0], out awardID);
+                    int.TryParse(parameters[1], out Net);
+                }
+                else
+                {
+                    this.awardID = (int)pageState["SharePageAward"];
+                    this.Net = (int)pageState["SocialNetworkID"];
+                }
+
+                AwardItem award = null;
+
+                if (awardID > 0)
+                    award = await AwardManager.GetAward(awardID, DBconnectionPath.Local);
+                if (award != null)
+                {
+
+                    _imagePath = award.ImagePath;
+                    _message = String.Format(res.GetString("PostMessage"), award.Title);
+                    try
+                    {
+
+                        switch (Net)
+                        {
+                            case (int)Socials.VK:
+                                provider = new VKProvider();
+                                break;
+                            case (int)Socials.Facebook:
+                                provider = new FacebookProvider();
+                                break;
+                            default:
+                                this.Frame.Navigate(typeof(AchievementsPage));
+                                break;
+                        }
+
+
+                        WebPage.Navigate(provider.LoginUri);
+                        WebPage.LoadCompleted += new LoadCompletedEventHandler(WebPage_LoadCompleted);
+
+                    }
+                    catch
+                    {
+                        Logger.ShowMessage(res.GetString("ConnectionError"));
+                        this.Frame.Navigate(typeof(AchievementsPage));
+                    }
+                }
+                else
+                {
+                    Logger.ShowMessage(res.GetString("NoInternetConnectionError"));
                     this.Frame.Navigate(typeof(AchievementsPage));
                 }
             }
-            else
-            {
-                Logger.ShowMessage(res.GetString("NoInternetConnectionError"));
-                this.Frame.Navigate(typeof(AchievementsPage));
-            }
+            else this.Frame.Navigate(typeof(AchievementsPage));
             
         }
 
@@ -142,6 +161,8 @@ namespace levelupspace
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
+            pageState["SharePageAward"] = this.awardID;
+            pageState["SocialNetworkID"] = (int)this.Net;
         }
 
         private void pageRoot_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)

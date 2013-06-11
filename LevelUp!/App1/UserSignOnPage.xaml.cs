@@ -52,6 +52,17 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+            if (pageState != null)
+            {
+                if (pageState.ContainsKey("SignOnLogin"))
+                    this.tbName.Text = (string)pageState["SignOnLogin"];
+                if (pageState.ContainsKey("SignOnLogofile"))
+                {
+                    this.logofilePath = (string)pageState["SignOnLogofile"];
+                    this.imgUserLogo.Source = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(logofilePath, UriKind.Absolute));
+                }
+            }
+                
         }
 
         /// <summary>
@@ -62,6 +73,10 @@ namespace levelupspace
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
+            if (this.tbName.Text.Length!=0)
+                pageState["SignOnLogin"] = this.tbName.Text;
+            if (this.logofilePath.Length != 0)
+                pageState["SignOnLogofile"] = this.logofilePath;
         }
 
         private async void btnOk_Click(object sender, RoutedEventArgs e)
@@ -90,7 +105,7 @@ namespace levelupspace
                     {
                         file = await StorageFile.GetFileFromPathAsync(logofilePath);
                         logofilePath = String.Concat("Users/UL", tbName.Text, file.FileType);
-                        await file.RenameAsync(logofilePath);
+                        await file.RenameAsync("UL"+tbName.Text+file.FileType);
                         //AzureStorageProvider.UploadAvatarToStorage(file, tbName.Text);
                     }
 

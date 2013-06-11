@@ -217,7 +217,7 @@ namespace levelupspace
         {
             LanguageProvider.CurrentLanguage = e.AddedItems[0] as LanguageItem;
             var _Frame = Window.Current.Content as Frame;
-            _Frame.Navigate(typeof(MainMenu));
+            if (_Frame!=null)_Frame.Navigate(typeof(MainMenu));
         }
     }
 }

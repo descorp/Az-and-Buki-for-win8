@@ -327,4 +327,7 @@
   <data name="WaitingAppTitle" xml:space="preserve">
     <value>Обработка...</value>
   </data>
+  <data name="DownloadingError" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
 </root>

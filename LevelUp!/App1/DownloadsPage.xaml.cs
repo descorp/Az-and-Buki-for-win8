@@ -29,7 +29,7 @@ namespace levelupspace
     {
         
         private DownloadPageState state;
-        private List<DownLoadAlphabetItem> DownloadingPackagesCollection = new List<DownLoadAlphabetItem>();
+        public List<DownLoadAlphabetItem> DownloadingPackagesCollection = new List<DownLoadAlphabetItem>();
 
         private async void ChangeState(DownloadPageState state)
         {
@@ -67,25 +67,28 @@ namespace levelupspace
                     }
 
                     pageTitle.Text = res.GetString("DownloadingAppTitle");
-                    var ABCs = await ContentManager.DownloadFromAzureDB();
+
                     try
                     {
+                        var ABCs = await ContentManager.DownloadFromAzureDB();
                         //TODO : remove librarys that already exist in 
+
+                        this.DefaultViewModel["ABCItems"] = ABCs;
+                        foreach (DownLoadAlphabetItem alph in ABCs)
+                            if (alph.IsSystem)
+                                gwDownLoadItems.SelectedItems.Add(alph);
+                        this.DefaultViewModel["HeaderText"] = res.GetString("ChoosePacksMessage");
+                        tbStatus.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                        pRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                        cbLangs.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                        gwDownLoadItems.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                        btnChooseLang.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     }
                     catch
                     {
+                        Logger.ShowMessage("ConnectionError");
+                        this.Frame.Navigate(typeof(MainMenu));
                     }
-                    this.DefaultViewModel["ABCItems"] = ABCs;
-                    foreach (DownLoadAlphabetItem alph in ABCs)
-                        if (alph.IsSystem)
-                            gwDownLoadItems.SelectedItems.Add(alph);
-                    this.DefaultViewModel["HeaderText"] = res.GetString("ChoosePacksMessage");
-                    tbStatus.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    pRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    cbLangs.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    gwDownLoadItems.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                    btnChooseLang.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                    
                     break;
                 case DownloadPageState.Downloading:
                     btnChooseLang.IsEnabled = false;
@@ -145,26 +148,34 @@ namespace levelupspace
             {
                 case DownloadPageState.ChooseLang:
                     ChangeState(DownloadPageState.Waiting);
-                    
+
                     ChangeState(DownloadPageState.ChoosePacks);
 
                     break;
                 case DownloadPageState.ChoosePacks:
                     foreach (DownLoadAlphabetItem item in gwDownLoadItems.SelectedItems)
                     {
-                        DownloadingPackagesCollection.Add(item);
-                        var Local = ApplicationData.Current.TemporaryFolder;
-                        var file = await Local.CreateFileAsync(item.ID.ToString() + "_pack", CreationCollisionOption.ReplaceExisting);
-                        string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
-                        item.PackageFileName = file.DisplayName;
-                        int numberOfParts = 20;
-                        AzureStorageProvider.DownloadPackageFromStorage(file, blobName, numberOfParts, item.DownLoadProgressMax, FileDownloaded, FilePartDownloaded);
-                        item.DownLoadProgressMax = numberOfParts + 3;
-                        item.DownLoadProcessVisible = Windows.UI.Xaml.Visibility.Visible;
-                        item.DownLoadProgessPos = 0;
-                        item.DownloadStatus = res.GetString("PackageDownloadMessage"); 
+                        try
+                        {
+                            DownloadingPackagesCollection.Add(item);
+                            var Local = ApplicationData.Current.TemporaryFolder;
+                            var file = await Local.CreateFileAsync(item.ID.ToString() + "_pack", CreationCollisionOption.ReplaceExisting);
+                            string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
+                            item.PackageFileName = file.DisplayName;
+                            int numberOfParts = 20;
+                            AzureStorageProvider.DownloadPackageFromStorage(file, blobName, numberOfParts, item.DownLoadProgressMax, FileDownloaded, FilePartDownloaded);
+                            item.DownLoadProgressMax = numberOfParts + 3;
+                            item.DownLoadProcessVisible = Windows.UI.Xaml.Visibility.Visible;
+                            item.DownLoadProgessPos = 0;
+                            item.DownloadStatus = res.GetString("PackageDownloadMessage");
+                        }
+                        catch
+                        {
+                            item.DownloadStatus = res.GetString("DownloadingError");
+                        }
                     };
                     ChangeState(DownloadPageState.Downloading);
+
                     break;
             }
         }
@@ -173,37 +184,56 @@ namespace levelupspace
         {
             var res = new ResourceLoader();
             var argument = args as FilePartDownloadedEventArgs;
-            var item = DownloadingPackagesCollection.Single(process => process.PackageFileName == argument.FileName);            
-            item.DownloadStatus = res.GetString("PackageInstallingMessage");
-            item.DownLoadProgessPos++;
-            UnZIPer.Unzip(sender as StorageFile, FileUnZIPed);
+            DownLoadAlphabetItem item = DownloadingPackagesCollection.First(process => process.PackageFileName == argument.FileName);
+
+            if (argument.Offset != -1)
+            {
+                item.DownloadStatus = res.GetString("PackageInstallingMessage");
+                item.DownLoadProgessPos++;
+                try
+                {
+                    UnZIPer.Unzip(sender as StorageFile, FileUnZIPed);
+                }
+                catch
+                {
+                    item.DownloadStatus = res.GetString("DownloadingError");
+                }
+            }
+            else
+                item.DownloadStatus = res.GetString("DownloadingError");
         }
 
 
         private void FilePartDownloaded(object sender, EventArgs args)
         {
             var argument = args as FilePartDownloadedEventArgs;
-            var item = DownloadingPackagesCollection.Single(process => process.PackageFileName == argument.FileName);
-            item.DownLoadProgessPos++;
+            var res = new ResourceLoader();
+            DownLoadAlphabetItem item = DownloadingPackagesCollection.First(process => process.PackageFileName == argument.FileName);
+            if (item != null)
+                item.DownLoadProgessPos++;
+            
         }
 
         private void FileUnZIPed(object sender, EventArgs args)
         {
             var res = new ResourceLoader();
             var argument = args as FileUnzippedEventArgs;
-            var item = DownloadingPackagesCollection.Single(process => process.PackageFileName == argument.FileName);
-            item.DownLoadProgessPos++;            
-            DBFiller.CreateDB(DBconnectionPath.Local);
-            DBFiller.LoadPackageToDB(argument.FolderPath, DBconnectionPath.Local);
-            item.DownloadStatus = res.GetString("PackageInstalledMessage");
+            var item = DownloadingPackagesCollection.First(process => process.PackageFileName == argument.FileName);
+            if (item != null)
+            {
+                item.DownLoadProgessPos++;
+                DBFiller.CreateDB(DBconnectionPath.Local);
+                DBFiller.LoadPackageToDB(argument.FolderPath, DBconnectionPath.Local);
+                item.DownloadStatus = res.GetString("PackageInstalledMessage");
 
-            bool isEveryDownloadingsCompleted = true;
-            foreach (DownLoadAlphabetItem d in DownloadingPackagesCollection)
-                if (d.DownloadStatus != res.GetString("PackageInstalledMessage"))
-                    isEveryDownloadingsCompleted = false;
+                bool isEveryDownloadingsCompleted = true;
+                foreach (DownLoadAlphabetItem d in DownloadingPackagesCollection)
+                    if (d.DownloadStatus != res.GetString("PackageInstalledMessage"))
+                        isEveryDownloadingsCompleted = false;
 
-            if (isEveryDownloadingsCompleted)
-                this.Frame.Navigate(typeof(MainMenu));
+                if (isEveryDownloadingsCompleted)
+                    this.Frame.Navigate(typeof(MainMenu));
+            }
         }
 
         private void gwDownLoadItems_ItemClick(object sender, ItemClickEventArgs e)

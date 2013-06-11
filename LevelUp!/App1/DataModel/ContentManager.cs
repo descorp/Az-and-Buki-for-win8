@@ -653,7 +653,7 @@ namespace levelupspace
             try
             {
                 await StorageFile.GetFileFromPathAsync(DBPath);
-            }
+            } 
             catch
             {
                 return false;

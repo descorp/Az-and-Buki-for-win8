@@ -32,10 +32,18 @@ namespace levelupspace
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             var res = new ResourceLoader();
-            ObservableCollection<GameItem> Games = new ObservableCollection<GameItem>();
-            Games.Add(new GameItem("Game 1", res.GetString("GameName"), "ms-appx:///Assets/Gamelogo1.png", res.GetString("GameDescription")));
+            try
+            {
+                ObservableCollection<GameItem> Games = new ObservableCollection<GameItem>();
+                Games.Add(new GameItem("Game 1", res.GetString("GameName"), "ms-appx:///Assets/Gamelogo1.png", res.GetString("GameDescription")));
 
-            this.DefaultViewModel["Items"] = Games;
+                this.DefaultViewModel["Items"] = Games;
+            }
+            catch
+            {
+                this.Frame.Navigate(typeof(MainMenu));
+                Logger.ShowMessage(res.GetString("ConnectionError"));
+            }
         }
 
         /// <summary>

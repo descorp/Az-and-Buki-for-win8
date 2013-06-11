@@ -34,37 +34,44 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            var abcs = ContentManager.GetAlphabets((String)navigationParameter) ;
-            if ((abcs as ObservableCollection<AlphabetItem>).Count==0)
+            var res = new ResourceLoader();
+            try
             {
-                if (DownLoadABCPopup == null)
+                var abcs = ContentManager.GetAlphabets((String)navigationParameter);
+                if ((abcs as ObservableCollection<AlphabetItem>).Count == 0)
                 {
-                    // create the Popup in code
-                    DownLoadABCPopup = new Popup();
-
-
-                    // we are creating this in code and need to handle multiple instances
-                    // so we are attaching to the Popup.Closed event to remove our reference
-                    DownLoadABCPopup.Closed += (senderPopup, argsPopup) =>
+                    if (DownLoadABCPopup == null)
                     {
-                        DownLoadABCPopup = null;
-                    };
+                        // create the Popup in code
+                        DownLoadABCPopup = new Popup();
 
-                    DownLoadABCPopup.HorizontalOffset = (Window.Current.Bounds.Width - 600) / 2;
-                    DownLoadABCPopup.VerticalOffset = 350;
 
-                    // set the content to our UserControl
-                    var res = new ResourceLoader();
+                        // we are creating this in code and need to handle multiple instances
+                        // so we are attaching to the Popup.Closed event to remove our reference
+                        DownLoadABCPopup.Closed += (senderPopup, argsPopup) =>
+                        {
+                            DownLoadABCPopup = null;
+                        };
 
-                    var chidPopup = new TextPopup(res.GetString("ABCIsEmptyMessage"), true);
-                    chidPopup.OKClickEvent += DownLoadABCClicked;
-                    DownLoadABCPopup.Child = chidPopup;
+                        DownLoadABCPopup.HorizontalOffset = (Window.Current.Bounds.Width - 600) / 2;
+                        DownLoadABCPopup.VerticalOffset = 350;
 
-                    // open the Popup
-                    DownLoadABCPopup.IsOpen = true;
+                        // set the content to our UserControl
+
+                        var chidPopup = new TextPopup(res.GetString("ABCIsEmptyMessage"), true);
+                        chidPopup.OKClickEvent += DownLoadABCClicked;
+                        DownLoadABCPopup.Child = chidPopup;
+
+                        // open the Popup
+                        DownLoadABCPopup.IsOpen = true;
+                    }
                 }
+                else this.DefaultViewModel["ABCItems"] = abcs;
             }
-            else this.DefaultViewModel["ABCItems"] = abcs;
+            catch
+            {
+                Logger.ShowMessage(res.GetString("ConnectionError"));
+            }
         }
 
         private void DownLoadABCClicked(object sender, EventArgs args)

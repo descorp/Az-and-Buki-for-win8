@@ -18,6 +18,7 @@ namespace levelupspace
     {       
         public async static Task<int> AddUserAsync(User Newby, String Pass, String DBPath)
         {
+            
             var Resources = new ResourceLoader();
             
             if (Newby.Name.Length == 0) throw new ArgumentOutOfRangeException("UserName", "Name can't be empty!");

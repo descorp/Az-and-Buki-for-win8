@@ -12,9 +12,10 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>LevelUP!_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>LevelUP!_StoreKey.pfx</PackageCertificateKeyFile>
     <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
-    <PackageCertificateThumbprint>78B27453A75839CB70636748D48B9A6B1A78C598</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>E335E71511393A6367D7D49D6C83470CFCDF66F9</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -192,6 +193,7 @@
     </AppxManifest>
     <None Include="ClassDiagram1.cd" />
     <None Include="Common\ReadMe.txt" />
+    <None Include="LevelUP!_StoreKey.pfx" />
     <None Include="LevelUP!_TemporaryKey.pfx" />
     <PRIResource Include="Localization\ru-ru\Resources.lang-ru-RU.resw" />
     <PRIResource Include="Localization\en-us\Resources.lang-en-US.resw" />
@@ -228,6 +230,7 @@
     <Content Include="Icons\fbbtn_hover.png" />
     <Content Include="Icons\vkbtn.png" />
     <Content Include="Icons\vkbtn_hover.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Sounds\tray again.wav" />
     <Content Include="Sounds\grate job.wav" />
     <Content Include="Sounds\yey.wav" />

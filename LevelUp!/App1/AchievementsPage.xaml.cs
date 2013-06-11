@@ -34,35 +34,43 @@ namespace levelupspace
         /// сеанса. Это значение будет равно NULL при первом посещении страницы.</param>
         protected async override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            this.DefaultViewModel["UAwards"] = await AwardManager.UsersAwards(UserManager.UserId, DBconnectionPath.Local);
-
-            if ((string)navigationParameter == "WallPostSent")
+            var res = new ResourceLoader();
+            try
             {
+                this.DefaultViewModel["UAwards"] = await AwardManager.UsersAwards(UserManager.UserId, DBconnectionPath.Local);
 
-                if (MessageBoxPopup == null)
+                if ((string)navigationParameter == "WallPostSent")
                 {
-                    // create the Popup in code
-                    MessageBoxPopup = new Popup();
 
-
-                    // we are creating this in code and need to handle multiple instances
-                    // so we are attaching to the Popup.Closed event to remove our reference
-                    MessageBoxPopup.Closed += (senderPopup, argsPopup) =>
+                    if (MessageBoxPopup == null)
                     {
-                        MessageBoxPopup = null;
-                    };
+                        // create the Popup in code
+                        MessageBoxPopup = new Popup();
 
-                    MessageBoxPopup.HorizontalOffset = (Window.Current.Bounds.Width - 600) / 2;
-                    MessageBoxPopup.VerticalOffset = 350;
 
-                    // set the content to our UserControl
-                    var res = new ResourceLoader();
-                    MessageBoxPopup.Child = new TextPopup(res.GetString("WallPostSentMessage"));
+                        // we are creating this in code and need to handle multiple instances
+                        // so we are attaching to the Popup.Closed event to remove our reference
+                        MessageBoxPopup.Closed += (senderPopup, argsPopup) =>
+                        {
+                            MessageBoxPopup = null;
+                        };
 
-                    // open the Popup
-                    MessageBoxPopup.IsOpen = true;
+                        MessageBoxPopup.HorizontalOffset = (Window.Current.Bounds.Width - 600) / 2;
+                        MessageBoxPopup.VerticalOffset = 350;
+
+                        // set the content to our UserControl
+                        MessageBoxPopup.Child = new TextPopup(res.GetString("WallPostSentMessage"));
+
+                        // open the Popup
+                        MessageBoxPopup.IsOpen = true;
+                    }
+
                 }
-                
+            }
+            catch
+            {
+                this.Frame.Navigate(typeof(MainMenu));
+                Logger.ShowMessage(res.GetString("ConnectionError"));
             }
         }
 

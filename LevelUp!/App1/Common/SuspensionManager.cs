@@ -59,22 +59,24 @@ namespace levelupspace.Common
         {
             try
             {
-            // Сохранение состояния навигации для всех зарегистрированных фреймов
-            foreach (var weakFrameReference in _registeredFrames)
-            {
-                Frame frame;
-                if (weakFrameReference.TryGetTarget(out frame))
+                // Сохранение состояния навигации для всех зарегистрированных фреймов
+                foreach (var weakFrameReference in _registeredFrames)
                 {
-                    SaveFrameNavigationState(frame);
+                    Frame frame;
+                    if (weakFrameReference.TryGetTarget(out frame))
+                    {
+                        SaveFrameNavigationState(frame);
+                    }
                 }
-            }
 
-            // Синхронная сериализация состояния сеанса с целью запрета асинхронного доступа к общему
-            // состоянию
-            MemoryStream sessionData = new MemoryStream();
-            DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
-            serializer.WriteObject(sessionData, _sessionState);
-            
+                
+
+                // Синхронная сериализация состояния сеанса с целью запрета асинхронного доступа к общему
+                // состоянию
+                MemoryStream sessionData = new MemoryStream();
+                DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
+                serializer.WriteObject(sessionData, _sessionState);
+
                 // Получение выходного потока для файла SessionState и асинхронная запись состояния
                 StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(sessionStateFilename, CreationCollisionOption.ReplaceExisting);
                 using (Stream fileStream = await file.OpenStreamForWriteAsync())

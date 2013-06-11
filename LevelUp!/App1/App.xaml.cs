@@ -92,6 +92,7 @@ namespace levelupspace
             var deferral = e.SuspendingOperation.GetDeferral();
             await SuspensionManager.SaveAsync();
             deferral.Complete();
+            
         }
     }
 }

@@ -200,31 +200,38 @@ namespace levelupspace.DataModel
 
         public static async void DownloadPackageFromStorage(StorageFile file, String packageNameInBlob, int numOfParts, long Length, EventHandler DownloadCompletedEvent = null, EventHandler DownloadPartEvent = null)
         {
-            // Retrieve reference to a previously created container.
-            CloudBlobContainer container = blobClient.GetContainerReference("packages");
-            
-            // Retrieve reference to a blob named "myblob".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageNameInBlob);
-            // Create or overwrite the "myblob" blob with contents from a local file.
             long offset = 0;
             long length = Length / numOfParts;
             if (length < 4096)
                 length = 4096;
-            using (var fileStream = await file.OpenStreamForWriteAsync())
+            try
             {
-                while (offset < Length)
-                {
-                    if (Length - length < offset)
-                        length = Length - offset;
+                // Retrieve reference to a previously created container.
+                CloudBlobContainer container = blobClient.GetContainerReference("packages");
 
-                    await blockBlob.DownloadRangeToStreamAsync(fileStream.AsOutputStream(), offset, length);
-                    offset += length;
-                    if (DownloadPartEvent != null)
+                // Retrieve reference to a blob named "myblob".
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageNameInBlob);
+                // Create or overwrite the "myblob" blob with contents from a local file.
+                using (var fileStream = await file.OpenStreamForWriteAsync())
+                {
+                    while (offset < Length)
                     {
-                        DownloadPartEvent(null, new FilePartDownloadedEventArgs(file.DisplayName, 0));
+                        if (Length - length < offset)
+                            length = Length - offset;
+
+                        await blockBlob.DownloadRangeToStreamAsync(fileStream.AsOutputStream(), offset, length);
+                        offset += length;
+                        if (DownloadPartEvent != null)
+                        {
+                            DownloadPartEvent(null, new FilePartDownloadedEventArgs(file.DisplayName, 0));
+                        }
+
                     }
-                    
                 }
+            }
+            catch
+            {
+                if (DownloadCompletedEvent != null) DownloadCompletedEvent(file, new FilePartDownloadedEventArgs(file.DisplayName, -1));
             }
 
             FilePartDownloadedEventArgs args = new FilePartDownloadedEventArgs(file.DisplayName, offset);

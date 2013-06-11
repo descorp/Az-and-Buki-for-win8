@@ -70,10 +70,21 @@ namespace levelupspace
 
             if (tbName.Text.Length > 3)
             {
-                var uniquelogin = await AzureDBProvider.UserUnique(tbName.Text);  //UserManager.IsUniqueLoginAsync(tbName.Text, DBconnectionPath.Local);
+                bool uniquelogin = false;
+
+                try
+                {
+                    uniquelogin = await AzureDBProvider.UserUnique(tbName.Text);  //UserManager.IsUniqueLoginAsync(tbName.Text, DBconnectionPath.Local);
+                }
+                catch
+                {
+                    this.Frame.Navigate(typeof(MainMenu));
+                    Logger.ShowMessage(res.GetString("ConnectionError"));
+                }
+
                 if (uniquelogin)
                 {
-                    StorageFile file=null;
+                    StorageFile file = null;
 
                     if (logofilePath != "ms-appx:///Assets/Userlogo.png")
                     {
@@ -87,18 +98,18 @@ namespace levelupspace
                         {
                             Name = tbName.Text,
                             Avatar = logofilePath
-                        }, 
+                        },
                         PassBox.Key,
                         DBconnectionPath.Local);
 
                     if (newUserID > 0)
                     {
-                        
+
                         this.Frame.Navigate(typeof(MainMenu), "Autorized");
                         return;
                     }
 
-                    
+
                     Logger.ShowMessage(res.GetString("SignOnUnexpectedError"));
 
                     return;

@@ -327,4 +327,10 @@
   <data name="WaitingAppTitle" xml:space="preserve">
     <value>Processing...</value>
   </data>
+  <data name="DownloadingError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="InstalationError" xml:space="preserve">
+    <value>Installation error</value>
+  </data>
 </root>

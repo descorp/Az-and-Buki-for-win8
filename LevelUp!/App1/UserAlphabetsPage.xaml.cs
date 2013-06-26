@@ -38,7 +38,7 @@ namespace levelupspace
             try
             {
                 var abcs = ContentManager.GetAlphabets((String)navigationParameter);
-                if ((abcs as ObservableCollection<AlphabetItem>).Count == 0)
+                if (abcs == null||(abcs as ObservableCollection<AlphabetItem>).Count == 0)
                 {
                     if (DownLoadABCPopup == null)
                     {
@@ -82,7 +82,7 @@ namespace levelupspace
                 Logger.ShowMessage(res.GetString("NoInternetConnectionError"));
                 return;
             }
-            this.Frame.Navigate(typeof(DownloadsPage), DownloadPageState.ChoosePacks);
+            this.Frame.Navigate(typeof(DownloadsPage), (int)DownloadPageState.ChoosePacks);
         }
 
         /// <summary>

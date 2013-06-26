@@ -79,9 +79,9 @@
                             		<ColumnDefinition/>
                             	</Grid.ColumnDefinitions>
                             	<StackPanel Margin="0" Orientation="Vertical">
-                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" x:Uid="CaptionPackage" Text="Название:" VerticalAlignment="Top" Margin="2,2,2,10" Style="{StaticResource TitleTextStyle}" TextAlignment="{StaticResource FormTextAlignment}"/>
-                                    <TextBlock TextWrapping="Wrap" x:Uid="SizePackage" Text="Размер:" Margin="2,2,2,10" Style="{StaticResource TitleTextStyle}" TextAlignment="{StaticResource FormTextAlignment}"/>
-                                    <TextBlock HorizontalAlignment="Left" x:Uid="DescriptionPackage" TextWrapping="Wrap" Text="Описание:" VerticalAlignment="Top" Margin="2,2,2,10" Style="{StaticResource TitleTextStyle}" TextAlignment="{StaticResource FormTextAlignment}"/>
+                                    <TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" x:Uid="CaptionPackage" Text="Название:" VerticalAlignment="Top" Margin="2,2,2,10" Style="{StaticResource TitleTextStyle}" TextAlignment="{StaticResource FormTextAlignment}"/>
+                                    <TextBlock TextWrapping="Wrap" x:Uid="SizePackage" Text="Размер:" Margin="2,2,2,10" Style="{StaticResource TitleTextStyle}" TextAlignment="{StaticResource FormTextAlignment}" HorizontalAlignment="Right"/>
+                                    <TextBlock HorizontalAlignment="Right" x:Uid="DescriptionPackage" TextWrapping="Wrap" Text="Описание:" VerticalAlignment="Top" Margin="2,2,2,10" Style="{StaticResource TitleTextStyle}" TextAlignment="{StaticResource FormTextAlignment}"/>
                             	</StackPanel>
                             	<StackPanel Margin="10,0" Orientation="Vertical" Grid.Column="2">
                             		<TextBlock x:Name="tbName" TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource ItemTextStyle}" Margin="2,2,2,10"/>

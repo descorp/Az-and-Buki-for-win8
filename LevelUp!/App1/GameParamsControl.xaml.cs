@@ -14,20 +14,27 @@ namespace levelupspace
         {
             this.InitializeComponent();
             var res = new ResourceLoader();
+            try
+            {
+                ObservableCollection<DifficultyItem> DLevels = new ObservableCollection<DifficultyItem>();
+                DLevels.Add(new DifficultyItem("easy level", res.GetString("EasyLevel"), "ms-appx:///Assets/EasyLevel.png", " "));
+                DLevels.Add(new DifficultyItem("medium level", res.GetString("MeduimLevel"), "ms-appx:///Assets/MediumLevel.png", " "));
+                DLevels.Add(new DifficultyItem("genius level", res.GetString("HardLevel"), "ms-appx:///Assets/HardLevel.png", " "));
 
-            ObservableCollection<DifficultyItem> DLevels = new ObservableCollection<DifficultyItem>();
-            DLevels.Add(new DifficultyItem("easy level", res.GetString("EasyLevel"), "ms-appx:///Assets/EasyLevel.png", " "));
-            DLevels.Add(new DifficultyItem("medium level", res.GetString("MeduimLevel"), "ms-appx:///Assets/MediumLevel.png", " "));
-            DLevels.Add(new DifficultyItem("genius level", res.GetString("HardLevel"), "ms-appx:///Assets/HardLevel.png", " "));
+                cbDifficulty.ItemsSource = DLevels;
+                cbDifficulty.SelectedIndex = 0;
 
-            cbDifficulty.ItemsSource = DLevels;
-            cbDifficulty.SelectedIndex = 0;
+                var abcs = ContentManager.GetAlphabets("AllAlphabets");
 
-            var abcs = ContentManager.GetAlphabets("AllAlphabets");
-            
 
-            cbAlphabet.ItemsSource = abcs;
-            cbAlphabet.SelectedIndex = 0;
+                cbAlphabet.ItemsSource = abcs;
+                cbAlphabet.SelectedIndex = 0;
+            }
+            catch
+            {
+                //this.Frame.Navigate(typeof(MainMenu));
+                Logger.ShowMessage(res.GetString("ConnectionError"));
+            }
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)

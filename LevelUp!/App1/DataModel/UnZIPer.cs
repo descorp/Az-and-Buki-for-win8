@@ -63,7 +63,21 @@ namespace levelupspace.DataModel
 
         public static async void Unzip(StorageFile file, EventHandler EventHandler)
         {
-            Stream stream = await file.OpenStreamForReadAsync();
+            Stream stream = null;
+
+            do
+            {
+                try
+                {
+                    var asyncStream = await file.OpenReadAsync();
+                    stream = asyncStream.AsStream();
+                }
+                catch
+                {
+                }
+            }
+            while (stream.Length == 0);
+
             var rootdir = ApplicationData.Current.LocalFolder;
             Dictionary<String, StorageFolder> folderTree = new Dictionary<string, StorageFolder>();
             using (ZipArchive archive = new ZipArchive(stream))
@@ -89,13 +103,16 @@ namespace levelupspace.DataModel
                 foreach (ZipArchiveEntry entry in archive.Entries.Where(u => u.Length > 0))
                 {
                     string dirName = entry.FullName.Substring(0, entry.FullName.LastIndexOf("/") + 1);
-                    var newFile = await folderTree.First(u => u.Key == dirName).Value.CreateFileAsync(entry.Name, CreationCollisionOption.ReplaceExisting);
-                    using (Stream streamForWriting = await newFile.OpenStreamForWriteAsync())
+                    var folder = folderTree.First(u => u.Key == dirName).Value;
+                    var newFile = await folder.CreateFileAsync(entry.Name, CreationCollisionOption.ReplaceExisting);
+
+                    using (Stream streamForRead = entry.Open())
                     {
-                        using (Stream streamForRead = entry.Open())
+                        long length = entry.Length;
+                        int n = 0;
+
+                        using(Stream streamForWriting = await newFile.OpenStreamForWriteAsync())
                         {
-                            long length = entry.Length;
-                            int n = 0;
                             int offset = 0;
                             do
                             {
@@ -104,7 +121,7 @@ namespace levelupspace.DataModel
                                 await streamForWriting.WriteAsync(bytes, 0, n);
                                 offset += n;
                             }
-                            while (offset < length);
+                            while (streamForWriting.Length < length);
                         }
                     }
                 }

@@ -13,6 +13,7 @@ using levelupspace.DataModel;
 using Windows.UI.Xaml;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.Networking.BackgroundTransfer;
 
 
 namespace levelupspace
@@ -373,6 +374,27 @@ namespace levelupspace
             this.IsSystem = IsSystem;
         }
 
+        private DownloadOperation _downloadOperation = null;
+
+        public void SetDownloadOperation(DownloadOperation operation)
+        {
+            _downloadOperation = operation;
+            var progress = new Progress<DownloadOperation>(ProgressCallback);
+        }
+
+        private void ProgressCallback(DownloadOperation obj)
+        {
+            double progress
+                = ((double)obj.Progress.BytesReceived / obj.Progress.TotalBytesToReceive);
+            //DownloadProgress.Value = progress * 100;
+            //if (progress >= 1.0)
+            //{
+            //    _activeDownload = null;
+            //    DownloadButton.IsEnabled = true;
+            //}
+            this._LoadPos = (long)(progress * 100);
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -455,20 +477,53 @@ namespace levelupspace
 
     public sealed class ContentManager
     {
-        private static ContentManager _ABCDataSource = new ContentManager(DBconnectionPath.Local);
-        
-        private ObservableCollection<AlphabetItem> _allAlphabets = new ObservableCollection<AlphabetItem>();
-        public ObservableCollection<AlphabetItem> AllAlphabets
+        public static ObservableCollection<AlphabetItem> AllAlphabets(String DataSourcePath)
         {
-            get { return this._allAlphabets; }
-            
+            ObservableCollection<AlphabetItem> abcs = new ObservableCollection<AlphabetItem>();
+
+            SQLiteConnection db = new SQLiteConnection(DataSourcePath);
+            List<Alphabet> AlphabetQuery = null;
+            try
+            {
+                AlphabetQuery = db.Query<Alphabet>("SELECT * FROM Alphabet WHERE IsSystem = 0");
+            }
+            catch
+            {
+                return null;
+            }
+            if (AlphabetQuery == null) return null;
+
+                for (int i = 0; i < AlphabetQuery.Count; i++)
+                {
+                    var LocalQuery = db.Query<AlphabetLocalization>(
+                                         "SELECT * FROM AlphabetLocalization WHERE AlphabetID=?", AlphabetQuery[i].Guid);
+
+                    var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
+                    var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
+                    if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
+
+                    var LPath = ApplicationData.Current.LocalFolder.Path;
+
+                    var Aitem = new AlphabetItem(
+                            String.Concat("Alphabet ", AlphabetQuery[i].Guid),
+                            localization.LanguageName,
+                            Path.Combine(LPath, AlphabetQuery[i].Logo),
+                            localization.Description,
+                            AlphabetQuery[i].Guid
+                            );
+
+                    abcs.Add(Aitem);
+                }
+            if (abcs.Count>0)
+                return abcs;
+            else return null;
         }
 
         public static IEnumerable<AlphabetItem> GetAlphabets(string uniqueId)
         {
             if (!uniqueId.Equals("AllAlphabets")) throw new ArgumentException("Only 'AllAlphabets' is supported as a collection of Alphabets");
 
-            return _ABCDataSource.AllAlphabets;
+            return ContentManager.AllAlphabets(DBconnectionPath.Local);
         }
 
         public static int AlphabetsCount(String DBPath)
@@ -478,28 +533,47 @@ namespace levelupspace
             return command.ExecuteScalar<int>();
         }
 
+        public static List<int> GetListOfDownloadedPackagesID(String DBPath)
+        {
+            List<int> IDs = new List<int>();
+            SQLiteConnection db = new SQLiteConnection(DBPath);
+            var command = db.CreateCommand("SELECT * From Alphabet");
+            var query = command.ExecuteQuery<Alphabet>();
+            foreach (Alphabet a in query)
+                IDs.Add(a.Guid);
+            return IDs;
+        }
+
         public static AlphabetItem GetAlphabet(string uniqueId, String DBPath)
         {
-            // Для небольших наборов данных можно использовать простой линейный поиск
-            var matches = _ABCDataSource.AllAlphabets.Where((alphabet) => alphabet.UniqueId.Equals(uniqueId));
-            if (matches.Count() == 1)
-            {
+            var AID = ParseAlphabetID(uniqueId);
                 
                 SQLiteConnection db = new SQLiteConnection(DBPath);
 
-                var Aitem = matches.First();
-                if (Aitem.LetterItems.Count == 0)
-                {
-                    
-                    var LetterQuery = db.Query<Letter>("SELECT * FROM Letter WHERE AlphabetID=?", Aitem.ID);
+                 var AlphabetQuery = db.Query<Alphabet>("SELECT * FROM Alphabet WHERE IsSystem = 0 AND GUID=?", AID).FirstOrDefault();
+                 
+            var LocalQuery = db.Query<AlphabetLocalization>(
+                                         "SELECT * FROM AlphabetLocalization WHERE AlphabetID=?", AlphabetQuery.Guid);
+
+                    var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
+                    var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
+                    if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
 
                     var LPath = ApplicationData.Current.LocalFolder.Path;
 
+                    var Aitem = new AlphabetItem(
+                            String.Concat("Alphabet ", AlphabetQuery.Guid),
+                            localization.LanguageName,
+                            Path.Combine(LPath, AlphabetQuery.Logo),
+                            localization.Description,
+                            AlphabetQuery.Guid
+                            );
+                                   
+                    var LetterQuery = db.Query<Letter>("SELECT * FROM Letter WHERE AlphabetID=?", Aitem.ID);
+                    
+
                     for (int j = 0; j < LetterQuery.Count; j++)
                     {
-                        
-                        
-                             
                         var Litem = new LetterItem(
                                         String.Concat("Alphabet ", Aitem.ID.ToString(), " Letter ", LetterQuery[j].Guid.ToString()),
                                         LetterQuery[j].Value,
@@ -532,26 +606,18 @@ namespace levelupspace
 
                         Aitem.LetterItems.Add(Litem);
                     }
-                }
+                
                 return Aitem;
             }
-            return null;
-        }
 
         
 
-        public static LetterItem GetItem(string uniqueId, String DBPath)
-        {
-           
-            var matches = _ABCDataSource.AllAlphabets.SelectMany(group => group.LetterItems).Where((item) => item.UniqueId.Equals(uniqueId));
-            if (matches.Count()==0)
-            {
+        public static LetterItem GetLetterItem(string uniqueId, String DBPath)
+        {           
                 var AlphabetID = ParseAlphabetID(uniqueId);
                 var alpha = GetAlphabet("Alphabet " + AlphabetID.ToString(), DBPath);
 
-                return alpha.LetterItems.Where((item) => item.UniqueId.Equals(uniqueId)).FirstOrDefault();
-            }
-            return matches.First();           
+                return alpha.LetterItems.Where((item) => item.UniqueId.Equals(uniqueId)).FirstOrDefault();               
             
         }
 
@@ -564,7 +630,7 @@ namespace levelupspace
             if (AlphabetID < 0 || LetterID < 0 || WordID < 0)
                 return null;
 
-            var alpha = _ABCDataSource.AllAlphabets.Where(alphabet => alphabet.ID == AlphabetID).First();
+            var alpha = GetAlphabet("Alphabet " + AlphabetID.ToString(), DBconnectionPath.Local);
             var let = alpha.LetterItems.Where(letter=>letter.ID==LetterID).First();
             var w = let.WordItems.Where(word=>word.ID==WordID).First();
 
@@ -592,37 +658,6 @@ namespace levelupspace
                 }
 
                 return AItems;
-        }
-
-        public ContentManager(String DataSourcePath)
-        {
-            
-               SQLiteConnection db = new SQLiteConnection(DataSourcePath);
-
-               var AlphabetQuery = db.Query<Alphabet>("SELECT * FROM Alphabet WHERE IsSystem = 0");
-
-                for (int i = 0; i < AlphabetQuery.Count; i++)
-                {
-                    var LocalQuery = db.Query<AlphabetLocalization>(
-                                         "SELECT * FROM AlphabetLocalization WHERE AlphabetID=?", AlphabetQuery[i].Guid);
-
-                    var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
-                    var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
-                    if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
-
-                    var LPath = ApplicationData.Current.LocalFolder.Path;
-
-                    var Aitem = new AlphabetItem(
-                            String.Concat("Alphabet ", AlphabetQuery[i].Guid),
-                            localization.LanguageName,
-                            Path.Combine(LPath, AlphabetQuery[i].Logo),
-                            localization.Description,
-                            AlphabetQuery[i].Guid
-                            );
-
-                    _allAlphabets.Add(Aitem);
-                }
-           
         }
 
         public static int ParseAlphabetID(string uniqueID)

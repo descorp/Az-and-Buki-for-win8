@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -15,6 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using levelupspace.DataModel;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
+using Windows.Networking.BackgroundTransfer;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -30,6 +32,7 @@ namespace levelupspace
         
         private DownloadPageState state;
         private List<DownLoadAlphabetItem> DownloadingPackagesCollection = new List<DownLoadAlphabetItem>();
+        private BackgroundDownloader downloader = new BackgroundDownloader();
 
         private async void ChangeState(DownloadPageState state)
         {
@@ -70,13 +73,24 @@ namespace levelupspace
 
                     try
                     {
-                        var ABCs = await ContentManager.DownloadFromAzureDB();
-                        //TODO : remove librarys that already exist in 
+                        var allPackagesFromAzure = await ContentManager.DownloadFromAzureDB();
+                        List<DownLoadAlphabetItem> packageSholdBeShown = allPackagesFromAzure.ToList();
+                        DBFiller.CreateDB(DBconnectionPath.Local);
 
-                        this.DefaultViewModel["ABCItems"] = ABCs;
-                        foreach (DownLoadAlphabetItem alph in ABCs)
+                        var packagesAlreadyDownloaded = ContentManager.GetListOfDownloadedPackagesID(DBconnectionPath.Local);
+
+                        foreach (int ID in packagesAlreadyDownloaded)
+                            foreach (DownLoadAlphabetItem alph in allPackagesFromAzure)
+                                if (alph.ID == ID)
+                                    packageSholdBeShown.Remove(alph);
+
+                        this.DefaultViewModel["ABCItems"] = packageSholdBeShown;
+
+                        foreach (DownLoadAlphabetItem alph in packageSholdBeShown)
                             if (alph.IsSystem)
                                 gwDownLoadItems.SelectedItems.Add(alph);
+
+
                         this.DefaultViewModel["HeaderText"] = res.GetString("ChoosePacksMessage");
                         tbStatus.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                         pRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
@@ -100,7 +114,7 @@ namespace levelupspace
         public DownloadsPage()
         {
             this.InitializeComponent();
-            
+            downloader.Method = "GET";
         }
 
         /// <summary>
@@ -127,7 +141,7 @@ namespace levelupspace
         /// <param name="pageState">Пустой словарь, заполняемый сериализуемым состоянием.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
-
+            
         }
 
         private void LocalizationSelected(object sender, SelectionChangedEventArgs e)
@@ -156,19 +170,33 @@ namespace levelupspace
                 case DownloadPageState.ChoosePacks:
                     foreach (DownLoadAlphabetItem item in gwDownLoadItems.SelectedItems)
                     {
+                        //http://levelupstorage.blob.core.windows.net/packages/A1.zip?st=2013-06-11T17%3A55%3A33Z&se=2013-06-11T18%3A55%3A33Z&sr=c&sp=r&sig=%2FtzEgXYJ3rudszpYS7l8KD%2Bs4tRO%2FlB7MZfGYV5BAoM%3D
                         try
                         {
                             DownloadingPackagesCollection.Add(item);
+
+                            string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
+                            string sas = AzureStorageProvider.GetConnectionString(blobName);
+                            Uri packUrl = new Uri(@"http://levelupstorage.blob.core.windows.net/packages/" + blobName + sas);
+
+
                             var Local = ApplicationData.Current.TemporaryFolder;
                             var file = await Local.CreateFileAsync(item.ID.ToString() + "_pack", CreationCollisionOption.ReplaceExisting);
-                            string blobName = await AzureDBProvider.GetBlobName((int)item.ID);
+                            
                             item.PackageFileName = file.DisplayName;
-                            int numberOfParts = 20;
-                            AzureStorageProvider.DownloadPackageFromStorage(file, blobName, numberOfParts, item.DownLoadProgressMax, FileDownloaded, FilePartDownloaded);
-                            item.DownLoadProgressMax = numberOfParts + 3;
+                            item.DownLoadProgressMax = 100 + 3;
                             item.DownLoadProcessVisible = Windows.UI.Xaml.Visibility.Visible;
                             item.DownLoadProgessPos = 0;
                             item.DownloadStatus = res.GetString("PackageDownloadMessage");
+
+                            var stream = await file.OpenSequentialReadAsync();
+                            var downloadOperation = await downloader.CreateDownloadAsync(packUrl, file, stream);
+                            
+                             StartDownloading(downloadOperation);
+                            //item.SetDownloadOperation(downloadOperation);
+                            //int numberOfParts = 20;
+                            //AzureStorageProvider.DownloadPackageFromStorage(file, blobName, numberOfParts, item.DownLoadProgressMax, FileDownloaded, ProgressCallback);
+
                         }
                         catch
                         {
@@ -204,14 +232,27 @@ namespace levelupspace
                 item.DownloadStatus = res.GetString("DownloadingError");
         }
 
-
-        private void FilePartDownloaded(object sender, EventArgs args)
+        private async void StartDownloading(DownloadOperation operation)
         {
-            var argument = args as FilePartDownloadedEventArgs;
+            var progress = new Progress<DownloadOperation>(ProgressCallback);
+            await operation.StartAsync().AsTask(progress);
+        }
+
+        private void ProgressCallback(DownloadOperation obj)
+        {
+            double progress = ((double)obj.Progress.BytesReceived / obj.Progress.TotalBytesToReceive);
+            string fileName = obj.ResultFile.Name;
+
             var res = new ResourceLoader();
-            DownLoadAlphabetItem item = DownloadingPackagesCollection.First(process => process.PackageFileName == argument.FileName);
+            DownLoadAlphabetItem item = DownloadingPackagesCollection.First(process => process.PackageFileName == fileName);
             if (item != null)
-                item.DownLoadProgessPos++;
+                item.DownLoadProgessPos = (int)(progress * 100);
+
+            if (progress >= 1.0)
+            {
+                this.FileDownloaded(obj.ResultFile, new FilePartDownloadedEventArgs(fileName, (long)obj.Progress.TotalBytesToReceive));
+                obj = null;
+            }
         }
 
         private void FileUnZIPed(object sender, EventArgs args)
@@ -222,7 +263,6 @@ namespace levelupspace
             if (item != null)
             {
                 item.DownLoadProgessPos++;
-                DBFiller.CreateDB(DBconnectionPath.Local);
                 DBFiller.LoadPackageToDB(argument.FolderPath, DBconnectionPath.Local);
                 item.DownloadStatus = res.GetString("PackageInstalledMessage");
 

@@ -119,7 +119,7 @@ namespace levelupspace
                 Logger.ShowMessage(res.GetString("NoInternetConnectionError"));
                 return;
             }
-            this.Frame.Navigate(typeof(DownloadsPage), DownloadPageState.ChoosePacks);
+            this.Frame.Navigate(typeof(DownloadsPage), (int)DownloadPageState.ChoosePacks);
         }
 
         /// <summary>

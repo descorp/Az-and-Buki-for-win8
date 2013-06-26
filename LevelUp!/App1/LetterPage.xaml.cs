@@ -37,7 +37,7 @@ namespace levelupspace
                 navigationParameter = pageState["SelectedLetterItem"];
             }
 
-            LetterItem letter = ContentManager.GetItem((String)navigationParameter, DBconnectionPath.Local);
+            LetterItem letter = ContentManager.GetLetterItem((String)navigationParameter, DBconnectionPath.Local);
             if (letter != null)
             {
                 this.DefaultViewModel["Letters"] = letter.Alphabet.LetterItems;
@@ -60,7 +60,7 @@ namespace levelupspace
 
         private void fwLetters_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
         {
-            LetterItem letter = ContentManager.GetItem(((LetterItem)this.fwLetters.SelectedItem).UniqueId, DBconnectionPath.Local);
+            LetterItem letter = ContentManager.GetLetterItem(((LetterItem)this.fwLetters.SelectedItem).UniqueId, DBconnectionPath.Local);
             if (letter != null)
             {
 

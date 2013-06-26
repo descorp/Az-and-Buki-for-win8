@@ -199,9 +199,6 @@
     <PRIResource Include="Localization\en-us\Resources.lang-en-US.resw" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Readme\Elmah.SqlServer.sql" />
-    <Content Include="App_Readme\Elmah.SqlServer.txt" />
-    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Icons\CH1.png" />
     <Content Include="Icons\CH2.png" />
     <Content Include="Icons\CH3.png" />

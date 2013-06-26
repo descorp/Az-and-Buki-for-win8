@@ -106,5 +106,10 @@ namespace levelupspace
             RoutedEventArgs args = new RoutedEventArgs();
             if (e.Key == Windows.System.VirtualKey.Escape) this.GoBack(this, args);
         }
+
+        private void GoBack(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainMenu));
+        }
     }
 }

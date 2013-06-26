@@ -158,7 +158,7 @@ namespace levelupspace
 
         public void SetLetter(string uniqueID)
         {
-            this.letter = ContentManager.GetItem(uniqueID, DBconnectionPath.Local);
+            this.letter = ContentManager.GetLetterItem(uniqueID, DBconnectionPath.Local);
             var res = new ResourceLoader();
             this.Question = String.Format(res.GetString("GameQuestion"), this.letter.Description);
         }

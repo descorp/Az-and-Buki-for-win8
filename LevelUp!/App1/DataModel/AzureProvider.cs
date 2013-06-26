@@ -253,6 +253,23 @@ namespace levelupspace.DataModel
 
         }
 
+        public static string GetConnectionString(string packageNameInBlob)
+        {
+            CloudBlobContainer container = blobClient.GetContainerReference("packages");
+
+            // Retrieve reference to a blob named "myblob".
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageNameInBlob);
+
+            var policy = new SharedAccessBlobPolicy() 
+            {
+                 Permissions = SharedAccessBlobPermissions.Read,
+                 SharedAccessExpiryTime = DateTimeOffset.Now.AddMinutes(10)
+            };
+
+            string url = blockBlob.GetSharedAccessSignature(policy);
+            return url;
+        }
+
     }
 
     public class FilePartDownloadedEventArgs : EventArgs

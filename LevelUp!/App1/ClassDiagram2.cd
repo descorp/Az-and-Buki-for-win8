@@ -1,0 +1,684 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="levelupspace.AchievementsPage" Collapsed="true">
+    <Position X="1.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAQAAAAAAAAAAAIAAAAAAAAAAEAAAAIAEAAIAA=</HashCode>
+      <FileName>AchievementsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.AlphabetDetailsPage" Collapsed="true">
+    <Position X="3.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAQAAAIAAAAAAAAAAAAAAEAAEAAAAA=</HashCode>
+      <FileName>AlphabetDetailsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.App" Collapsed="true">
+    <Position X="30" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAIAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.AuthorizationControl" Collapsed="true">
+    <Position X="33.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAABAAAgAAAAAAAAAgAAAAAg=</HashCode>
+      <FileName>AuthorizationControl.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.ChooseGamePage" Collapsed="true">
+    <Position X="10.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAIAAAAAAAAAAEAAAEAAEAAAAA=</HashCode>
+      <FileName>ChooseGamePage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.AwardItem" Collapsed="true">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\AwardManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.AwardManager" Collapsed="true">
+    <Position X="26.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIQAAAAAAABAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>DataModel\AwardManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.ABCItem" Collapsed="true">
+    <Position X="9" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAgAEQEQAAAAIUAAAAAQBAAAAAAAAAARAA=</HashCode>
+      <FileName>DataModel\ContentManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.LetterItem" Collapsed="true">
+    <Position X="10" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAkAAAAABEAAAAAAAACAACBBgAAgAAAAA=</HashCode>
+      <FileName>DataModel\ContentManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.WordItem" Collapsed="true">
+    <Position X="14.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAgAAkAIBAAAAAAAAACAAABAgABgAAABA=</HashCode>
+      <FileName>DataModel\ContentManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.AlphabetItem" Collapsed="true">
+    <Position X="3.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgEBAAAgAAAAABAAAAAAAAAAAAAABAAAAAAQAA=</HashCode>
+      <FileName>DataModel\ContentManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DownLoadAlphabetItem">
+    <Position X="11.5" Y="8.5" Width="2.75" />
+    <InheritanceLine Type="levelupspace.AlphabetItem" ManuallyRouted="true">
+      <Path>
+        <Point X="4" Y="6.941" />
+        <Point X="4" Y="6.448" />
+        <Point X="12.875" Y="6.448" />
+        <Point X="12.875" Y="8.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>CABBAMCAAAAEIIABBiBQgAAAgAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>DataModel\ContentManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="levelupspace.ContentManager" Collapsed="true">
+    <Position X="38.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIIAAAABAgAEAAAQgAACACAAAAgAACAAAAAA=</HashCode>
+      <FileName>DataModel\ContentManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.PasswordBoxItem" Collapsed="true">
+    <Position X="1" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAQBAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\ContentManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.PasswordBoxImageSource" Collapsed="true">
+    <Position X="37" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\ContentManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DBconnectionPath" Collapsed="true">
+    <Position X="28.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAABAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>DataModel\DBconnectionPath.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.FacebookProvider" Collapsed="true">
+    <Position X="6.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BACAAAAAAAAAAAQAAIAAAAAAAAAAAAAABCAAAAAAEAA=</HashCode>
+      <FileName>DataModel\FacebookProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.GameItem" Collapsed="true">
+    <Position X="7.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\GameClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DifficultyItem" Collapsed="true">
+    <Position X="12.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\GameClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.GameClass" Collapsed="true">
+    <Position X="37" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAIAAAEAIAAQggAAQAAAQAAAAAIABABlAAAQAAAAAA=</HashCode>
+      <FileName>DataModel\GameClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.GameLevel" Collapsed="true">
+    <Position X="38.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAiAAAAAAAAAAAAGAEACCAAgDAgQY=</HashCode>
+      <FileName>DataModel\GameClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.HttpProvider" Collapsed="true">
+    <Position X="28.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAgAAIAAAAAAAAIAAgACAAAAAAAAAAgAAA=</HashCode>
+      <FileName>DataModel\HttpProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.HttpRresponseEventArgs" Collapsed="true">
+    <Position X="30" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\HttpProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.LanguageItem" Collapsed="true">
+    <Position X="26.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAEAAAAAAgAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>DataModel\LanguageItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.LanguageProvider" Collapsed="true">
+    <Position X="28.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\LanguageItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.SocialProvider" Collapsed="true">
+    <Position X="7.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAIAQAAAAAAAAAACAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>DataModel\SocialProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.UserManager" Collapsed="true">
+    <Position X="28.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAEAAAgAAAgAAAgkAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\UserManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.VKProvider" Collapsed="true">
+    <Position X="8.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RAAAAAAAAAAAICQACABgAAAIABAAAAAABCAAAIACECA=</HashCode>
+      <FileName>DataModel\VKProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.JSONGetWallUploadServerResponse" Collapsed="true">
+    <Position X="33.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\VKProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.JSONUploadServerResponse" Collapsed="true">
+    <Position X="38.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\VKProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.JSONUploadFileResponse" Collapsed="true">
+    <Position X="37" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>DataModel\VKProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.JSONSaveWallPhotoResponse" Collapsed="true">
+    <Position X="35.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\VKProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.WallPhotoInfo" Collapsed="true">
+    <Position X="30" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>DataModel\VKProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DownloadsPage" Collapsed="true">
+    <Position X="15" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABAAAAAAEABAABAAAICAIAQAAAAgAESAAAAEAAEAA=</HashCode>
+      <FileName>DownloadsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.GameAnswerControl" Collapsed="true">
+    <Position X="35.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameAnswerControl.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.GamePage" Collapsed="true">
+    <Position X="19.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgAAAAAAAAAAkAAAAAGIAEBAAAAAAAEIAAAAAEAggAA=</HashCode>
+      <FileName>GamePage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.GameParamsControl" Collapsed="true">
+    <Position X="26.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAABAAAgAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>GameParamsControl.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.GameResultPage" Collapsed="true">
+    <Position X="24" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAEAQAAAAAAAAAAAIAAAAAAAAAAEAAAAAAEAAAAA=</HashCode>
+      <FileName>GameResultPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.Logger" Collapsed="true">
+    <Position X="31.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\Logger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.LetterPage" Collapsed="true">
+    <Position X="6" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkAAAAAAAAAAAIAAAAAIAAAAAAEAAAAIAAAAIEAAAAA=</HashCode>
+      <FileName>LetterPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.MainMenu" Collapsed="true">
+    <Position X="8.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgIAIAAQAAhBAAAAAACIAgAIABBAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainMenu.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.SharePage" Collapsed="true">
+    <Position X="12.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAQAEAABACAAAACIAABIAAAAAAAAEAAAgEAAAAA=</HashCode>
+      <FileName>SharePage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.TextPopup" Collapsed="true">
+    <Position X="35.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABBAABgAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>TextPopup.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.UserAlphabetsPage" Collapsed="true">
+    <Position X="17.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAEAAAAAEIAAAAAAAAAAAAAAAQAEAAAAA=</HashCode>
+      <FileName>UserAlphabetsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.UserSignOnPage" Collapsed="true">
+    <Position X="21.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAIAAABAQAAAAAAAIAAAAAAAAAAAAAAAAAEAAAAg=</HashCode>
+      <FileName>UserSignOnPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.Common.BindableBase" Collapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAgAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\BindableBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="levelupspace.Common.BooleanNegationConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="31.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\BooleanNegationConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="levelupspace.Common.BooleanToVisibilityConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\BooleanToVisibilityConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="levelupspace.Common.LayoutAwarePage" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAQgAAQACAAIAAAAAAIQAQQAAAYAA0AAAAAAAAAAUg=</HashCode>
+      <FileName>Common\LayoutAwarePage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.Common.RichTextColumns" Collapsed="true">
+    <Position X="28.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAEAAgAAAAAAAQAAAAACAAQAAAAAgAAAAAABAAAAAA=</HashCode>
+      <FileName>Common\RichTextColumns.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.Common.SuspensionManager" Collapsed="true">
+    <Position X="28.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAaIAASCBEAAAICAAAAAIAAAAAAAAAAIAAAABA=</HashCode>
+      <FileName>Common\SuspensionManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.Common.SuspensionManagerException" Collapsed="true">
+    <Position X="30" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\SuspensionManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.Alphabet" Collapsed="true">
+    <Position X="26.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAgAIBAAAAAABAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\ABCModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.AlphabetLocalization" Collapsed="true">
+    <Position X="28.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAggAAAAAAAAAAAAAAgAAICAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\ABCModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.User" Collapsed="true">
+    <Position X="38.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAgAAAAAQAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\ABCModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.UserAward" Collapsed="true">
+    <Position X="26.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAgAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\ABCModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.Award" Collapsed="true">
+    <Position X="37" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>DataModel\ABCModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.AwardLocalization" Collapsed="true">
+    <Position X="38.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAABgAAAAAAAAAAAAEAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\ABCModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.Letter" Collapsed="true">
+    <Position X="30" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAgAAAAAAAAAAAAAAABAACBAAgAAAAAAA=</HashCode>
+      <FileName>DataModel\ABCModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.Word" Collapsed="true">
+    <Position X="31.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAACAAAAABACBAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\ABCModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.AzureDBProvider" Collapsed="true">
+    <Position X="28.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAEAAAEEYAAAAQAAAAAAABAAKAAAUAAAAEgNAAA=</HashCode>
+      <FileName>DataModel\AzureProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.AzureStorageProvider" Collapsed="true">
+    <Position X="30" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAgAAAAAQAgAACAIAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\AzureProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.FilePartDownloadedEventArgs" Collapsed="true">
+    <Position X="31.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAIAAAAAAAAAAAAAAAAAAAAABAgAA=</HashCode>
+      <FileName>DataModel\AzureProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.FileUnzippedEventArgs" Collapsed="true">
+    <Position X="33.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAgAACAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>DataModel\AzureProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.DBFiller" Collapsed="true">
+    <Position X="30" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAgAAAAAAQAAAAA=</HashCode>
+      <FileName>DataModel\DBFiller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="levelupspace.DataModel.UnZIPer" Collapsed="true">
+    <Position X="37" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\UnZIPer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SlotMachineControl.SlotMachineControl" Collapsed="true">
+    <Position X="30" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADgEQCAAABAAAQAAAACAAAAAAAAAAEAAAAAACAAAAA=</HashCode>
+      <FileName>SlotMashineControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.SQLiteException" Collapsed="true">
+    <Position X="26.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.SQLiteConnection" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEEABACnAiAbrBAAEQAQQCAUIgBoBQYAIgBCAAEU=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SQLite.SQLiteConnectionString" Collapsed="true">
+    <Position X="38.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAgAAAAIAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.TableAttribute" Collapsed="true">
+    <Position X="31.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.ColumnAttribute" Collapsed="true">
+    <Position X="37" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.PrimaryKeyAttribute" Collapsed="true">
+    <Position X="26.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.AutoIncrementAttribute" Collapsed="true">
+    <Position X="35.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.IndexedAttribute" Collapsed="true">
+    <Position X="3.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAQAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.IgnoreAttribute" Collapsed="true">
+    <Position X="31.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.UniqueAttribute" Collapsed="true">
+    <Position X="3.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.MaxLengthAttribute" Collapsed="true">
+    <Position X="33.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.CollationAttribute" Collapsed="true">
+    <Position X="35.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.TableMapping" Collapsed="true">
+    <Position X="33.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAMAAiCgCAUAQgAAAQAAACAAAAgAAAAAACQgAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.Orm" Collapsed="true">
+    <Position X="35.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAABgAAAAAAAAAAAwAAAAAAAACAAE=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.SQLiteCommand" Collapsed="true">
+    <Position X="35.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAYEAAABAEBBAQAAgAABAAAEEAAACAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.PreparedSqlLiteInsertCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="38.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAEAAAACAAQAUAAAAAAEACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SQLite.BaseTableQuery" Collapsed="true">
+    <Position X="0.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.TableQuery&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EOAAAAAIAIAAAVsAIAAARAQABAGIAWA0AgHAQAAAEJA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SQLite.SQLite3" Collapsed="true">
+    <Position X="31.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIJAgUgAAggALQsCCBlAAAAUYQAAgAAAMAAACACDBAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.SQLiteAsyncConnection" Collapsed="true">
+    <Position X="33.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAACCAAAAAQAAAASAEACABAAAgIAAAAIBAAEMA=</HashCode>
+      <FileName>SQLiteAsync.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.AsyncTableQuery&lt;T&gt;" Collapsed="true">
+    <Position X="31.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIAAAAAAAAAAAAAAgAAACAAAAAkAAAAAAAFAAAAAEQE=</HashCode>
+      <FileName>SQLiteAsync.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.CreateTablesResult" Collapsed="true">
+    <Position X="26.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLiteAsync.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.SQLiteConnectionPool" Collapsed="true">
+    <Position X="37" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAABAAAAABAEAAAAAAABAAAAAAAAAAAAIABAAAAA=</HashCode>
+      <FileName>SQLiteAsync.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SQLite.SQLiteConnectionWithLock" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLiteAsync.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="levelupspace.Dificulty" Collapsed="true">
+    <Position X="26.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAkAAA=</HashCode>
+      <FileName>DataModel\GameClass.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="levelupspace.DownloadPageState" Collapsed="true">
+    <Position X="28.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAABAAAAAAAAAAAIAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>DownloadsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="levelupspace.Socials" Collapsed="true">
+    <Position X="30" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAgAAAAA=</HashCode>
+      <FileName>SharePage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SQLite.SQLiteOpenFlags" Collapsed="true">
+    <Position X="31.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAAACAAAAAAAAAAAAAACAIAACkAIEAAIAAAAAAA=</HashCode>
+      <FileName>SQLite.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

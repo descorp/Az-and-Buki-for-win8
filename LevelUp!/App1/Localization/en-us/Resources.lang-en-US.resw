@@ -333,4 +333,19 @@
   <data name="InstalationError" xml:space="preserve">
     <value>Installation error</value>
   </data>
+  <data name="UriPrivacyPolicy" xml:space="preserve">
+    <value>http://leveluppolicy.wordpress.com/2013/06/26/privacy-policy-for-levelup/</value>
+  </data>
+  <data name="PreferencesCaption" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="PrivacyStatementCaption" xml:space="preserve">
+    <value>Privacy Statement</value>
+  </data>
+  <data name="SwitchEnableSocials.Header" xml:space="preserve">
+    <value>Enable social network sharing</value>
+  </data>
+  <data name="ToolTipEnableSharingText.Text" xml:space="preserve">
+    <value>To Enable/Disable social sharing manage app settings</value>
+  </data>
 </root>

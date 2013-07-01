@@ -1,14 +1,19 @@
-﻿using System;
+﻿using Callisto.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
+using Windows.UI;
+using Windows.UI.ApplicationSettings;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace levelupspace.Common
@@ -330,6 +335,8 @@ namespace levelupspace.Common
         /// задает группу для отображения.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            SettingsPane.GetForCurrentView().CommandsRequested += Settings_CommandRequested;
+
             // Возвращение к кэшированной странице во время навигации не должно инициировать загрузку состояния
             if (this._pageKey != null) return;
 
@@ -367,10 +374,36 @@ namespace levelupspace.Common
         /// задает группу для отображения.</param>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            SettingsPane.GetForCurrentView().CommandsRequested -= Settings_CommandRequested;
             var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
             var pageState = new Dictionary<String, Object>();
             this.SaveState(pageState);
             frameState[_pageKey] = pageState;
+        }
+
+        private void Settings_CommandRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
+        {
+            var res = new ResourceLoader();
+            var viewPrivacyPage = new SettingsCommand("", res.GetString("PrivacyStatementCaption"), cmd =>
+            {
+                Launcher.LaunchUriAsync(new Uri(res.GetString("UriPrivacyPolicy"), UriKind.Absolute));
+
+            });
+            args.Request.ApplicationCommands.Add(viewPrivacyPage);
+
+
+            var viewPrefrencesPage = new SettingsCommand("preferences", res.GetString("PreferencesCaption"), (handler) =>
+            {
+                var settings = new SettingsFlyout();
+                settings.Content = new PreferencesContro();
+                settings.HeaderBrush = new SolidColorBrush(Color.FromArgb(255,0, 148, 255));
+                settings.Background = new SolidColorBrush(Color.FromArgb(255, 0, 148, 255));
+                settings.HeaderText = res.GetString("PreferencesCaption");
+                settings.IsOpen = true;
+            });
+
+            args.Request.ApplicationCommands.Add(viewPrefrencesPage);
+
         }
 
         /// <summary>

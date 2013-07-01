@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using levelupspace.DataModel;
+using Windows.UI.Xaml;
 
 namespace levelupspace
 {
@@ -22,6 +23,16 @@ namespace levelupspace
         {
             get { return _id; }
             set { this.SetProperty( ref this._id, value); }
+        }
+
+        public bool SocialsEnabled
+        {
+            get
+            {
+                if (!ApplicationData.Current.RoamingSettings.Values.ContainsKey("Socials")) return false;
+                else
+                    return (bool)ApplicationData.Current.RoamingSettings.Values["Socials"];    
+            }
         }
     }
 

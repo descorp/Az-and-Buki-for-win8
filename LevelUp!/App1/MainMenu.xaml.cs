@@ -4,10 +4,13 @@ using System.IO;
 using Windows.ApplicationModel.Resources;
 using Windows.Globalization;
 using Windows.Storage;
+using Windows.System;
+using Windows.UI.ApplicationSettings;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -218,6 +221,32 @@ namespace levelupspace
             LanguageProvider.CurrentLanguage = e.AddedItems[0] as LanguageItem;
             var _Frame = Window.Current.Content as Frame;
             if (_Frame!=null)_Frame.Navigate(typeof(MainMenu));
+
+            
         }
+
+        //protected override void OnNavigatedFrom(Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        //{
+        //    SettingsPane.GetForCurrentView().CommandsRequested -= Settings_CommandRequested;
+        //    base.OnNavigatedFrom(e);
+        //}
+
+        //protected override void OnNavigatedTo(NavigationEventArgs e)
+        //{
+        //    SettingsPane.GetForCurrentView().CommandsRequested += Settings_CommandRequested;
+
+        //    base.OnNavigatedTo(e);
+        //}
+
+        //private void Settings_CommandRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
+        //{
+        //    var res = new ResourceLoader();
+        //    var viewPrivacyPage = new SettingsCommand("","Privacy Statement", cmd =>
+        //    {
+        //        Launcher.LaunchUriAsync(new Uri(res.GetString("UriPrivacyPolicy"), UriKind.Absolute));
+   
+        //    });
+        //    args.Request.ApplicationCommands.Add(viewPrivacyPage);
+        //}
     }
 }

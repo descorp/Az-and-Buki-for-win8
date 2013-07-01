@@ -1973,8 +1973,8 @@
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Visibility">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="imgBtn" Storyboard.TargetProperty="Source">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="ms-appx:///Icons/fbbtn_hover.png"/>
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>

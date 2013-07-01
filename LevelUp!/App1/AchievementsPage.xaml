@@ -45,7 +45,10 @@
         	<GridView.Resources>
         		<DataTemplate x:Key="AchievementsHeaderTemplate">
         			<Grid Margin="20,0" Width="300">
-        				<TextBlock x:Uid="AchievementsDescription" x:Name="tbText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Здесь ты можешь посмотреть все свои награды, полученные в играх" VerticalAlignment="Center" Style="{StaticResource PageSubheaderTextStyle}" TextAlignment="{StaticResource FormTextAlignment}"/>
+        				<StackPanel Margin="0">
+        					<TextBlock x:Uid="AchievementsDescription" x:Name="tbText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Здесь ты можешь посмотреть все свои награды, полученные в играх" VerticalAlignment="Center" Style="{StaticResource PageSubheaderTextStyle}" TextAlignment="{StaticResource FormTextAlignment}" Margin="0"/>
+                            <TextBlock x:Uid="ToolTipEnableSharingText" TextWrapping="Wrap" Text="dsjhsgmb,snmsgns nfn fj  jf nfjf" VerticalAlignment="Top" TextAlignment="{StaticResource FormTextAlignment}" Margin="10,20,10,0" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource ABCBackgroundThemeBrush}"/>
+        				</StackPanel>
         			</Grid>
         		</DataTemplate>
         		<DataTemplate x:Key="AchievementsItemTemplate">
@@ -65,7 +68,18 @@
         					</Grid.ColumnDefinitions>
                             <Button x:Name="btnShareVK" Visibility="Collapsed" Click="btnShare_Click" Content="" Tag="{Binding ID}" Style="{StaticResource VKShareButtonStyle}" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="4" Margin="5,5,2,5" Width="30" Height="30" TabIndex="1"/>
         					<TextBlock x:Name="tbDescription" TextWrapping="Wrap" Text="{Binding Description}" Style="{StaticResource SubtitleTextStyle}" Margin="5" Grid.Column="2"/>
-                            <Button x:Name="btnShareFB" Click="btnShareFB_Click" Content="" Tag="{Binding ID}" Style="{StaticResource FBShareButtonStyle}" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="4" Margin="2,5,5,5" Width="30" Height="30" Grid.Column="1" TabIndex="2"/>
+                            <Button x:Name="btnShareFB"  IsEnabled="{Binding SocialsEnabled}"
+                                    Click="btnShareFB_Click" Content="" Tag="{Binding ID}"
+                                    IsTapEnabled="{Binding SocialsEnabled}" 
+                                    Style="{StaticResource FBShareButtonStyle}" 
+                                    Background="{x:Null}" HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center" 
+                                    Padding="4" Margin="2,5,5,5" Width="30" Height="30" 
+                                    Grid.Column="1" TabIndex="2">
+                                <ToolTipService.ToolTip>
+                                        <TextBlock x:Uid="ToolTipEnableSharingText"/>
+                                </ToolTipService.ToolTip>
+                            </Button>
         				</Grid>
         			</Grid>
         		</DataTemplate>        		

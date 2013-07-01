@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="53891ProtonArt.LevelUP" Publisher="CN=C8AC85BE-7ECB-4F8B-8119-556ED0F09C4F" Version="1.0.0.10" />
+  <Identity Name="53891ProtonArt.LevelUP" Publisher="CN=C8AC85BE-7ECB-4F8B-8119-556ED0F09C4F" Version="1.0.0.13" />
   <Properties>
     <DisplayName>LevelUP!</DisplayName>
     <PublisherDisplayName>ProtonArt</PublisherDisplayName>

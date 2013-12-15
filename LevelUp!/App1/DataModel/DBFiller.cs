@@ -1,73 +1,71 @@
-﻿using SQLite;
+﻿using System.Threading.Tasks;
+using SQLite;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace levelupspace.DataModel
 {
     public class DBFiller
     {
-        public static async void LoadPackageToDB(String PathToPack, String DBPath)
+        public static async void LoadPackageToDB(String pathToPack, String dbPath, EventHandler  packLoaded)
         {
-            
-            var folder = await StorageFolder.GetFolderFromPathAsync(PathToPack);
+            var folder = await StorageFolder.GetFolderFromPathAsync(pathToPack);
             var file = await folder.GetFileAsync("input.sql");
-            var SQLStrings = await FileIO.ReadLinesAsync(file);
-            
-            DBFiller.InsertStringsToDB(SQLStrings, DBPath);           
+            var sqlStrings = await FileIO.ReadLinesAsync(file);
 
-                      
+            InsertStringsToDB(sqlStrings, dbPath);
+
+            if (packLoaded != null)
+            {
+                packLoaded(null, new EventArgs());
+            }
         }
 
-        private static void InsertStringsToDB(IList<string> ListString, String DBPath)
+        private static void InsertStringsToDB(IEnumerable<string> ListString, String DBPath)
         {
-            var db = new SQLiteConnection(DBPath);
-
-            foreach (string rawCommand in ListString) //(int i = 0; i < ListString.Count; i++)
+            foreach (var rawCommand in ListString) //(int i = 0; i < ListString.Count; i++)
             {
-                if (rawCommand.IndexOf(") VALUES (") > 5)
+                if (rawCommand.IndexOf(") VALUES (", StringComparison.Ordinal) > 5)
                 {
-                    string parametString = rawCommand.Substring(rawCommand.IndexOf(") VALUES (") + 10);
-                    if (parametString.LastIndexOf(");") > 0)
-                        parametString = parametString.Remove(parametString.LastIndexOf(");"));
-                    else
-                        parametString = parametString.Remove(parametString.LastIndexOf(") ;"));
+                    var parametString = rawCommand.Substring(rawCommand.IndexOf(") VALUES (", StringComparison.Ordinal) + 10);
+                    parametString = parametString.Remove(parametString.LastIndexOf(");", StringComparison.Ordinal) > 0 ? parametString.LastIndexOf(");", StringComparison.Ordinal) : parametString.LastIndexOf(") ;", StringComparison.Ordinal));
 
-                    string[] rawArray = parametString.Split(new string[] { ",       ", ",      ", ",     ", ",    ", ",   ", "       ,", "      ,", "     ,", "    ,", "   ," }, StringSplitOptions.RemoveEmptyEntries);
-                    string paramsTemplate = "";
-                    List<string> array = new List<string>();
+                    var rawArray = parametString.Split(new[] { ",       ", ",      ", ",     ", ",    ", ",   ", "       ,", "      ,", "     ,", "    ,", "   ," }, StringSplitOptions.RemoveEmptyEntries);
+                    var paramsTemplate = "";
+                    var array = new List<string>();
 
-                    foreach (string s in rawArray)
+                    foreach (var s in rawArray)
                     {
-                        string trim = " \"";
-                        string temp = s.Trim(trim.ToCharArray());
+                        const string trim = " \"";
+                        var temp = s.Trim(trim.ToCharArray());
                         temp = temp.TrimEnd("\\".ToCharArray());
                         paramsTemplate += "?, ";
                         array.Add(temp);
                     }
 
                     paramsTemplate = paramsTemplate.Remove(paramsTemplate.Length - 2);
-                    string command = rawCommand.Remove(rawCommand.IndexOf(") VALUES (") + 10) + paramsTemplate + " ); ";
-                    db.CreateCommand(command, array.ToArray()).ExecuteNonQuery();
+                    var command = rawCommand.Remove(rawCommand.IndexOf(") VALUES (", StringComparison.Ordinal) + 10) + paramsTemplate + " ); ";
+                    using (var db = new SQLiteConnection(DBPath))
+                        db.CreateCommand(command, array.ToArray()).ExecuteNonQuery();
                 }
             }
         }
 
         public static void CreateDB(String DBPath)
         {
-            var db = new SQLiteConnection(DBPath);
-            db.CreateTable<Alphabet>();
-            db.CreateTable<Letter>();
-            db.CreateTable<AlphabetLocalization>();
-            db.CreateTable<Word>();
-            db.CreateTable<User>();
-            db.CreateTable<UserAward>();
-            db.CreateTable<Award>();
-            db.CreateTable<AwardLocalization>();
-            int n = db.CreateCommand("PRAGMA win1251 = \"UTF-8\"").ExecuteNonQuery();
+            using (var db = new SQLiteConnection(DBPath))
+            {
+                db.CreateTable<Alphabet>();
+                db.CreateTable<Letter>();
+                db.CreateTable<AlphabetLocalization>();
+                db.CreateTable<Word>();
+                db.CreateTable<User>();
+                db.CreateTable<UserAward>();
+                db.CreateTable<Award>();
+                db.CreateTable<AwardLocalization>();
+                var n = db.CreateCommand("PRAGMA win1251 = \"UTF-8\"").ExecuteNonQuery();
+            }
         }
     }
 }

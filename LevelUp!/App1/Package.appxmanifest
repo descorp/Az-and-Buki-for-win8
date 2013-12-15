@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="53891ProtonArt.LevelUP" Publisher="CN=C8AC85BE-7ECB-4F8B-8119-556ED0F09C4F" Version="1.0.0.13" />
+  <Identity Name="53891ProtonArt.LevelUP" Publisher="CN=C8AC85BE-7ECB-4F8B-8119-556ED0F09C4F" Version="1.0.0.15" />
   <Properties>
     <DisplayName>LevelUP!</DisplayName>
     <PublisherDisplayName>ProtonArt</PublisherDisplayName>
@@ -16,7 +16,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="LevelUP.App">
-      <VisualElements DisplayName="LevelUP!" Logo="Assets/Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Learn alphabets" ForegroundText="light" BackgroundColor="#0094FF">
+      <VisualElements DisplayName="LevelUP!" Logo="Assets/Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Learn alphabets with fun" ForegroundText="light" BackgroundColor="#0094FF">
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="Assets\SplashScreen.png" />
         <InitialRotationPreference>
@@ -28,4 +28,9 @@
   <Capabilities>
     <Capability Name="internetClient" />
   </Capabilities>
+  <Extensions>
+    <Extension Category="windows.gameExplorer">
+      <GameExplorer GameDefinitionContainer="GDF_DLL.dll" />
+    </Extension>
+  </Extensions>
 </Package>

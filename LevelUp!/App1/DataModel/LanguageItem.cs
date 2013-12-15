@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
 using Windows.Globalization;
-using Windows.System.UserProfile;
 
 namespace levelupspace
 {
@@ -10,16 +9,16 @@ namespace levelupspace
         private string _langname;
         public string LanguageName
         {
-            get { return this._langname; }
-            set { this._langname = value; }
+            get { return _langname; }
+            set { _langname = value; }
         }
 
         private string _langcode;
         
         public string LanguageCode
         {
-            get { return this._langcode; }
-            set { this._langcode = value; }
+            get { return _langcode; }
+            set { _langcode = value; }
         }
 
     }
@@ -30,30 +29,30 @@ namespace levelupspace
         {
             get
             {
-                ObservableCollection<LanguageItem> All = new ObservableCollection<LanguageItem>();
-                bool IsLanguageSupported=false;
-                int EngIndex=0;
-                for (int i = 0; i < ApplicationLanguages.ManifestLanguages.Count; i++)
+                var all = new ObservableCollection<LanguageItem>();
+                var isLanguageSupported=false;
+                var engIndex=0;
+                for (var i = 0; i < ApplicationLanguages.ManifestLanguages.Count; i++)
                 {
-                    var LItem = new LanguageItem();
-                    CultureInfo cInfo = new CultureInfo(ApplicationLanguages.ManifestLanguages[i]);
+                    var lItem = new LanguageItem();
+                    var cInfo = new CultureInfo(ApplicationLanguages.ManifestLanguages[i]);
 
-                    LItem.LanguageName = cInfo.NativeName;
-                    LItem.LanguageCode = cInfo.Name;
-                    if (LItem.LanguageCode.Equals("en-US"))
+                    lItem.LanguageName = cInfo.NativeName;
+                    lItem.LanguageCode = cInfo.Name;
+                    if (lItem.LanguageCode.Equals("en-US"))
                     {
-                        EngIndex = i;
+                        engIndex = i;
                     }
-                    if (CurrentLanguage.LanguageCode.Equals(LItem.LanguageCode))
+                    if (CurrentLanguage.LanguageCode.Equals(lItem.LanguageCode))
                     {
-                        All.Insert(0, LItem);
-                        IsLanguageSupported = true;
+                        all.Insert(0, lItem);
+                        isLanguageSupported = true;
                     }
-                    else All.Add(LItem);
+                    else all.Add(lItem);
                 }
 
-                if (!IsLanguageSupported) AllLanguages.Move(EngIndex,0);
-                return All;
+                if (!isLanguageSupported) AllLanguages.Move(engIndex,0);
+                return all;
             }
         }
 
@@ -65,7 +64,7 @@ namespace levelupspace
                 if (ApplicationLanguages.PrimaryLanguageOverride.Length == 0)
                     ApplicationLanguages.PrimaryLanguageOverride = "en-US";
                 LItem.LanguageCode = ApplicationLanguages.PrimaryLanguageOverride;
-                CultureInfo cInfo = new CultureInfo(ApplicationLanguages.PrimaryLanguageOverride);
+                var cInfo = new CultureInfo(ApplicationLanguages.PrimaryLanguageOverride);
                 LItem.LanguageName = cInfo.NativeName;
                 return LItem;
             }

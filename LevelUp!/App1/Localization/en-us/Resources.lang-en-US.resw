@@ -205,7 +205,7 @@
     <value>Sign Up</value>
   </data>
   <data name="AwerageGameResult" xml:space="preserve">
-    <value>Good results! Keep her steady!</value>
+    <value>Good results!</value>
   </data>
   <data name="BadGameResult" xml:space="preserve">
     <value>Huh! You should learn more throughly!</value>
@@ -247,7 +247,7 @@
     <value>Log In and you'll be able to get prizes for your work</value>
   </data>
   <data name="LowAwerageGameResult" xml:space="preserve">
-    <value>Ok, but I believe you can be better</value>
+    <value>Ok, but I believe you could be better</value>
   </data>
   <data name="MeduimLevel" xml:space="preserve">
     <value>Medium</value>
@@ -259,7 +259,7 @@
     <value>It seems, you are genius! Perfect work!</value>
   </data>
   <data name="PostMessage" xml:space="preserve">
-    <value>My kids won {0} for success in learning alphabet</value>
+    <value>My kids won {0}, little genius!)</value>
   </data>
   <data name="RightAnswer" xml:space="preserve">
     <value>Correct!</value>
@@ -268,10 +268,10 @@
     <value>Sending your message...</value>
   </data>
   <data name="SignOnNotUniqueLoginError" xml:space="preserve">
-    <value>This name is alrady used by other user. Write another name!</value>
+    <value>This name is already used by another user. Write another name!</value>
   </data>
   <data name="SignOnTooShortNameError" xml:space="preserve">
-    <value>This name is too short. Write another name!</value>
+    <value>The name is too short. Write another name!</value>
   </data>
   <data name="SignOnUnexpectedError" xml:space="preserve">
     <value>Something goes wrong, try again later!</value>
@@ -283,7 +283,7 @@
     <value>Oh, sorry, not correct. Try again! =(</value>
   </data>
   <data name="YouWonPrizeMessage" xml:space="preserve">
-    <value>You are grtting award for your awesome game! All your awards you coud see at Achievements section</value>
+    <value>You are got award for your awesome game! All your awards you could see at Achievements section</value>
   </data>
   <data name="btnNextContent" xml:space="preserve">
     <value>Close</value>
@@ -322,7 +322,7 @@
     <value>Installing..</value>
   </data>
   <data name="DownloadingAppTitle" xml:space="preserve">
-    <value>Make a choise</value>
+    <value>Make a choice</value>
   </data>
   <data name="WaitingAppTitle" xml:space="preserve">
     <value>Processing...</value>
@@ -347,5 +347,11 @@
   </data>
   <data name="ToolTipEnableSharingText.Text" xml:space="preserve">
     <value>To Enable/Disable social sharing manage app settings</value>
+  </data>
+  <data name="NoNewPackagesAvailable" xml:space="preserve">
+    <value>No new downloads available</value>
+  </data>
+  <data name="Store.Content" xml:space="preserve">
+    <value>More alphabets</value>
   </data>
 </root>

@@ -1,6 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 // Общие сведения о сборке можно задать с помощью следующего 
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,

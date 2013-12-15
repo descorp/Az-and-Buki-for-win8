@@ -8,9 +8,9 @@ namespace levelupspace
 {
     public class FacebookProvider : SocialProvider
     {
-        private static FacebookClient _fb = new FacebookClient();
-        private static string appId = "337251873070006";
-        private static string extendedPermissions = "user_about_me,read_stream,publish_stream,publish_actions";
+        private static readonly FacebookClient _fb = new FacebookClient();
+        private const string appId = "337251873070006";
+        private const string extendedPermissions = "user_about_me,read_stream,publish_stream,publish_actions";
         private string accessToken;
 
         public override event EventHandler SentEvent;
@@ -32,7 +32,7 @@ namespace levelupspace
                 parameters["scope"] = extendedPermissions;
             }
 
-            base._uri=_fb.GetLoginUrl(parameters);
+            _uri=_fb.GetLoginUrl(parameters);
         }
 
 
@@ -48,20 +48,19 @@ namespace levelupspace
                 return true;
             }
 
-            else return false;
-            
+            return false;
         }
 
         public override async void WallPost(String Message, String ImagePath)
         {
             var fb = new FacebookClient(accessToken);
             ImagePath = ImagePath.Replace('/','\\');
-            FacebookMediaObject facebookUploader = new FacebookMediaObject { FileName = "funny-image.jpg", ContentType = "image/png" };
+            var facebookUploader = new FacebookMediaObject { FileName = "funny-image.jpg", ContentType = "image/png" };
             
             var file = await StorageFile.GetFileFromPathAsync(ImagePath);
             var fileStream = await file.OpenStreamForReadAsync();
 
-            byte[] bytes = new Byte[fileStream.Length];
+            var bytes = new Byte[fileStream.Length];
             fileStream.Position = 0;
             fileStream.Read(bytes, 0, (int)fileStream.Length);
 
@@ -69,10 +68,8 @@ namespace levelupspace
 
             facebookUploader.SetValue(bytes);
 
-            var postInfo = new Dictionary<string, object>();
-            postInfo.Add("message", Message);
-            postInfo.Add("image", facebookUploader);
-            fb.PostCompleted += new EventHandler<FacebookApiEventArgs>(FBPostSending_Completed);
+            var postInfo = new Dictionary<string, object> {{"message", Message}, {"image", facebookUploader}};
+            fb.PostCompleted += FBPostSending_Completed;
             await fb.PostTaskAsync("/photos", postInfo);
         }
 

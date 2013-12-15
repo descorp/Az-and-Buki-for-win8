@@ -1,7 +1,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SlotMachineControl">
+    xmlns:levelupspace="using:levelupspace"
+    xmlns:controls="using:levelupspace.Controls">
     <Style x:Key="FlipViewABCStyle" TargetType="FlipView">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -145,11 +146,11 @@
         </Setter>
     </Style>
     
-    <Style TargetType="local:SlotMachineControl">
+    <Style TargetType="controls:SlotMachineControl">
         
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:SlotMachineControl">
+                <ControlTemplate TargetType="controls:SlotMachineControl">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,20">
                             <FlipView x:Name="fvCH1" HorizontalAlignment="Left" VerticalAlignment="Top" 
                                       Width="125" Height="125" Margin="5,0" Padding="5" 

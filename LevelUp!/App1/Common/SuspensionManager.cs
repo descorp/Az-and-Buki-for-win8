@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -73,13 +69,13 @@ namespace levelupspace.Common
 
                 // Синхронная сериализация состояния сеанса с целью запрета асинхронного доступа к общему
                 // состоянию
-                MemoryStream sessionData = new MemoryStream();
-                DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
+                var sessionData = new MemoryStream();
+                var serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
                 serializer.WriteObject(sessionData, _sessionState);
 
                 // Получение выходного потока для файла SessionState и асинхронная запись состояния
-                StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(sessionStateFilename, CreationCollisionOption.ReplaceExisting);
-                using (Stream fileStream = await file.OpenStreamForWriteAsync())
+                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(sessionStateFilename, CreationCollisionOption.ReplaceExisting);
+                using (var fileStream = await file.OpenStreamForWriteAsync())
                 {
                     sessionData.Seek(0, SeekOrigin.Begin);
                     await sessionData.CopyToAsync(fileStream);
@@ -108,11 +104,11 @@ namespace levelupspace.Common
             try
             {
                 // Получение входного потока для файла SessionState
-                StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(sessionStateFilename);
-                using (IInputStream inStream = await file.OpenSequentialReadAsync())
+                var file = await ApplicationData.Current.LocalFolder.GetFileAsync(sessionStateFilename);
+                using (var inStream = await file.OpenSequentialReadAsync())
                 {
                     // Десериализация состояния сеанса
-                    DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
+                    var serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
                     _sessionState = (Dictionary<string, object>)serializer.ReadObject(inStream.AsStreamForRead());
                 }
 

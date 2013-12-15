@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
 
-namespace levelupspace
+namespace levelupspace.DataModel
 {
     public class GameItem : ABCItem
     {
@@ -29,15 +29,15 @@ namespace levelupspace
 
     public class GameClass
     {
-        private int _score=0;
+        private int _score;
 
-        private int _levelNum = 0;
+        private int _levelNum;
         public int LevelNum
         {
-            get { return this._levelNum; }
+            get { return _levelNum; }
         }
 
-        Random randomizer = new Random();
+        readonly Random _randomizer = new Random();
 
         public int Score
         {
@@ -52,77 +52,77 @@ namespace levelupspace
         private GameLevel _level;
         public GameLevel Level
         {
-            get { return this._level; }
+            get { return _level; }
         }
             
         public int MaxScore
         {
-            get { return _levelsСount * GameLevel.MaxLevelScore * ((int)this.DifficultyLevel + 1); }
+            get { return _levelsСount * GameLevel.MaxLevelScore * ((int)DifficultyLevel + 1); }
         }
 
         public Dificulty DifficultyLevel;
 
-        private int _levelsСount=0;
+        private int _levelsСount;
 
         public int LevelsCount
         {
-            get { return this._levelsСount; }
+            get { return _levelsСount; }
         }
 
-        private AlphabetItem abcToTest;
+        private AlphabetItem _abcToTest;
 
-        public GameClass(Dificulty difficultyLevel, string AlphabetID, String DBPath)
+        public GameClass(Dificulty difficultyLevel, string alphabetID, String dbPath)
         {
-            this.DifficultyLevel = difficultyLevel;
-            this.abcToTest = ContentManager.GetAlphabet(AlphabetID, DBPath);
+            DifficultyLevel = difficultyLevel;
+            _abcToTest = ContentManager.GetAlphabet(alphabetID, dbPath);
 
-            this._levelsСount = abcToTest.LetterItems.Count/2;
+            _levelsСount = _abcToTest.LetterItems.Count/2;
 
-                this._level = new GameLevel(this.randomizer, this.abcToTest, this.DifficultyLevel == Dificulty.Easy);           
+                _level = new GameLevel(_randomizer, _abcToTest, DifficultyLevel == Dificulty.Easy);           
 
             
-            this._levelNum = 0;
+            _levelNum = 0;
         }
 
         public  GameClass() 
         {
-            this._level = new GameLevel();
+            _level = new GameLevel();
         }
 
         public void SaveGameState(Dictionary<String, object> pageState)
         {
-            pageState["abcToTestID"] = this.abcToTest.UniqueId;
-            pageState["LevelNum"]=this._levelNum;
-            pageState["LevelsCount"]= this._levelsСount;
-            pageState["Score"]=this._score;
-            pageState["Difficulty"]=(int)this.DifficultyLevel;
-            pageState["ans"] = this._level.GetAns();
-            pageState["trial"] = this._level.GetTrial();
-            pageState["words"] = this._level.SerilializeWords();
-            pageState["letter"] = this._level.GetLetter();
+            pageState["abcToTestID"] = _abcToTest.UniqueId;
+            pageState["LevelNum"]=_levelNum;
+            pageState["LevelsCount"]= _levelsСount;
+            pageState["Score"]=_score;
+            pageState["Difficulty"]=(int)DifficultyLevel;
+            pageState["ans"] = _level.GetAns();
+            pageState["trial"] = _level.GetTrial();
+            pageState["words"] = _level.SerilializeWords();
+            pageState["letter"] = _level.GetLetter();
         }
 
         public bool LoadGameState(Dictionary<String, object> pageState)
         {
             if (pageState == null) return false;
             if (!pageState.ContainsKey("abcToTestID")) return false;
-            abcToTest = ContentManager.GetAlphabet((string)pageState["abcToTestID"], DBconnectionPath.Local);
+            _abcToTest = ContentManager.GetAlphabet((string)pageState["abcToTestID"], DBconnectionPath.Local);
             if (!pageState.ContainsKey("LevelNum")) return false;
-            this._levelNum =(int) pageState["LevelNum"];
+            _levelNum =(int) pageState["LevelNum"];
             if (!pageState.ContainsKey("LevelsCount")) return false;
-            this._levelsСount = (int)pageState["LevelsCount"];
+            _levelsСount = (int)pageState["LevelsCount"];
             if (!pageState.ContainsKey("Score")) return false;
-            this._score = (int)pageState["Score"];
+            _score = (int)pageState["Score"];
             if (!pageState.ContainsKey("Difficulty")) return false;
-            this.DifficultyLevel = (Dificulty)pageState["Difficulty"];
+            DifficultyLevel = (Dificulty)pageState["Difficulty"];
             if (!pageState.ContainsKey("ans")) return false;
-            this._level.SetAns((int)pageState["ans"]);
+            _level.SetAns((int)pageState["ans"]);
             if (!pageState.ContainsKey("trial")) return false;
-            this._level.SetTrial((int)pageState["trial"]);
+            _level.SetTrial((int)pageState["trial"]);
             if (!pageState.ContainsKey("words")) return false;
-            this._level.DeserializeWords((string)pageState["words"]);
+            _level.DeserializeWords((string)pageState["words"]);
             if (!pageState.ContainsKey("letter")) return false;
-            this._level.SetLetter((string)pageState["letter"]);
+            _level.SetLetter((string)pageState["letter"]);
             return true;
         }
 
@@ -131,17 +131,17 @@ namespace levelupspace
         /// </summary>
         /// <returns>Возвращает false, если уровень не пройден</returns>
 
-        public bool NextLevel(int Answer)
+        public bool NextLevel(int answer)
         {           
 
-            var result = this.Level.ValidateAnswer(Answer);
+            var result = Level.ValidateAnswer(answer);
             if (result < 0)
                 return false;
 
-            this._score += result * ((int)this.DifficultyLevel + 1);
-            this._levelNum++;
+            _score += result * ((int)DifficultyLevel + 1);
+            _levelNum++;
             if (_levelNum < LevelsCount)
-                this._level = new GameLevel(this.randomizer, this.abcToTest, this.DifficultyLevel == Dificulty.Easy);             
+                _level = new GameLevel(_randomizer, _abcToTest, DifficultyLevel == Dificulty.Easy);             
             return true;
         }
         
@@ -150,92 +150,87 @@ namespace levelupspace
 
     public class GameLevel
     {
-        private LetterItem letter;
+        private LetterItem _letter;
         public string GetLetter()
         {
-            return letter.UniqueId;
+            return _letter.UniqueId;
         }
 
         public void SetLetter(string uniqueID)
         {
-            this.letter = ContentManager.GetLetterItem(uniqueID, DBconnectionPath.Local);
+            _letter = ContentManager.GetLetterItem(uniqueID, DBconnectionPath.Local);
             var res = new ResourceLoader();
-            this.Question = String.Format(res.GetString("GameQuestion"), this.letter.Description);
+            Question = String.Format(res.GetString("GameQuestion"), _letter.Description);
         }
 
         public string Question;        
 
         public const int MaxLevelScore=3;
 
-        private int Trial = 1;
+        private int _trial = 1;
 
         public int GetTrial()
         {
-            return this.Trial;
+            return _trial;
         }
 
         public void SetTrial(int trial)
         {
-            this.Trial = trial;
+            _trial = trial;
         }
 
-        private int Answer;
+        private int _answer;
 
         public int GetAns()
         {
-            return this.Answer;
+            return _answer;
         }
 
         public void SetAns(int ans)
         {
-            this.Answer = ans;
+            _answer = ans;
         }
 
-        public ObservableCollection<WordItem> words;
+        public ObservableCollection<WordItem> Words;
 
         public string SerilializeWords()
         {
-            string ans = "";
-            foreach (WordItem word in words)
-                ans += word.UniqueId+"/";
-            return ans;
+            return Words.Aggregate("", (current, word) => current + (word.UniqueId + "/"));
         }
 
         public void DeserializeWords(String wordsStr)
         {
-            var IDs = wordsStr.Split('/');
-            this.words = new ObservableCollection<WordItem>();
-            foreach (string id in IDs)
+            var ds = wordsStr.Split('/');
+            Words = new ObservableCollection<WordItem>();
+            foreach (var id in ds)
                 if (id.Length>0)
-                words.Add(ContentManager.GetWordItem(id));
+                Words.Add(ContentManager.GetWordItem(id));
         }
 
 
         public GameLevel() { }
 
-        public GameLevel(Random rand, AlphabetItem alphabet, bool LoadWords)
+        public GameLevel(Random rand, AlphabetItem alphabet, bool loadWords)
         {
-            this.Answer = rand.Next(3);
-            this.words = new ObservableCollection<WordItem>();
-            var letterAnswerNumber = 0;
+            _answer = rand.Next(3);
+            Words = new ObservableCollection<WordItem>();
+            int letterAnswerNumber;
             do
             {
                 letterAnswerNumber = rand.Next(alphabet.LetterItems.Count - 1);
 
-                this.letter = alphabet.LetterItems[letterAnswerNumber];
-            } while (letter.WordItems.Count == 0);
+                _letter = alphabet.LetterItems[letterAnswerNumber];
+            } while (_letter.WordItems.Count == 0);
 
             var res = new ResourceLoader();
-            this.Question = String.Format(res.GetString("GameQuestion"), this.letter.Description);
-            
-            WordItem word;
+            Question = String.Format(res.GetString("GameQuestion"), _letter.Description);
 
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
-                
-                if (i == this.Answer)
+                WordItem word;
+                if (i == _answer)
                 {
-                    word = letter.WordItems[rand.Next(letter.WordItems.Count - 1)].Clone();                    
+                    word = _letter.WordItems[rand.Next(_letter.WordItems.Count - 1)].Clone();                    
                 }
                 else
                 {                     
@@ -247,31 +242,28 @@ namespace levelupspace
                         while (letterIndex == letterAnswerNumber || alphabet.LetterItems[letterIndex].WordItems.Count==0);
 
 
-                        var Curletter = alphabet.LetterItems[letterIndex];
-                        var wordIndex = rand.Next(Curletter.WordItems.Count - 1);
-                        word = Curletter.WordItems[wordIndex].Clone();
+                        var curletter = alphabet.LetterItems[letterIndex];
+                        var wordIndex = rand.Next(curletter.WordItems.Count - 1);
+                        word = curletter.WordItems[wordIndex].Clone();
                     }
-                    while ((words.Where(w=>w.ID==word.ID)).Count()!=0);                   
+                    while ((Words.Where(w=>w.ID==word.ID)).Count()!=0);                   
                 }
-                if (!LoadWords) word.Image = null;
-                words.Add(word);
+                if (!loadWords) word.Image = null;
+                Words.Add(word);
             }           
         }
         
         /// <summary>
         /// Возвращает очки за уровень , если ответ правильный и отриц. значение иначе
         /// </summary>
-        public int ValidateAnswer(int UserAnswer)
+        public int ValidateAnswer(int userAnswer)
         {
-            if (UserAnswer == this.Answer)
+            if (userAnswer == _answer)
             {
-                return GameLevel.MaxLevelScore / this.Trial;
+                return MaxLevelScore / _trial;
             }
-            else
-            {
-                this.Trial++;
-                return -1;
-            }
+            _trial++;
+            return -1;
         }
 
 

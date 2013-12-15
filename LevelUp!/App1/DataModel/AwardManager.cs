@@ -1,28 +1,27 @@
-﻿using SQLite;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
-using levelupspace.DataModel;
-using Windows.UI.Xaml;
+using SQLite;
 
-namespace levelupspace
+namespace levelupspace.DataModel
 {
-    public class AwardItem: ABCItem
+    public class AwardItem : ABCItem
     {
-        public AwardItem(String uniqueId, String title, String imagePath, String description, int ID)
+        public AwardItem(String uniqueId, String title, String imagePath, String description, int id)
             : base(uniqueId, title, imagePath, description)
         {
-            this._id = ID;
+            _id = id;
         }
 
-        private int _id = 0;
+        private int _id;
         public int ID
         {
             get { return _id; }
-            set { this.SetProperty( ref this._id, value); }
+            set { SetProperty(ref _id, value); }
         }
 
         public bool SocialsEnabled
@@ -30,101 +29,103 @@ namespace levelupspace
             get
             {
                 if (!ApplicationData.Current.RoamingSettings.Values.ContainsKey("Socials")) return false;
-                else
-                    return (bool)ApplicationData.Current.RoamingSettings.Values["Socials"];    
+                return (bool)ApplicationData.Current.RoamingSettings.Values["Socials"];
             }
         }
     }
 
     public class AwardManager
     {
-        public async static Task<ObservableCollection<AwardItem>> UsersAwards(int userId, String DBPath)
+        public async static Task<ObservableCollection<AwardItem>> UsersAwards(int userId, String dbPath)
         {
-            ObservableCollection<AwardItem> UserAwards = new ObservableCollection<AwardItem>();
+            var userAwards = new ObservableCollection<AwardItem>();
 
-            var db = new SQLiteAsyncConnection(DBPath);
-            
-            var AwardQuery = await db.QueryAsync<UserAward>("SELECT * FROM UserAward WHERE UserID=?", userId);
-            var LPath = ApplicationData.Current.LocalFolder.Path;
-            for (int i = 0; i < AwardQuery.Count; i++)
+            var db = new SQLiteAsyncConnection(dbPath);
+
+            var awardQuery = await db.QueryAsync<UserAward>("SELECT * FROM UserAward WHERE UserID=?", userId);
+            var lPath = ApplicationData.Current.LocalFolder.Path;
+            foreach (var award in awardQuery)
             {
-                var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
-                var LocalQuery = await db.QueryAsync<AwardLocalization>(
-                                     "SELECT * FROM AwardLocalization WHERE AwardID=?", AwardQuery[i].AwardID);
-                var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
-                if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
-                
-                var AwardDataQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE Id=?", AwardQuery[i].AwardID);
+                var languageID = CultureInfo.CurrentCulture.Name;
+
+                var localQuery = await db.QueryAsync<AwardLocalization>(
+                    "SELECT * FROM AwardLocalization WHERE AwardID=?", award.AwardID);
+                var localization = localQuery.First(l => l.LanguageID.Contains(languageID)) ??
+                                   localQuery.First(l => l.LanguageID.Contains("en"));
+
+                var awardDataQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE Id=?", award.AwardID);
 
 
-                var AwardData = AwardDataQuery.FirstOrDefault();
+                var awardData = awardDataQuery.FirstOrDefault();
 
-                
 
-                UserAwards.Add(new AwardItem(String.Concat("Award " + AwardQuery[i].AwardID.ToString()),
-                                             localization.AwardName,
-                                             Path.Combine(LPath, AwardData.LogoPath),
-                                             localization.AwardDescription,
-                                             AwardQuery[i].AwardID));
 
+                userAwards.Add(new AwardItem(String.Concat("Award ", award.AwardID),
+                    localization.AwardName,
+                    Path.Combine(lPath, awardData.LogoPath),
+                    localization.AwardDescription,
+                    award.AwardID));
             }
-            return UserAwards;
+            return userAwards;
         }
 
-        public async static Task<AwardItem> GetAward(int awardId, String DBPath)
+        public async static Task<AwardItem> GetAward(int awardId, String dbPath)
         {
-            var LPath = ApplicationData.Current.LocalFolder.Path;
+            var lPath = ApplicationData.Current.LocalFolder.Path;
 
-            var db = new SQLiteAsyncConnection(DBPath);
+            var db = new SQLiteAsyncConnection(dbPath);
 
-            var AwardQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE Id=?", awardId);
-            var Award = AwardQuery.FirstOrDefault();
+            var awardQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE Id=?", awardId);
+            var award = awardQuery.FirstOrDefault();
 
-            var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
-            
-            
-            var LocalQuery = await db.QueryAsync<AwardLocalization>(
-                                     "SELECT * FROM AwardLocalization WHERE AwardID=?", Award.ID);
+            var languageID = CultureInfo.CurrentCulture.Name;
 
-            var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
-            if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
 
-            return new AwardItem(String.Concat("Award " + Award.ID.ToString()),
+            var localQuery = await db.QueryAsync<AwardLocalization>(
+                                     "SELECT * FROM AwardLocalization WHERE AwardID=?", award.ID);
+
+            var localization = localQuery.First(l => l.LanguageID.Contains(languageID)) ??
+                               localQuery.First(l => l.LanguageID.Contains("en"));
+
+            return new AwardItem("Award " + award.ID,
                                              localization.AwardName,
-                                             Path.Combine(LPath, Award.LogoPath),
+                                             Path.Combine(lPath, award.LogoPath),
                                              localization.AwardDescription,
-                                             Award.ID);
+                                             award.ID);
         }
 
-        public async static Task<AwardItem> GetAwardForRate(int Rate, String DBPath)
+        public async static Task<AwardItem> GetAwardForRate(int rate, String dbPath)
         {
-            if (Rate>5 || Rate <2)
+            if (rate > 5 || rate < 2)
                 return null;
-            var LPath = ApplicationData.Current.LocalFolder.Path;
-            var db = new SQLiteAsyncConnection(DBPath);
+            var lPath = ApplicationData.Current.LocalFolder.Path;
+            var db = new SQLiteAsyncConnection(dbPath);
 
-            var AwardQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE Rate=?", Rate);
-            var Award = AwardQuery.FirstOrDefault();
-            
-            var LocalQuery = await db.QueryAsync<AwardLocalization>(
-                                     "SELECT * FROM AwardLocalization WHERE AwardID=?", Award.ID);
-            var languageID = System.Globalization.CultureInfo.CurrentCulture.Name;
-            var localization = LocalQuery.Where(l => l.LanguageID.Contains(languageID)).First();
-            if (localization == null) localization = LocalQuery.Where(l => l.LanguageID.Contains("en")).First();
+            var awardQuery = await db.QueryAsync<Award>("SELECT * FROM Award WHERE Rate=?", rate);
+            var award = awardQuery.FirstOrDefault();
 
-            return new AwardItem("Award " + Award.ID.ToString(),
+            var localQuery = await db.QueryAsync<AwardLocalization>(
+                                     "SELECT * FROM AwardLocalization WHERE AwardID=?", award.ID);
+            var languageID = CultureInfo.CurrentCulture.Name;
+            var localization = localQuery.First(l => l.LanguageID.Contains(languageID)) ??
+                               localQuery.First(l => l.LanguageID.Contains("en"));
+
+            return new AwardItem("Award " + award.ID.ToString(),
                                 localization.AwardName,
-                                Path.Combine(LPath, Award.LogoPath),
+                                Path.Combine(lPath, award.LogoPath),
                                 localization.AwardDescription,
-                                Award.ID);
+                                award.ID);
         }
 
-        public async static void AddUserAward(AwardItem award, int UserId, String DBPath)
+        public async static void AddUserAward(AwardItem award, int userId, String dbPath)
         {
-            var db = new SQLiteAsyncConnection(DBPath);
+            var db = new SQLiteAsyncConnection(dbPath);
 
-            await db.InsertAsync(new UserAward() { AwardID = award.ID, 
-                                                    UserID = UserId });
+            await db.InsertAsync(new UserAward
+            {
+                AwardID = award.ID,
+                UserID = userId
+            });
         }
     }
 }

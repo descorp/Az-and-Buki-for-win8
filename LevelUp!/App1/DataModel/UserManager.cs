@@ -1,12 +1,9 @@
 ﻿using SQLite;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Security.Cryptography.Core;
-using Windows.Storage.Streams;
 using Windows.Security.Cryptography;
-using Newtonsoft.Json;
 using levelupspace.DataModel;
 using Windows.ApplicationModel.Resources;
 
@@ -18,10 +15,8 @@ namespace levelupspace
     {       
         public async static Task<int> AddUserAsync(User Newby, String Pass, String DBPath)
         {
-            
-            var Resources = new ResourceLoader();
-            
-            if (Newby.Name.Length == 0) throw new ArgumentOutOfRangeException("UserName", "Name can't be empty!");
+
+            if (Newby.Name.Length == 0) throw new ArgumentOutOfRangeException("Newby", "Name can't be empty!");
             if (Pass.Length == 0) throw new ArgumentOutOfRangeException("Pass", "Password can't be empty!");
             if (Newby.Avatar.Length == 0) Newby.Avatar = "ms-appx:///Assets/Userlogo.png";
 
@@ -40,15 +35,15 @@ namespace levelupspace
 
                 return Newby.ID;
             }
-            else return -1;
+            return -1;
         }
 
 
         public async static Task<bool> Authorize(string Name,string Pass, String DBPath)
         {
             var db = new SQLiteAsyncConnection(DBPath);
-            var userFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Users", CreationCollisionOption.OpenIfExists);
-            string hash = ComputeMD5(String.Concat(Name, Pass));
+           
+            var hash = ComputeMD5(String.Concat(Name, Pass));
 
             if (Name.Length == 0) throw new ArgumentOutOfRangeException("UserName", "Name can't be empty!");
             if (Pass.Length == 0) throw new ArgumentOutOfRangeException("Hash", "Password can't be empty!");
@@ -57,7 +52,7 @@ namespace levelupspace
             if (User.Count == 0)
             {
                 if (!HttpProvider.IsInternetConnection()) return false;
-                User userFromAzure = await AzureDBProvider.GetUser(Name, hash);
+                var userFromAzure = await AzureDBProvider.GetUser(Name, hash);
                 if (userFromAzure != null)
                 {
                     userFromAzure.Avatar = "ms-appx:///Assets/Userlogo.png";
@@ -70,22 +65,17 @@ namespace levelupspace
                     ApplicationData.Current.LocalSettings.Values["UserID"] = DBUser[0].ID;
                     return true;
                 }
-                else
-                    return false;
+                return false;
             }
-            else
-            {
-                //return false;
-                if (String.Compare(hash, User[0].Hash) != 0)
-                    return false;
+            //return false;
+            if (System.String.CompareOrdinal(hash, User[0].Hash) != 0)
+                return false;
 
-                ApplicationData.Current.LocalSettings.Values["UserName"] = Name;
-                ApplicationData.Current.LocalSettings.Values["UserLogo"] = User[0].Avatar;
-                ApplicationData.Current.LocalSettings.Values["UserID"] = User[0].ID;
+            ApplicationData.Current.LocalSettings.Values["UserName"] = Name;
+            ApplicationData.Current.LocalSettings.Values["UserLogo"] = User[0].Avatar;
+            ApplicationData.Current.LocalSettings.Values["UserID"] = User[0].ID;
 
-                return true;
-            }
-
+            return true;
         }
 
         public static void LogOut()
@@ -108,7 +98,7 @@ namespace levelupspace
             {
                 if (IsAutorized)
                     return (int)ApplicationData.Current.LocalSettings.Values["UserID"];
-                else return -1;
+                return -1;
             }
         }
 
@@ -118,13 +108,13 @@ namespace levelupspace
 
             var UQuery = await db.QueryAsync<User>("SELECT * FROM User WHERE Name=?", Login);
 
-            return UQuery.Count > 0 ? false : true;
+            return UQuery.Count <= 0;
         }
 
         private static string ComputeMD5(string str)
         {
             var alg = HashAlgorithmProvider.OpenAlgorithm("MD5");
-            IBuffer buff = CryptographicBuffer.ConvertStringToBinary(str, BinaryStringEncoding.Utf8);
+            var buff = CryptographicBuffer.ConvertStringToBinary(str, BinaryStringEncoding.Utf8);
             var hashed = alg.HashData(buff);
             var res = CryptographicBuffer.EncodeToHexString(hashed);
             return res;

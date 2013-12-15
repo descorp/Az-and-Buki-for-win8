@@ -1,19 +1,17 @@
-﻿using Callisto.Controls;
+﻿using System.Collections;
+using Windows.ApplicationModel;
+using Windows.Foundation.Metadata;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
-using Windows.UI;
 using Windows.UI.ApplicationSettings;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace levelupspace.Common
@@ -38,7 +36,7 @@ namespace levelupspace.Common
     /// </item>
     /// </list>
     /// </summary>
-    [Windows.Foundation.Metadata.WebHostHidden]
+    [WebHostHidden]
     public class LayoutAwarePage : Page
     {
         /// <summary>
@@ -55,38 +53,38 @@ namespace levelupspace.Common
         /// </summary>
         public LayoutAwarePage()
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) return;
+            if (DesignMode.DesignModeEnabled) return;
 
             // Создание пустой модели представления по умолчанию
-            this.DefaultViewModel = new ObservableDictionary<String, Object>();
+            DefaultViewModel = new ObservableDictionary<String, Object>();
 
             // Если данная страница является частью визуального дерева, возникают два изменения:
             // 1) Сопоставление состояния просмотра приложения с визуальным состоянием для страницы.
             // 2) Обработка запросов навигации с помощью мыши и клавиатуры.
-            this.Loaded += (sender, e) =>
+            Loaded += (sender, e) =>
             {
-                this.StartLayoutUpdates(sender, e);
+                StartLayoutUpdates(sender, e);
 
                 // Навигация с помощью мыши и клавиатуры применяется, только если страница занимает все окно
-                if (this.ActualHeight == Window.Current.Bounds.Height &&
-                    this.ActualWidth == Window.Current.Bounds.Width)
+                if (ActualHeight == Window.Current.Bounds.Height &&
+                    ActualWidth == Window.Current.Bounds.Width)
                 {
                     // Непосредственное прослушивание окна, поэтому фокус не требуется
                     Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated +=
                         CoreDispatcher_AcceleratorKeyActivated;
                     Window.Current.CoreWindow.PointerPressed +=
-                        this.CoreWindow_PointerPressed;
+                        CoreWindow_PointerPressed;
                 }
             };
 
             // Отмена тех же изменений, когда страница перестает быть видимой
-            this.Unloaded += (sender, e) =>
+            Unloaded += (sender, e) =>
             {
-                this.StopLayoutUpdates(sender, e);
+                StopLayoutUpdates(sender, e);
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -=
                     CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed -=
-                    this.CoreWindow_PointerPressed;
+                    CoreWindow_PointerPressed;
             };
         }
 
@@ -98,12 +96,12 @@ namespace levelupspace.Common
         {
             get
             {
-                return this.GetValue(DefaultViewModelProperty) as IObservableMap<String, Object>;
+                return GetValue(DefaultViewModelProperty) as IObservableMap<String, Object>;
             }
 
             set
             {
-                this.SetValue(DefaultViewModelProperty, value);
+                SetValue(DefaultViewModelProperty, value);
             }
         }
 
@@ -118,9 +116,9 @@ namespace levelupspace.Common
         protected virtual void GoHome(object sender, RoutedEventArgs e)
         {
             // Используйте фрейм навигации для возврата на самую верхнюю страницу
-            if (this.Frame != null)
+            if (Frame != null)
             {
-                while (this.Frame.CanGoBack) this.Frame.GoBack();
+                while (Frame.CanGoBack) Frame.GoBack();
             }
         }
 
@@ -134,7 +132,7 @@ namespace levelupspace.Common
         protected virtual void GoBack(object sender, RoutedEventArgs e)
         {
             // Используйте фрейм навигации для возврата на предыдущую страницу
-            if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
+            if (Frame != null && Frame.CanGoBack) Frame.GoBack();
         }
 
         /// <summary>
@@ -147,7 +145,7 @@ namespace levelupspace.Common
         protected virtual void GoForward(object sender, RoutedEventArgs e)
         {
             // Используйте фрейм навигации для перехода на следующую страницу
-            if (this.Frame != null && this.Frame.CanGoForward) this.Frame.GoForward();
+            if (Frame != null && Frame.CanGoForward) Frame.GoForward();
         }
 
         /// <summary>
@@ -170,26 +168,26 @@ namespace levelupspace.Common
                 (int)virtualKey == 166 || (int)virtualKey == 167))
             {
                 var coreWindow = Window.Current.CoreWindow;
-                var downState = CoreVirtualKeyStates.Down;
-                bool menuKey = (coreWindow.GetKeyState(VirtualKey.Menu) & downState) == downState;
-                bool controlKey = (coreWindow.GetKeyState(VirtualKey.Control) & downState) == downState;
-                bool shiftKey = (coreWindow.GetKeyState(VirtualKey.Shift) & downState) == downState;
-                bool noModifiers = !menuKey && !controlKey && !shiftKey;
-                bool onlyAlt = menuKey && !controlKey && !shiftKey;
+                const CoreVirtualKeyStates downState = CoreVirtualKeyStates.Down;
+                var menuKey = (coreWindow.GetKeyState(VirtualKey.Menu) & downState) == downState;
+                var controlKey = (coreWindow.GetKeyState(VirtualKey.Control) & downState) == downState;
+                var shiftKey = (coreWindow.GetKeyState(VirtualKey.Shift) & downState) == downState;
+                var noModifiers = !menuKey && !controlKey && !shiftKey;
+                var onlyAlt = menuKey && !controlKey && !shiftKey;
 
                 if (((int)virtualKey == 166 && noModifiers) ||
                     (virtualKey == VirtualKey.Left && onlyAlt))
                 {
                     // Переход назад при нажатии клавиши "Назад" или сочетания клавиш ALT+стрелка влево
                     args.Handled = true;
-                    this.GoBack(this, new RoutedEventArgs());
+                    GoBack(this, new RoutedEventArgs());
                 }
                 else if (((int)virtualKey == 167 && noModifiers) ||
                     (virtualKey == VirtualKey.Right && onlyAlt))
                 {
                     // Переход вперед при нажатии клавиши "Вперед" или сочетания клавиш ALT+стрелка вправо
                     args.Handled = true;
-                    this.GoForward(this, new RoutedEventArgs());
+                    GoForward(this, new RoutedEventArgs());
                 }
             }
         }
@@ -211,13 +209,13 @@ namespace levelupspace.Common
                 properties.IsMiddleButtonPressed) return;
 
             // Если нажата кнопка "Назад" или "Вперед" (но не обе), выполняется соответствующий переход
-            bool backPressed = properties.IsXButton1Pressed;
-            bool forwardPressed = properties.IsXButton2Pressed;
+            var backPressed = properties.IsXButton1Pressed;
+            var forwardPressed = properties.IsXButton2Pressed;
             if (backPressed ^ forwardPressed)
             {
                 args.Handled = true;
-                if (backPressed) this.GoBack(this, new RoutedEventArgs());
-                if (forwardPressed) this.GoForward(this, new RoutedEventArgs());
+                if (backPressed) GoBack(this, new RoutedEventArgs());
+                if (forwardPressed) GoForward(this, new RoutedEventArgs());
             }
         }
 
@@ -246,13 +244,13 @@ namespace levelupspace.Common
         {
             var control = sender as Control;
             if (control == null) return;
-            if (this._layoutAwareControls == null)
+            if (_layoutAwareControls == null)
             {
                 // Запуск прослушивания изменений состояния просмотра при наличии элементов управления, заинтересованных в обновлениях
-                Window.Current.SizeChanged += this.WindowSizeChanged;
-                this._layoutAwareControls = new List<Control>();
+                Window.Current.SizeChanged += WindowSizeChanged;
+                _layoutAwareControls = new List<Control>();
             }
-            this._layoutAwareControls.Add(control);
+            _layoutAwareControls.Add(control);
 
             // Задает начальное визуальное состояние элемента управления
             VisualStateManager.GoToState(control, DetermineVisualState(ApplicationView.Value), false);
@@ -260,7 +258,7 @@ namespace levelupspace.Common
 
         private void WindowSizeChanged(object sender, WindowSizeChangedEventArgs e)
         {
-            this.InvalidateVisualState();
+            InvalidateVisualState();
         }
 
         /// <summary>
@@ -277,13 +275,13 @@ namespace levelupspace.Common
         public void StopLayoutUpdates(object sender, RoutedEventArgs e)
         {
             var control = sender as Control;
-            if (control == null || this._layoutAwareControls == null) return;
-            this._layoutAwareControls.Remove(control);
-            if (this._layoutAwareControls.Count == 0)
+            if (control == null || _layoutAwareControls == null) return;
+            _layoutAwareControls.Remove(control);
+            if (_layoutAwareControls.Count == 0)
             {
                 // Остановка прослушивания изменений состояния просмотра при отсутствии элементов управления, заинтересованных в обновлениях
-                this._layoutAwareControls = null;
-                Window.Current.SizeChanged -= this.WindowSizeChanged;
+                _layoutAwareControls = null;
+                Window.Current.SizeChanged -= WindowSizeChanged;
             }
         }
 
@@ -312,10 +310,10 @@ namespace levelupspace.Common
         /// </remarks>
         public void InvalidateVisualState()
         {
-            if (this._layoutAwareControls != null)
+            if (_layoutAwareControls != null)
             {
-                string visualState = DetermineVisualState(ApplicationView.Value);
-                foreach (var layoutAwareControl in this._layoutAwareControls)
+                var visualState = DetermineVisualState(ApplicationView.Value);
+                foreach (var layoutAwareControl in _layoutAwareControls)
                 {
                     VisualStateManager.GoToState(layoutAwareControl, visualState, false);
                 }
@@ -338,17 +336,17 @@ namespace levelupspace.Common
             SettingsPane.GetForCurrentView().CommandsRequested += Settings_CommandRequested;
 
             // Возвращение к кэшированной странице во время навигации не должно инициировать загрузку состояния
-            if (this._pageKey != null) return;
+            if (_pageKey != null) return;
 
-            var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
-            this._pageKey = "Page-" + this.Frame.BackStackDepth;
+            var frameState = SuspensionManager.SessionStateForFrame(Frame);
+            _pageKey = "Page-" + Frame.BackStackDepth;
 
             if (e.NavigationMode == NavigationMode.New)
             {
                 // Очистка существующего состояния для перехода вперед при добавлении новой страницы в
                 // стек навигации
-                var nextPageKey = this._pageKey;
-                int nextPageIndex = this.Frame.BackStackDepth;
+                var nextPageKey = _pageKey;
+                var nextPageIndex = Frame.BackStackDepth;
                 while (frameState.Remove(nextPageKey))
                 {
                     nextPageIndex++;
@@ -356,14 +354,14 @@ namespace levelupspace.Common
                 }
 
                 // Передача параметра навигации на новую страницу
-                this.LoadState(e.Parameter, null);
+                LoadState(e.Parameter, null);
             }
             else
             {
                 // Передача на страницу параметра навигации и сохраненного состояния страницы с использованием
                 // той же стратегии загрузки приостановленного состояния и повторного создания страниц, удаленных
                 // из кэша
-                this.LoadState(e.Parameter, (Dictionary<String, Object>)frameState[this._pageKey]);
+                LoadState(e.Parameter, (Dictionary<String, Object>)frameState[_pageKey]);
             }
         }
 
@@ -375,34 +373,17 @@ namespace levelupspace.Common
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             SettingsPane.GetForCurrentView().CommandsRequested -= Settings_CommandRequested;
-            var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
+            var frameState = SuspensionManager.SessionStateForFrame(Frame);
             var pageState = new Dictionary<String, Object>();
-            this.SaveState(pageState);
+            SaveState(pageState);
             frameState[_pageKey] = pageState;
         }
 
         private void Settings_CommandRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
         {
             var res = new ResourceLoader();
-            var viewPrivacyPage = new SettingsCommand("", res.GetString("PrivacyStatementCaption"), cmd =>
-            {
-                Launcher.LaunchUriAsync(new Uri(res.GetString("UriPrivacyPolicy"), UriKind.Absolute));
-
-            });
+            var viewPrivacyPage = new SettingsCommand("", res.GetString("PrivacyStatementCaption"), cmd => Launcher.LaunchUriAsync(new Uri(res.GetString("UriPrivacyPolicy"), UriKind.Absolute)));
             args.Request.ApplicationCommands.Add(viewPrivacyPage);
-
-
-            var viewPrefrencesPage = new SettingsCommand("preferences", res.GetString("PreferencesCaption"), (handler) =>
-            {
-                var settings = new SettingsFlyout();
-                settings.Content = new PreferencesContro();
-                settings.HeaderBrush = new SolidColorBrush(Color.FromArgb(255,0, 148, 255));
-                settings.Background = new SolidColorBrush(Color.FromArgb(255, 0, 148, 255));
-                settings.HeaderText = res.GetString("PreferencesCaption");
-                settings.IsOpen = true;
-            });
-
-            args.Request.ApplicationCommands.Add(viewPrefrencesPage);
 
         }
 
@@ -435,24 +416,24 @@ namespace levelupspace.Common
         /// Реализация интерфейса IObservableMap, поддерживающего повторный вход для использования в качестве модели представления
         /// по умолчанию.
         /// </summary>
-        private class ObservableDictionary<K, V> : IObservableMap<K, V>
+        private class ObservableDictionary<TK, V> : IObservableMap<TK, V>
         {
-            private class ObservableDictionaryChangedEventArgs : IMapChangedEventArgs<K>
+            private class ObservableDictionaryChangedEventArgs : IMapChangedEventArgs<TK>
             {
-                public ObservableDictionaryChangedEventArgs(CollectionChange change, K key)
+                public ObservableDictionaryChangedEventArgs(CollectionChange change, TK key)
                 {
-                    this.CollectionChange = change;
-                    this.Key = key;
+                    CollectionChange = change;
+                    Key = key;
                 }
 
                 public CollectionChange CollectionChange { get; private set; }
-                public K Key { get; private set; }
+                public TK Key { get; private set; }
             }
 
-            private Dictionary<K, V> _dictionary = new Dictionary<K, V>();
-            public event MapChangedEventHandler<K, V> MapChanged;
+            private readonly Dictionary<TK, V> _dictionary = new Dictionary<TK, V>();
+            public event MapChangedEventHandler<TK, V> MapChanged;
 
-            private void InvokeMapChanged(CollectionChange change, K key)
+            private void InvokeMapChanged(CollectionChange change, TK key)
             {
                 var eventHandler = MapChanged;
                 if (eventHandler != null)
@@ -461,90 +442,90 @@ namespace levelupspace.Common
                 }
             }
 
-            public void Add(K key, V value)
+            public void Add(TK key, V value)
             {
-                this._dictionary.Add(key, value);
-                this.InvokeMapChanged(CollectionChange.ItemInserted, key);
+                _dictionary.Add(key, value);
+                InvokeMapChanged(CollectionChange.ItemInserted, key);
             }
 
-            public void Add(KeyValuePair<K, V> item)
+            public void Add(KeyValuePair<TK, V> item)
             {
-                this.Add(item.Key, item.Value);
+                Add(item.Key, item.Value);
             }
 
-            public bool Remove(K key)
+            public bool Remove(TK key)
             {
-                if (this._dictionary.Remove(key))
+                if (_dictionary.Remove(key))
                 {
-                    this.InvokeMapChanged(CollectionChange.ItemRemoved, key);
+                    InvokeMapChanged(CollectionChange.ItemRemoved, key);
                     return true;
                 }
                 return false;
             }
 
-            public bool Remove(KeyValuePair<K, V> item)
+            public bool Remove(KeyValuePair<TK, V> item)
             {
                 V currentValue;
-                if (this._dictionary.TryGetValue(item.Key, out currentValue) &&
-                    Object.Equals(item.Value, currentValue) && this._dictionary.Remove(item.Key))
+                if (_dictionary.TryGetValue(item.Key, out currentValue) &&
+                    Equals(item.Value, currentValue) && _dictionary.Remove(item.Key))
                 {
-                    this.InvokeMapChanged(CollectionChange.ItemRemoved, item.Key);
+                    InvokeMapChanged(CollectionChange.ItemRemoved, item.Key);
                     return true;
                 }
                 return false;
             }
 
-            public V this[K key]
+            public V this[TK key]
             {
                 get
                 {
-                    return this._dictionary[key];
+                    return _dictionary[key];
                 }
                 set
                 {
-                    this._dictionary[key] = value;
-                    this.InvokeMapChanged(CollectionChange.ItemChanged, key);
+                    _dictionary[key] = value;
+                    InvokeMapChanged(CollectionChange.ItemChanged, key);
                 }
             }
 
             public void Clear()
             {
-                var priorKeys = this._dictionary.Keys.ToArray();
-                this._dictionary.Clear();
+                var priorKeys = _dictionary.Keys.ToArray();
+                _dictionary.Clear();
                 foreach (var key in priorKeys)
                 {
-                    this.InvokeMapChanged(CollectionChange.ItemRemoved, key);
+                    InvokeMapChanged(CollectionChange.ItemRemoved, key);
                 }
             }
 
-            public ICollection<K> Keys
+            public ICollection<TK> Keys
             {
-                get { return this._dictionary.Keys; }
+                get { return _dictionary.Keys; }
             }
 
-            public bool ContainsKey(K key)
+            public bool ContainsKey(TK key)
             {
-                return this._dictionary.ContainsKey(key);
+                return _dictionary.ContainsKey(key);
             }
 
-            public bool TryGetValue(K key, out V value)
+            public bool TryGetValue(TK key, out V value)
             {
-                return this._dictionary.TryGetValue(key, out value);
+                return _dictionary.TryGetValue(key, out value);
             }
 
             public ICollection<V> Values
             {
-                get { return this._dictionary.Values; }
+                get { return _dictionary.Values; }
             }
 
-            public bool Contains(KeyValuePair<K, V> item)
+            public bool Contains(KeyValuePair<TK, V> item)
             {
-                return this._dictionary.Contains(item);
+                return _dictionary.Contains(item);
             }
 
             public int Count
             {
-                get { return this._dictionary.Count; }
+                get { return _dictionary.Count; }
             }
 
             public bool IsReadOnly
@@ -552,20 +533,20 @@ namespace levelupspace.Common
                 get { return false; }
             }
 
-            public IEnumerator<KeyValuePair<K, V>> GetEnumerator()
+            public IEnumerator<KeyValuePair<TK, V>> GetEnumerator()
             {
-                return this._dictionary.GetEnumerator();
+                return _dictionary.GetEnumerator();
             }
 
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
-                return this._dictionary.GetEnumerator();
+                return _dictionary.GetEnumerator();
             }
 
-            public void CopyTo(KeyValuePair<K, V>[] array, int arrayIndex)
+            public void CopyTo(KeyValuePair<TK, V>[] array, int arrayIndex)
             {
-                int arraySize = array.Length;
-                foreach (var pair in this._dictionary)
+                var arraySize = array.Length;
+                foreach (var pair in _dictionary)
                 {
                     if (arrayIndex >= arraySize) break;
                     array[arrayIndex++] = pair;

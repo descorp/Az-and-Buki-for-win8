@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Markup;
 
 namespace levelupspace.Common
 {
@@ -36,7 +33,7 @@ namespace levelupspace.Common
     /// <remarks>Обычно используется для области с горизонтальной прокруткой, в котором содержится неограниченное
     /// пространство для создания всех необходимых столбцов. При использовании в области
     /// с вертикальной прокруткой, дополнительные столбцы не создаются.</remarks>
-    [Windows.UI.Xaml.Markup.ContentProperty(Name = "RichTextContent")]
+    [ContentProperty(Name = "RichTextContent")]
     public sealed class RichTextColumns : Panel
     {
         /// <summary>
@@ -58,7 +55,7 @@ namespace levelupspace.Common
         /// </summary>
         public RichTextColumns()
         {
-            this.HorizontalAlignment = HorizontalAlignment.Left;
+            HorizontalAlignment = HorizontalAlignment.Left;
         }
 
         /// <summary>
@@ -103,7 +100,7 @@ namespace levelupspace.Common
         /// экземплярами в коллекции <see cref="Panel.Children"/>, следующими за исходным
         /// дочерним элементом RichTextBlock.
         /// </summary>
-        private List<RichTextBlockOverflow> _overflowColumns = null;
+        private List<RichTextBlockOverflow> _overflowColumns;
 
         /// <summary>
         /// Определяет, нужны ли дополнительные столбцы переполнения и можно ли удалить
@@ -114,46 +111,46 @@ namespace levelupspace.Common
         /// <returns>Результирующий размер исходного содержимого плюс все дополнительные столбцы.</returns>
         protected override Size MeasureOverride(Size availableSize)
         {
-            if (this.RichTextContent == null) return new Size(0, 0);
+            if (RichTextContent == null) return new Size(0, 0);
 
             // Убедитесь, что RichTextBlock является дочерним элементом; отсутствие
             // списка дополнительных столбцов означает, что он еще не сделан
             // дочерним
-            if (this._overflowColumns == null)
+            if (_overflowColumns == null)
             {
-                Children.Add(this.RichTextContent);
-                this._overflowColumns = new List<RichTextBlockOverflow>();
+                Children.Add(RichTextContent);
+                _overflowColumns = new List<RichTextBlockOverflow>();
             }
 
             // Начните с измерения исходного содержимого RichTextBlock
-            this.RichTextContent.Measure(availableSize);
-            var maxWidth = this.RichTextContent.DesiredSize.Width;
-            var maxHeight = this.RichTextContent.DesiredSize.Height;
-            var hasOverflow = this.RichTextContent.HasOverflowContent;
+            RichTextContent.Measure(availableSize);
+            var maxWidth = RichTextContent.DesiredSize.Width;
+            var maxHeight = RichTextContent.DesiredSize.Height;
+            var hasOverflow = RichTextContent.HasOverflowContent;
 
             // Убедитесь в наличии достаточного количества столбцов переполнения
-            int overflowIndex = 0;
-            while (hasOverflow && maxWidth < availableSize.Width && this.ColumnTemplate != null)
+            var overflowIndex = 0;
+            while (hasOverflow && maxWidth < availableSize.Width && ColumnTemplate != null)
             {
                 // Используйте существующие столбцы переполнения, пока они не закончатся, затем создайте
                 // дополнительные столбцы из предоставленного шаблона
                 RichTextBlockOverflow overflow;
-                if (this._overflowColumns.Count > overflowIndex)
+                if (_overflowColumns.Count > overflowIndex)
                 {
-                    overflow = this._overflowColumns[overflowIndex];
+                    overflow = _overflowColumns[overflowIndex];
                 }
                 else
                 {
-                    overflow = (RichTextBlockOverflow)this.ColumnTemplate.LoadContent();
-                    this._overflowColumns.Add(overflow);
-                    this.Children.Add(overflow);
+                    overflow = (RichTextBlockOverflow)ColumnTemplate.LoadContent();
+                    _overflowColumns.Add(overflow);
+                    Children.Add(overflow);
                     if (overflowIndex == 0)
                     {
-                        this.RichTextContent.OverflowContentTarget = overflow;
+                        RichTextContent.OverflowContentTarget = overflow;
                     }
                     else
                     {
-                        this._overflowColumns[overflowIndex - 1].OverflowContentTarget = overflow;
+                        _overflowColumns[overflowIndex - 1].OverflowContentTarget = overflow;
                     }
                 }
 
@@ -167,20 +164,20 @@ namespace levelupspace.Common
 
             // Отключение дополнительных столбцов от цепи переполнения, удаление их из нашего закрытого списка
             // столбцов и удаление их как дочерних элементов
-            if (this._overflowColumns.Count > overflowIndex)
+            if (_overflowColumns.Count > overflowIndex)
             {
                 if (overflowIndex == 0)
                 {
-                    this.RichTextContent.OverflowContentTarget = null;
+                    RichTextContent.OverflowContentTarget = null;
                 }
                 else
                 {
-                    this._overflowColumns[overflowIndex - 1].OverflowContentTarget = null;
+                    _overflowColumns[overflowIndex - 1].OverflowContentTarget = null;
                 }
-                while (this._overflowColumns.Count > overflowIndex)
+                while (_overflowColumns.Count > overflowIndex)
                 {
-                    this._overflowColumns.RemoveAt(overflowIndex);
-                    this.Children.RemoveAt(overflowIndex + 1);
+                    _overflowColumns.RemoveAt(overflowIndex);
+                    Children.RemoveAt(overflowIndex + 1);
                 }
             }
 

@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using levelupspace;
 using System.Threading.Tasks;
-using Windows.Security.Cryptography.Core;
-using Windows.Security.Cryptography;
-using Windows.Storage.Streams;
 using levelupspace.DataModel;
+using SQLite;
 using AsyncAssert = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.Assert;
 
 namespace UnitTestLibrary
@@ -49,7 +44,7 @@ namespace UnitTestLibrary
         [TestMethod]
         public async Task AddUserAsyncNewUserCorrectData()
         {
-            var db = new SQLite.SQLiteAsyncConnection(DBconnectionPath.Test);
+            var db = new SQLiteAsyncConnection(DBconnectionPath.Test);
             await db.CreateTableAsync<User>();
 
             User newUser = new User();
@@ -69,7 +64,7 @@ namespace UnitTestLibrary
         [TestMethod]
         public async Task IsUniqueLoginAsyncOccupiedUserName()
         {
-            var db = new SQLite.SQLiteAsyncConnection(DBconnectionPath.Test);
+            var db = new SQLiteAsyncConnection(DBconnectionPath.Test);
             await db.CreateTableAsync<User>();
 
             User newUser = new User();
@@ -87,7 +82,7 @@ namespace UnitTestLibrary
         [TestMethod]
         public async Task IsUniqueLoginAsyncFreeUserName()
         {
-            var db = new SQLite.SQLiteAsyncConnection(DBconnectionPath.Test);
+            var db = new SQLiteAsyncConnection(DBconnectionPath.Test);
             await db.CreateTableAsync<User>();
 
             String Name = "Sasha";
@@ -102,7 +97,7 @@ namespace UnitTestLibrary
         [TestMethod]
         public async Task AuthorizeCorrectNamePass()
         {
-            var db = new SQLite.SQLiteAsyncConnection(DBconnectionPath.Test);
+            var db = new SQLiteAsyncConnection(DBconnectionPath.Test);
             await db.CreateTableAsync<User>();
             User newUser = new User();
             newUser.Name = "Sasha";
@@ -123,7 +118,7 @@ namespace UnitTestLibrary
         [TestMethod]
         public async Task AuthorizeWrongNamePass()
         {
-            var db = new SQLite.SQLiteAsyncConnection(DBconnectionPath.Test);
+            var db = new SQLiteAsyncConnection(DBconnectionPath.Test);
             await db.CreateTableAsync<User>();
             User newUser = new User();
             newUser.Name = "Sasha";
@@ -162,7 +157,7 @@ namespace UnitTestLibrary
         [TestMethod]
         public async Task UserIdCorrect()
         {
-            var db = new SQLite.SQLiteAsyncConnection(DBconnectionPath.Test);
+            var db = new SQLiteAsyncConnection(DBconnectionPath.Test);
             await db.CreateTableAsync<User>();
             User newUser = new User();
             newUser.Name = "Sasha";
@@ -183,7 +178,7 @@ namespace UnitTestLibrary
         [TestMethod]
         public async Task IsAutorizedUserAuthorized()
         {
-            var db = new SQLite.SQLiteAsyncConnection(DBconnectionPath.Test);
+            var db = new SQLiteAsyncConnection(DBconnectionPath.Test);
             await db.CreateTableAsync<User>();
             User newUser = new User();
             newUser.Name = "Sasha";

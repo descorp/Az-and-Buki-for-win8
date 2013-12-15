@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -9,22 +10,17 @@ namespace levelupspace
 {
     public class VKProvider : SocialProvider
     {
-        private static int appId = 3664063;
-        private static string Scope = "wall,messages,photos";
-        private string accessToken = "";
-        private string userId = "";
-        private string message;
+        private const int appId = 3664063;
+        private const string Scope = "wall,messages,photos";
+        private string _accessToken = "";
+        private string _message;
 
-        private static string RedirectLink = "http://oauth.vk.com/blank.html";
-        private static string GetWallUploadLink = "https://api.vkontakte.ru/method/photos.getWallUploadServer?access_token={0}";
-        private static string SaveWallPhotoLink = "https://api.vkontakte.ru/method/photos.saveWallPhoto?access_token={0}&server={1}&photo={2}&hash={3}";
-        private static string wallPostLink = "https://api.vkontakte.ru/method/wall.post?access_token={0}&attachments={1}&message={2}";
-        private static string OAuthUrlLink = "http://oauth.vk.com/authorize?" +
-            "client_id={0}" +
-            "&scope={1}" +
-            "&redirect_uri=" +
-            "&display=touch" +
-            "&response_type=token";
+        private const string RedirectLink = "http://oauth.vk.com/blank.html";
+        private const string GetWallUploadLink = "https://api.vkontakte.ru/method/photos.getWallUploadServer?access_token={0}";
+        private const string SaveWallPhotoLink = "https://api.vkontakte.ru/method/photos.saveWallPhoto?access_token={0}&server={1}&photo={2}&hash={3}";
+        private const string WallPostLink = "https://api.vkontakte.ru/method/wall.post?access_token={0}&attachments={1}&message={2}";
+
+        private const string OAuthUrlLink = "http://oauth.vk.com/authorize?" + "client_id={0}" + "&scope={1}" + "&redirect_uri=" + "&display=touch" + "&response_type=token";
 
         public override event EventHandler SentEvent;
 
@@ -37,7 +33,7 @@ namespace levelupspace
         {
             
             if (!URi.AbsoluteUri.StartsWith(RedirectLink)) return false;
-            var paramPairs = System.Net.WebUtility.HtmlDecode(URi.Fragment).TrimStart('#').Split('&');
+            var paramPairs = WebUtility.HtmlDecode(URi.Fragment).TrimStart('#').Split('&');
             try
             {
                 foreach (var param in paramPairs)
@@ -47,11 +43,10 @@ namespace levelupspace
                     if (paramkey.Length == 2)
                     {
                         if (paramkey[0] == "access_token")
-                            accessToken = paramkey[1];
+                            _accessToken = paramkey[1];
 
                         else if (paramkey[0] == "user_id")
                         {
-                            userId = paramkey[1];
                         }
                     }
                 }
@@ -67,21 +62,20 @@ namespace levelupspace
 
         public override async void WallPost(String Message, String Picture)
         {
-            message = Message;
-            JSONGetWallUploadServerResponse UploadServerResponse=null;
+            _message = Message;
             try
             {
-                UploadServerResponse = await GetWallUploadServer();
-                UploadPhoto(UploadServerResponse, Picture);
+                var uploadServerResponse=await GetWallUploadServer();
+                UploadPhoto(uploadServerResponse, Picture);
             }
-            catch { };
-            
+            catch (Exception)
+            { }
         }
 
         private async Task<JSONGetWallUploadServerResponse> GetWallUploadServer()
         {
-            HttpProvider provider = new HttpProvider();
-            var response = await provider.POSTrequest(new Uri(string.Format(GetWallUploadLink, accessToken)));
+            var provider = new HttpProvider();
+            var response = await provider.POSTrequest(new Uri(string.Format(GetWallUploadLink, _accessToken)));
             return JsonConvert.DeserializeObject<JSONGetWallUploadServerResponse>(response);
         }
 
@@ -90,37 +84,41 @@ namespace levelupspace
             var file = await StorageFile.GetFileFromPathAsync(ImagePath);
             var fileStream = await file.OpenStreamForReadAsync();
 
-            HttpProvider httpProvider = new HttpProvider();
+            var httpProvider = new HttpProvider();
 
-            httpProvider.Complete += new EventHandler(FileUpload_Complete);
+            httpProvider.Complete += FileUpload_Complete;
             httpProvider.SendMultiPartRerquest(UploadServerResponse.response.upload_url, fileStream, file.Name);
         }
 
         // <summary>
         /// File-uploading is completed.
-        /// </summary>
+        /// 
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void FileUpload_Complete(object sender, EventArgs e)
         {
-            string jsonMessage = (e as HttpRresponseEventArgs).responseData;
+            var httpRresponseEventArgs = e as HttpRresponseEventArgs;
+            if (httpRresponseEventArgs != null)
+            {
+                var jsonMessage = httpRresponseEventArgs.responseData;
             
-            JSONUploadFileResponse UploadFileResponse = JsonConvert.DeserializeObject<JSONUploadFileResponse>(jsonMessage);
+                var uploadFileResponse = JsonConvert.DeserializeObject<JSONUploadFileResponse>(jsonMessage);
 
-            string SaveWallPhotoUrl = string.Format(SaveWallPhotoLink, accessToken, UploadFileResponse.server, UploadFileResponse.photo, UploadFileResponse.hash);
+                var saveWallPhotoUrl = string.Format(SaveWallPhotoLink, _accessToken, uploadFileResponse.server, uploadFileResponse.photo, uploadFileResponse.hash);
 
-            HttpProvider provider = new HttpProvider();
-            var SaveWallPhotoResponse = await provider.POSTrequest(new Uri(SaveWallPhotoUrl));
+                var provider = new HttpProvider();
+                var saveWallPhotoResponse = await provider.POSTrequest(new Uri(saveWallPhotoUrl));
 
-            string str = SaveWallPhotoResponse.Replace("[", "").Replace("]", "");
+                var str = saveWallPhotoResponse.Replace("[", "").Replace("]", "");
 
-            JSONSaveWallPhotoResponse SaveWallResponse = JsonConvert.DeserializeObject<JSONSaveWallPhotoResponse>(str);
+                var saveWallResponse = JsonConvert.DeserializeObject<JSONSaveWallPhotoResponse>(str);
 
 
-            string WallPostUrl = string.Format(wallPostLink, accessToken, SaveWallResponse.response.id, message);
-            var WallPostResponse = await provider.POSTrequest(new Uri(WallPostUrl));
+                var wallPostUrl = string.Format(WallPostLink, _accessToken, saveWallResponse.response.id, _message);
+                await provider.POSTrequest(new Uri(wallPostUrl));
+            }
 
-            EventArgs eventArgs = new EventArgs();
+            var eventArgs = new EventArgs();
             if (SentEvent != null) SentEvent(this, eventArgs);
         }
         

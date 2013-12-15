@@ -175,7 +175,7 @@
     <value>Язык</value>
   </data>
   <data name="LearnABCs.Content" xml:space="preserve">
-    <value>Учим алфавит</value>
+    <value>Учимся</value>
   </data>
   <data name="Letter.Text" xml:space="preserve">
     <value>Буква</value>
@@ -289,7 +289,7 @@
     <value>Дальше</value>
   </data>
   <data name="ChoosePacksMessage" xml:space="preserve">
-    <value>Выбери темы, которые хочешь изучать</value>
+    <value>Выбери алфавиты, которые хочешь изучать</value>
   </data>
   <data name="DownLoadPageChooseLangText" xml:space="preserve">
     <value>Привет! Рад тебя видеть! Для того, чтобы начать выбери язык приложения</value>
@@ -347,5 +347,11 @@
   </data>
   <data name="String1" xml:space="preserve">
     <value />
+  </data>
+  <data name="NoNewPackagesAvailable" xml:space="preserve">
+    <value>Новых загрузок пока нет</value>
+  </data>
+  <data name="Store.Content" xml:space="preserve">
+    <value>Загрузить</value>
   </data>
 </root>

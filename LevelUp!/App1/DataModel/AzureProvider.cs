@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using System.IO;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.MobileServices;
 
@@ -18,67 +14,79 @@ namespace levelupspace.DataModel
     {
 
         #region MobileService connection
-        public static MobileServiceClient MobileService = new MobileServiceClient(
-        "https://levelupbackend.azure-mobile.net/",
-        "hGDmdRlTFfjhgwkOzAAICUBJliMLzn13"
-        );
-        #endregion
+        //public static MobileServiceClient MobileService = new MobileServiceClient(
+        //"https://levelupbackend.azure-mobile.net/",
+        //"hGDmdRlTFfjhgwkOzAAICUBJliMLzn13"
+        //);
 
-        #region MobileService Table providers
-
-        //private static MobileServiceCollectionView<Alphabet> AlphabetItems;
-        private static IMobileServiceTable<Alphabet> AlphabetTable =
-            MobileService.GetTable<Alphabet>();
-
-        //private static MobileServiceCollectionView<AlphabetLocalization> AlphabetLocalizationtItems;
-        private static IMobileServiceTable<AlphabetLocalization> AlphabetLocalizationTable =
-            MobileService.GetTable<AlphabetLocalization>();
-
-        //private static MobileServiceCollectionView<User> UserItems;
-        private static IMobileServiceTable<User> UserTable =
-            MobileService.GetTable<User>();
-
-        //private static MobileServiceCollectionView<UserAward> UserAwardItems;
-        private static IMobileServiceTable<UserAward> UserAwardTable =
-            MobileService.GetTable<UserAward>();
-
-        //private static MobileServiceCollectionView<Award> AwardItems;
-        private static IMobileServiceTable<Award> AwardTable =
-            MobileService.GetTable<Award>();
-
-        //private static MobileServiceCollectionView<AwardLocalization> AwardLocalizationItems;
-        private static IMobileServiceTable<AwardLocalization> AwardLocalizationTable =
-            MobileService.GetTable<AwardLocalization>();
-
-        //AlphabetLocalization
+        private const string AppUri = "https://levelupbackend.azure-mobile.net/";
+        private const string AppKey = "hGDmdRlTFfjhgwkOzAAICUBJliMLzn13";
 
         #endregion
+
+
+
+        ////private static MobileServiceCollectionView<Alphabet> AlphabetItems;
+        private static IMobileServiceTable<Alphabet> AlphabetTable
+        {
+            get { return new MobileServiceClient(AppUri, AppKey).GetTable<Alphabet>(); }
+        }
+
+        ////private static MobileServiceCollectionView<AlphabetLocalization> AlphabetLocalizationtItems;
+        private static IMobileServiceTable<AlphabetLocalization> AlphabetLocalizationTable
+        {
+            get { return new MobileServiceClient(AppUri, AppKey).GetTable<AlphabetLocalization>(); }
+        }
+
+        ////private static MobileServiceCollectionView<User> UserItems;
+        private static IMobileServiceTable<User> UserTable
+        {
+            get { return new MobileServiceClient(AppUri, AppKey).GetTable<User>(); }
+        }
+
+        ////private static MobileServiceCollectionView<UserAward> UserAwardItems;
+        private static IMobileServiceTable<UserAward> UserAwardTable
+        {
+            get { return new MobileServiceClient(AppUri, AppKey).GetTable<UserAward>(); }
+        }
+
+        ////private static MobileServiceCollectionView<Award> AwardItems;
+        private static IMobileServiceTable<Award> AwardTable
+        {
+            get { return new MobileServiceClient(AppUri, AppKey).GetTable<Award>(); }
+        }
+
+        ////private static MobileServiceCollectionView<AwardLocalization> AwardLocalizationItems;
+        private static IMobileServiceTable<AwardLocalization> AwardLocalizationTable
+        {
+            get { return new MobileServiceClient(AppUri, AppKey).GetTable<AwardLocalization>(); }
+        }
+
+
 
         #region Users data providing methods
 
         public async static void AddNewUser(User user)
         {
-            //// This code inserts a new TodoItem into the database. When the operation completes
-            //// and Mobile Services has assigned an Guid, the item is added to the CollectionView
-            await UserTable .InsertAsync(user);
-            var items = await UserTable.ToListAsync();
+            var userTable = UserTable;
+            await userTable.InsertAsync(user);
+            await userTable.ToListAsync();
         }
 
-        public async static Task<bool> UserUnique(string Name)
+        public async static Task<bool> UserUnique(string name)
         {
-            UserTable = MobileService.GetTable<User>();
-            List<User> list = await UserTable.Where(user => user.Name == Name).ToListAsync();
+            var userTable = UserTable;
+            var list = await userTable.Where(user => user.Name == name).ToListAsync();
             return list.Count == 0;
         }
 
-        public static async Task<User> GetUser(string Name, string Hash)
+        public static async Task<User> GetUser(string name, string hash)
         {
-            UserTable = MobileService.GetTable<User>();
-            List<User> list = await UserTable.Where(user => user.Name == Name && user.Hash == Hash).ToListAsync();
+            var userTable = UserTable;
+            var list = await userTable.Where(user => user.Name == name && user.Hash == hash).ToListAsync();
             if (list.Count > 0)
                 return list.First();
-            else
-                return null;
+            return null;
         }
 
         #endregion
@@ -89,16 +97,17 @@ namespace levelupspace.DataModel
         {
             //// This code inserts a new TodoItem into the database. When the operation completes
             //// and Mobile Services has assigned an Guid, the item is added to the CollectionView
-            AlphabetTable = MobileService.GetTable<Alphabet>();
-            return await AlphabetTable.ToListAsync();
+            var alphabetTable = AlphabetTable;
+            return await alphabetTable.ToListAsync();
         }
 
         public async static Task<string> GetBlobName(int packageID)
         {
-            List<Alphabet> list = await AlphabetTable.Where(pack => pack.ID == packageID).ToListAsync();
-            string fullPath = list.First().Path;
-            int lastSlash = fullPath.LastIndexOf("/");
-            return fullPath.Remove(0,lastSlash + 1);
+            var alphabetTable = AlphabetTable;
+            var list = await alphabetTable.Where(pack => pack.ID == packageID).ToListAsync();
+            var fullPath = list.First().Path;
+            var lastSlash = fullPath.LastIndexOf("/", StringComparison.Ordinal);
+            return fullPath.Remove(0, lastSlash + 1);
         }
 
         /// <summary>
@@ -108,14 +117,15 @@ namespace levelupspace.DataModel
         /// <returns>Size of </returns>
         public static async Task<long> GetBlobSize(int packageID)
         {
-            List<Alphabet> list = await AlphabetTable.Where(pack => pack.ID == packageID).ToListAsync();
+            var alphabetTable = AlphabetTable;
+            var list = await alphabetTable.Where(pack => pack.ID == packageID).ToListAsync();
             return list.First().Length;
         }
 
-        public async static Task<AlphabetLocalization> GetPackageLocalization(Alphabet alphabet, String LocalizationId)
+        public async static Task<AlphabetLocalization> GetPackageLocalization(Alphabet alphabet, String localizationId)
         {
-            AlphabetLocalizationTable = MobileService.GetTable<AlphabetLocalization>();
-            var localization = await AlphabetLocalizationTable.Where(local => local.AlphabetID == alphabet.Guid && local.LanguageID.Contains(LocalizationId)).ToListAsync();
+            var alphabetLocalizationTable = AlphabetLocalizationTable;
+            var localization = await alphabetLocalizationTable.Where(local => local.AlphabetID == alphabet.Guid && local.LanguageID.Contains(localizationId)).ToListAsync();
             return localization.First();
         }
 
@@ -127,26 +137,27 @@ namespace levelupspace.DataModel
         {
             //// This code inserts a new TodoItem into the database. When the operation completes
             //// and Mobile Services has assigned an Guid, the item is added to the CollectionView
-            UserAward newAward = new UserAward() { AwardID = award.ID, UserID = user.ID };
-            await UserAwardTable.InsertAsync(newAward);
+            var userAwardTable = UserAwardTable;
+            var newAward = new UserAward { AwardID = award.ID, UserID = user.ID };
+            await userAwardTable.InsertAsync(newAward);
         }
 
         public async static Task<List<UserAward>> GetAwardsOfThisUser(User user)
         {
-            UserAwardTable = MobileService.GetTable<UserAward>();
-            return await UserAwardTable.Where(u => u.UserID == user.ID).ToListAsync();
+            var userAwardTable = UserAwardTable;
+            return await userAwardTable.Where(u => u.UserID == user.ID).ToListAsync();
         }
 
         public async static Task<List<Award>> GetAllAwards(User user)
         {
-            AwardTable = MobileService.GetTable<Award>();
-            return await AwardTable.ToListAsync();
+            var awardTable = AwardTable;
+            return await awardTable.ToListAsync();
         }
 
-        public async static Task<List<AwardLocalization>> GetAwardLocalization(Award award, String LocalizationId)
+        public async static Task<List<AwardLocalization>> GetAwardLocalization(Award award, String localizationId)
         {
-            AwardLocalizationTable = MobileService.GetTable<AwardLocalization>();
-            return await AwardLocalizationTable.Where(local => local.AwardId == award.ID && local.LanguageID == LocalizationId ).ToListAsync();
+            var awardLocalizationTable = AwardLocalizationTable;
+            return await awardLocalizationTable.Where(local => local.AwardId == award.ID && local.LanguageID == localizationId).ToListAsync();
         }
 
         #endregion
@@ -155,62 +166,60 @@ namespace levelupspace.DataModel
 
     public class AzureStorageProvider
     {
-        private static string connectionString = "DefaultEndpointsProtocol=http;AccountName=levelupstorage;AccountKey=k9OkEg5CQHVD415z+s8xD/zx4lCKyWdBgWrDxqUnCsVbohmxgYVUUs8q4ZknpJdpgOEikk0damf2/lTSksSTZg==";
+        private const string ConnectionString = "DefaultEndpointsProtocol=http;AccountName=levelupstorage;AccountKey=k9OkEg5CQHVD415z+s8xD/zx4lCKyWdBgWrDxqUnCsVbohmxgYVUUs8q4ZknpJdpgOEikk0damf2/lTSksSTZg==";
 
-        private static CloudStorageAccount storageAccount =
-            CloudStorageAccount.Parse(connectionString);
+        private static readonly CloudStorageAccount StorageAccount =
+            CloudStorageAccount.Parse(ConnectionString);
 
-        private static CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
-        public static  async void UploadAvatarToStorage(StorageFile file, String username)
+        public static async void UploadAvatarToStorage(StorageFile file, String username)
         {
             // Retrieve reference to a previously created container.
-            CloudBlobContainer container = blobClient.GetContainerReference("userpic");
-
+            var container = StorageAccount.CreateCloudBlobClient().GetContainerReference("userpic");
+            
             // Retrieve reference to a blob named "myblob".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference("UL" + username);
+            var blockBlob = container.GetBlockBlobReference("UL" + username);
 
             // Create or overwrite the "myblob" blob with contents from a local file.
 
             var stream = await file.OpenAsync(FileAccessMode.Read);
 
             await blockBlob.UploadFromStreamAsync(stream.GetInputStreamAt(0));
-            
+
         }
 
-        public static async void DownloadPackageFromStorage(StorageFile file, String packageName, EventHandler DownloadCompletedEvent=null)
+        public static async void DownloadPackageFromStorage(StorageFile file, String packageName, EventHandler downloadCompletedEvent = null)
         {
             // Retrieve reference to a previously created container.
-            CloudBlobContainer container = blobClient.GetContainerReference("packages");
+            var container = StorageAccount.CreateCloudBlobClient().GetContainerReference("packages");
 
             // Retrieve reference to a blob named "myblob".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageName);
+            var blockBlob = container.GetBlockBlobReference(packageName);
             // Create or overwrite the "myblob" blob with contents from a local file.
-            
+
             using (var fileStream = await file.OpenStreamForWriteAsync())
             {
-                
+
                 await blockBlob.DownloadToStreamAsync(fileStream.AsOutputStream());
             }
 
-            EventArgs args = new EventArgs();
-            
-            if (DownloadCompletedEvent != null) DownloadCompletedEvent(null, args);
+            var args = new EventArgs();
+
+            if (downloadCompletedEvent != null) downloadCompletedEvent(null, args);
         }
 
-        public static async void DownloadPackageFromStorage(StorageFile file, String packageNameInBlob, int numOfParts, long Length, EventHandler DownloadCompletedEvent = null, EventHandler DownloadPartEvent = null)
+        public static async void DownloadPackageFromStorage(StorageFile file, String packageNameInBlob, int numOfParts, long Length, EventHandler downloadCompletedEvent = null, EventHandler downloadPartEvent = null)
         {
             long offset = 0;
-            long length = Length / numOfParts;
+            var length = Length / numOfParts;
             if (length < 4096)
                 length = 4096;
             try
             {
                 // Retrieve reference to a previously created container.
-                CloudBlobContainer container = blobClient.GetContainerReference("packages");
+                var container = StorageAccount.CreateCloudBlobClient().GetContainerReference("packages");
 
                 // Retrieve reference to a blob named "myblob".
-                CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageNameInBlob);
+                var blockBlob = container.GetBlockBlobReference(packageNameInBlob);
                 // Create or overwrite the "myblob" blob with contents from a local file.
                 using (var fileStream = await file.OpenStreamForWriteAsync())
                 {
@@ -221,9 +230,9 @@ namespace levelupspace.DataModel
 
                         await blockBlob.DownloadRangeToStreamAsync(fileStream.AsOutputStream(), offset, length);
                         offset += length;
-                        if (DownloadPartEvent != null)
+                        if (downloadPartEvent != null)
                         {
-                            DownloadPartEvent(null, new FilePartDownloadedEventArgs(file.DisplayName, 0));
+                            downloadPartEvent(null, new FilePartDownloadedEventArgs(file.DisplayName, 0));
                         }
 
                     }
@@ -231,20 +240,20 @@ namespace levelupspace.DataModel
             }
             catch
             {
-                if (DownloadCompletedEvent != null) DownloadCompletedEvent(file, new FilePartDownloadedEventArgs(file.DisplayName, -1));
+                if (downloadCompletedEvent != null) downloadCompletedEvent(file, new FilePartDownloadedEventArgs(file.DisplayName, -1));
             }
 
-            FilePartDownloadedEventArgs args = new FilePartDownloadedEventArgs(file.DisplayName, offset);
-            if (DownloadCompletedEvent != null) DownloadCompletedEvent(file, args);
+            var args = new FilePartDownloadedEventArgs(file.DisplayName, offset);
+            if (downloadCompletedEvent != null) downloadCompletedEvent(file, args);
         }
 
         public static async void DownloadAvatarFromStorage(StorageFile file, String userID)
         {
             // Retrieve reference to a previously created container.
-            CloudBlobContainer container = blobClient.GetContainerReference("userpic");
+            var container = StorageAccount.CreateCloudBlobClient().GetContainerReference("userpic");
 
             // Retrieve reference to a blob named "myblob".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference("UL" + userID);
+            var blockBlob = container.GetBlockBlobReference("UL" + userID);
             // Create or overwrite the "myblob" blob with contents from a local file.
             using (var fileStream = await file.OpenStreamForWriteAsync())
             {
@@ -255,18 +264,18 @@ namespace levelupspace.DataModel
 
         public static string GetConnectionString(string packageNameInBlob)
         {
-            CloudBlobContainer container = blobClient.GetContainerReference("packages");
+            var container = StorageAccount.CreateCloudBlobClient().GetContainerReference("packages");
 
             // Retrieve reference to a blob named "myblob".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(packageNameInBlob);
+            var blockBlob = container.GetBlockBlobReference(packageNameInBlob);
 
-            var policy = new SharedAccessBlobPolicy() 
+            var policy = new SharedAccessBlobPolicy
             {
-                 Permissions = SharedAccessBlobPermissions.Read,
-                 SharedAccessExpiryTime = DateTimeOffset.Now.AddMinutes(10)
+                Permissions = SharedAccessBlobPermissions.Read,
+                SharedAccessExpiryTime = DateTimeOffset.Now.AddMinutes(10)
             };
 
-            string url = blockBlob.GetSharedAccessSignature(policy);
+            var url = blockBlob.GetSharedAccessSignature(policy);
             return url;
         }
 
@@ -304,10 +313,10 @@ namespace levelupspace.DataModel
             set { _fileName = value; }
         }
 
-        public FileUnzippedEventArgs(string FileName, string FolderPath)
+        public FileUnzippedEventArgs(string FileName, string folderPath)
         {
             _fileName = FileName;
-            this._folderPath = FolderPath;
+            _folderPath = folderPath;
         }
 
         private String _folderPath;
@@ -316,12 +325,12 @@ namespace levelupspace.DataModel
         {
             get
             {
-                return this._folderPath;
+                return _folderPath;
             }
 
             set
             {
-                this._folderPath = value;
+                _folderPath = value;
             }
         }
     }

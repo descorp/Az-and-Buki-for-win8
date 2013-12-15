@@ -1,14 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Windows.UI.Xaml.Data;
+using Windows.Foundation.Metadata;
 
 namespace levelupspace.Common
 {
     /// <summary>
     /// Реализация интерфейса <see cref="INotifyPropertyChanged"/> для упрощения моделей.
     /// </summary>
-    [Windows.Foundation.Metadata.WebHostHidden]
+    [WebHostHidden]
     public abstract class BindableBase : INotifyPropertyChanged
     {
         /// <summary>
@@ -30,10 +30,10 @@ namespace levelupspace.Common
         /// требуемым значением.</returns>
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
         {
-            if (object.Equals(storage, value)) return false;
+            if (Equals(storage, value)) return false;
 
             storage = value;
-            this.OnPropertyChanged(propertyName);
+            OnPropertyChanged(propertyName);
             return true;
         }
 
@@ -45,7 +45,7 @@ namespace levelupspace.Common
         /// который поддерживает атрибут <see cref="CallerMemberNameAttribute"/>.</param>
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            var eventHandler = this.PropertyChanged;
+            var eventHandler = PropertyChanged;
             if (eventHandler != null)
             {
                 eventHandler(this, new PropertyChangedEventArgs(propertyName));

@@ -3,8 +3,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace levelupspace.DataModel
@@ -13,48 +11,56 @@ namespace levelupspace.DataModel
     {
         public static async void Unzip(StorageFile file)
         {
-            Stream stream = await file.OpenStreamForReadAsync();
-            var rootdir = ApplicationData.Current.LocalFolder;
-            Dictionary<String, StorageFolder> folderTree = new Dictionary<string, StorageFolder>();
-            using (ZipArchive archive = new ZipArchive(stream))
+            using (var stream = await file.OpenStreamForReadAsync())
             {
-                foreach (ZipArchiveEntry folderEntry in archive.Entries.Where(u => u.Length == 0))
+                var rootdir = ApplicationData.Current.LocalFolder;
+                var folderTree = new Dictionary<string, StorageFolder>();
+                using (var archive = new ZipArchive(stream))
                 {
-                    string path = folderEntry.FullName;
-                    string finalFolderName = path.Substring(0, path.Length - 1);
+                    foreach (var folderEntry in archive.Entries.Where(u => u.Length == 0))
+                    {
+                        var path = folderEntry.FullName;
+                        var finalFolderName = path.Substring(0, path.Length - 1);
 
-                    if (finalFolderName.LastIndexOf("/") > 0)
-                    {
-                        string subFolderName = path.Substring(0, finalFolderName.LastIndexOf("/") + 1);
-                        finalFolderName = finalFolderName.Substring(subFolderName.Length);
-                        var subFolder = folderTree.First(u => u.Key == subFolderName).Value;
-                        folderTree.Add(path, await subFolder.CreateFolderAsync(finalFolderName, CreationCollisionOption.OpenIfExists));
-                    }
-                    else
-                    {
-                        folderTree.Add(path, await rootdir.CreateFolderAsync(finalFolderName, CreationCollisionOption.OpenIfExists));
-                    }
-                }
-
-                foreach (ZipArchiveEntry entry in archive.Entries.Where(u => u.Length > 0 && !u.Name.Contains("Thumbs.db")))
-                {
-                    string dirName = entry.FullName.Substring(0, entry.FullName.LastIndexOf("/") + 1);
-                    var newFile = await folderTree.First(u => u.Key == dirName).Value.CreateFileAsync(entry.Name, CreationCollisionOption.ReplaceExisting);
-                    using (Stream streamForWriting = await newFile.OpenStreamForWriteAsync())
-                    {
-                        using (Stream streamForRead = entry.Open())
+                        if (finalFolderName.LastIndexOf("/", StringComparison.Ordinal) > 0)
                         {
-                            long length = entry.Length;
-                            int n = 0;
-                            int offset = 0;
-                            do
+                            var subFolderName = path.Substring(0,
+                                finalFolderName.LastIndexOf("/", StringComparison.Ordinal) + 1);
+                            finalFolderName = finalFolderName.Substring(subFolderName.Length);
+                            var subFolder = folderTree.First(u => u.Key == subFolderName).Value;
+                            folderTree.Add(path,
+                                await subFolder.CreateFolderAsync(finalFolderName, CreationCollisionOption.OpenIfExists));
+                        }
+                        else
+                        {
+                            folderTree.Add(path,
+                                await rootdir.CreateFolderAsync(finalFolderName, CreationCollisionOption.OpenIfExists));
+                        }
+                    }
+
+
+                    foreach (var entry in archive.Entries.Where(u => u.Length > 0 && !u.Name.Contains("Thumbs.db")))
+                    {
+                        var dirName = entry.FullName.Substring(0,
+                            entry.FullName.LastIndexOf("/", StringComparison.Ordinal) + 1);
+                        var newFile =
+                            await
+                                folderTree.First(u => u.Key == dirName)
+                                    .Value.CreateFileAsync(entry.Name, CreationCollisionOption.ReplaceExisting);
+                        using (var streamForWriting = await newFile.OpenStreamForWriteAsync())
+                        {
+                            using (var streamForRead = entry.Open())
                             {
-                                byte[] bytes = new byte[length];
-                                n = await streamForRead.ReadAsync(bytes, 0, (int)length);
-                                await streamForWriting.WriteAsync(bytes, 0, n);
-                                offset += n;
+                                var length = entry.Length;
+                                var offset = 0;
+                                do
+                                {
+                                    var bytes = new byte[length];
+                                    var n = await streamForRead.ReadAsync(bytes, 0, (int) length);
+                                    await streamForWriting.WriteAsync(bytes, 0, n);
+                                    offset += n;
+                                } while (offset < length);
                             }
-                            while (offset < length);
                         }
                     }
                 }
@@ -72,24 +78,24 @@ namespace levelupspace.DataModel
                     var asyncStream = await file.OpenReadAsync();
                     stream = asyncStream.AsStream();
                 }
-                catch
+                catch (Exception)
                 {
                 }
             }
-            while (stream.Length == 0);
+            while (stream != null && stream.Length == 0);
 
             var rootdir = ApplicationData.Current.LocalFolder;
-            Dictionary<String, StorageFolder> folderTree = new Dictionary<string, StorageFolder>();
-            using (ZipArchive archive = new ZipArchive(stream))
+            var folderTree = new Dictionary<string, StorageFolder>();
+            using (var archive = new ZipArchive(stream))
             {
-                foreach (ZipArchiveEntry folderEntry in archive.Entries.Where(u => u.Length == 0))
+                foreach (var folderEntry in archive.Entries.Where(u => u.Length == 0))
                 {
-                    string path = folderEntry.FullName;
-                    string finalFolderName = path.Substring(0, path.Length - 1);
+                    var path = folderEntry.FullName;
+                    var finalFolderName = path.Substring(0, path.Length - 1);
 
-                    if (finalFolderName.LastIndexOf("/") > 0)
+                    if (finalFolderName.LastIndexOf("/", StringComparison.Ordinal) > 0)
                     {
-                        string subFolderName = path.Substring(0, finalFolderName.LastIndexOf("/") + 1);
+                        var subFolderName = path.Substring(0, finalFolderName.LastIndexOf("/", StringComparison.Ordinal) + 1);
                         finalFolderName = finalFolderName.Substring(subFolderName.Length);
                         var subFolder = folderTree.First(u => u.Key == subFolderName).Value;
                         folderTree.Add(path, await subFolder.CreateFolderAsync(finalFolderName, CreationCollisionOption.OpenIfExists));
@@ -100,33 +106,31 @@ namespace levelupspace.DataModel
                     }
                 }
 
-                foreach (ZipArchiveEntry entry in archive.Entries.Where(u => u.Length > 0))
+                foreach (var entry in archive.Entries.Where(u => u.Length > 0))
                 {
-                    string dirName = entry.FullName.Substring(0, entry.FullName.LastIndexOf("/") + 1);
+                    var dirName = entry.FullName.Substring(0, entry.FullName.LastIndexOf("/", StringComparison.Ordinal) + 1);
                     var folder = folderTree.First(u => u.Key == dirName).Value;
                     var newFile = await folder.CreateFileAsync(entry.Name, CreationCollisionOption.ReplaceExisting);
 
-                    using (Stream streamForRead = entry.Open())
+                    using (var streamForRead = entry.Open())
                     {
-                        long length = entry.Length;
-                        int n = 0;
+                        var length = entry.Length;
 
-                        using(Stream streamForWriting = await newFile.OpenStreamForWriteAsync())
+                        using (var streamForWriting = await newFile.OpenStreamForWriteAsync())
                         {
-                            int offset = 0;
                             do
                             {
-                                byte[] bytes = new byte[length];
-                                n = await streamForRead.ReadAsync(bytes, 0, (int)length);
+                                var bytes = new byte[length];
+                                var n = await streamForRead.ReadAsync(bytes, 0, (int)length);
                                 await streamForWriting.WriteAsync(bytes, 0, n);
-                                offset += n;
                             }
                             while (streamForWriting.Length < length);
                         }
                     }
                 }
             }
-
+            stream.Dispose();
+            
             if (EventHandler != null)
                 EventHandler(null, new FileUnzippedEventArgs(file.Name, folderTree.First().Value.Path));
         }

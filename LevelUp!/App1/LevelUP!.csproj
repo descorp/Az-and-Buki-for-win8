@@ -115,16 +115,24 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AuthorizationControl.xaml.cs">
+    <Compile Include="DataModel\ABCItem.cs" />
+    <Compile Include="DataModel\AlphabetItem.cs" />
+    <Compile Include="DataModel\DownLoadAlphabetItem.cs" />
+    <Compile Include="DataModel\LetterItem.cs" />
+    <Compile Include="DataModel\PasswordBoxImageSource.cs" />
+    <Compile Include="DataModel\PasswordBoxItem.cs" />
+    <Compile Include="DataModel\WordItem.cs" />
+    <Compile Include="ViewModel\MainMenuViewModel.cs" />
+    <Compile Include="View\AuthorizationControl.xaml.cs">
       <DependentUpon>AuthorizationControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ChooseGamePage.xaml.cs">
+    <Compile Include="View\ChooseGamePage.xaml.cs">
       <DependentUpon>ChooseGamePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModel\ABCModel.cs" />
     <Compile Include="DataModel\AzureProvider.cs" />
     <Compile Include="DataModel\ContentManager.cs" />
-    <Compile Include="AlphabetDetailsPage.xaml.cs">
+    <Compile Include="View\AlphabetDetailsPage.xaml.cs">
       <DependentUpon>AlphabetDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AwardManager.cs" />
@@ -138,27 +146,27 @@
     <Compile Include="DataModel\UnZIPer.cs" />
     <Compile Include="DataModel\UserManager.cs" />
     <Compile Include="DataModel\VKProvider.cs" />
-    <Compile Include="DownloadsPage.xaml.cs">
+    <Compile Include="View\DownloadsPage.xaml.cs">
       <DependentUpon>DownloadsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PreferencesContro.xaml.cs">
+    <Compile Include="View\PreferencesContro.xaml.cs">
       <DependentUpon>PreferencesContro.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GamePage.xaml.cs">
+    <Compile Include="View\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameParamsControl.xaml.cs">
+    <Compile Include="View\GameParamsControl.xaml.cs">
       <DependentUpon>GameParamsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameResultPage.xaml.cs">
+    <Compile Include="View\GameResultPage.xaml.cs">
       <DependentUpon>GameResultPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Logger.cs" />
-    <Compile Include="LetterPage.xaml.cs">
+    <Compile Include="View\LetterPage.xaml.cs">
       <DependentUpon>LetterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainMenu.xaml.cs">
+    <Compile Include="View\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -168,25 +176,25 @@
     <Compile Include="Common\LayoutAwarePage.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="AchievementsPage.xaml.cs">
+    <Compile Include="View\AchievementsPage.xaml.cs">
       <DependentUpon>AchievementsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SlotMashineControl.cs" />
+    <Compile Include="Controls\SlotMashineControl.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
-    <Compile Include="TextPopup.xaml.cs">
+    <Compile Include="View\TextPopup.xaml.cs">
       <DependentUpon>TextPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserAlphabetsPage.xaml.cs">
+    <Compile Include="View\UserAlphabetsPage.xaml.cs">
       <DependentUpon>UserAlphabetsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserSignOnPage.xaml.cs">
+    <Compile Include="View\UserSignOnPage.xaml.cs">
       <DependentUpon>UserSignOnPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameAnswerControl.xaml.cs">
+    <Compile Include="View\GameAnswerControl.xaml.cs">
       <DependentUpon>GameAnswerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SharePage.xaml.cs">
+    <Compile Include="View\SharePage.xaml.cs">
       <DependentUpon>SharePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -194,7 +202,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram2.cd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Common\ReadMe.txt" />
     <None Include="LevelUP!_StoreKey.pfx" />
     <None Include="LevelUP!_TemporaryKey.pfx" />
@@ -202,6 +212,8 @@
     <PRIResource Include="Localization\en-us\Resources.lang-en-US.resw" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Userlogo.png" />
+    <Content Include="GDF_DLL.dll" />
     <Content Include="Icons\CH1.png" />
     <Content Include="Icons\CH2.png" />
     <Content Include="Icons\CH3.png" />
@@ -214,18 +226,19 @@
     <Content Include="Assets\Gamelogo1.png" />
     <Content Include="Assets\HappyFace.png" />
     <Content Include="Assets\HardLevel.png" />
-    <Content Include="Assets\LearnImg.png" />
+    <Content Include="View\images\download.png" />
+    <Content Include="View\images\LearnImg.png" />
     <Content Include="Assets\Logo.png" />
-    <Content Include="Assets\MainPageLogo.png" />
-    <Content Include="Assets\MedalImgl.png" />
+    <Content Include="View\images\MainPageLogo.png" />
+    <Content Include="View\images\MedalImgl.png" />
     <Content Include="Assets\MediumLevel.png" />
-    <Content Include="Assets\PlayImg.png" />
+    <Content Include="View\images\PlayImg.png" />
     <Content Include="Assets\SadFace.png" />
     <Content Include="Assets\SettingsImg.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\Userlogo.png" />
+    <Content Include="View\images\Userlogo.png" />
     <Content Include="Icons\fbbtn.png" />
     <Content Include="Icons\fbbtn_hover.png" />
     <Content Include="Icons\vkbtn.png" />
@@ -240,11 +253,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AuthorizationControl.xaml">
+    <Page Include="View\AuthorizationControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ChooseGamePage.xaml">
+    <Page Include="View\ChooseGamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -252,35 +265,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AlphabetDetailsPage.xaml">
+    <Page Include="View\AlphabetDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DownloadsPage.xaml">
+    <Page Include="View\DownloadsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PreferencesContro.xaml">
+    <Page Include="View\PreferencesContro.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GamePage.xaml">
+    <Page Include="View\GamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameParamsControl.xaml">
+    <Page Include="View\GameParamsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameResultPage.xaml">
+    <Page Include="View\GameResultPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LetterPage.xaml">
+    <Page Include="View\LetterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainMenu.xaml">
+    <Page Include="View\MainMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -289,11 +302,11 @@
       <SubType>Designer</SubType>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
     </Page>
-    <Page Include="AchievementsPage.xaml">
+    <Page Include="View\AchievementsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TextPopup.xaml">
+    <Page Include="View\TextPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -301,19 +314,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserAlphabetsPage.xaml">
+    <Page Include="View\UserAlphabetsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserSignOnPage.xaml">
+    <Page Include="View\UserSignOnPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameAnswerControl.xaml">
+    <Page Include="View\GameAnswerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SharePage.xaml">
+    <Page Include="View\SharePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

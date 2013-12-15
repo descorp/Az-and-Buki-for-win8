@@ -12,7 +12,7 @@ namespace levelupspace
             var res = new ResourceLoader();
 
             messageDialog.Commands.Add(new UICommand(res.GetString("btnNextContent"),
-                new UICommandInvokedHandler(CommandInvokedHandler)));
+                CommandInvokedHandler));
 
             messageDialog.DefaultCommandIndex = 0;
 

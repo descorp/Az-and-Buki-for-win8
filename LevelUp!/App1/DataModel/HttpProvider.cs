@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.Networking.Connectivity;
 
 namespace levelupspace 
 {
@@ -12,26 +13,23 @@ namespace levelupspace
 
         public static bool IsInternetConnection()
         {
-            var connectionProfile = Windows.Networking.Connectivity.NetworkInformation.GetInternetConnectionProfile();
+            var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
             return (connectionProfile != null);
         }
 
         public event EventHandler Complete;
-        string _boundary = "----------" + DateTime.Now.Ticks.ToString("x");
+        readonly string _boundary = "----------" + DateTime.Now.Ticks.ToString("x");
 
         public void SendMultiPartRerquest(string url, Stream postStream, string fileName)
         {
-            HttpWebRequest FileSendRequest = (HttpWebRequest)HttpWebRequest.Create(url);
-            FileSendRequest.ContentType = "multipart/form-data; boundary=" + _boundary ;
-            FileSendRequest.Method = "POST";
-            FileSendRequest.AllowReadStreamBuffering = false;
+            var fileSendRequest = (HttpWebRequest)WebRequest.Create(url);
+            fileSendRequest.ContentType = "multipart/form-data; boundary=" + _boundary ;
+            fileSendRequest.Method = "POST";
+            fileSendRequest.AllowReadStreamBuffering = false;
             try
             {
                 // start the request
-                FileSendRequest.BeginGetRequestStream(ar =>
-                {
-                    GetRequestStreamCallback(fileName, postStream, ar, FileSendRequest);
-                }, null);
+                fileSendRequest.BeginGetRequestStream(ar => GetRequestStreamCallback(fileName, postStream, ar, fileSendRequest), null);
             }
             catch
             {
@@ -44,16 +42,17 @@ namespace levelupspace
         /// <summary>
         /// Get request strean for sending large post data.
         /// </summary>
+        /// <param name="fileName"></param>
         /// <param name="postData"></param>
         /// <param name="asynchronousResult"></param>
         /// <param name="webRequest"></param>
         private void GetRequestStreamCallback(string fileName, Stream postData, IAsyncResult asynchronousResult, HttpWebRequest webRequest)
         {
             // end the stream request operation
-            Stream postStream = webRequest.EndGetRequestStream(asynchronousResult);
+            var postStream = webRequest.EndGetRequestStream(asynchronousResult);
 
             // the post message header
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             // File
             sb.Append("--" + _boundary + "\r\n");
@@ -63,15 +62,15 @@ namespace levelupspace
 
             //sb.Append("Content-Transfer-Encoding: binary\r\n\r\n");
 
-            string strPostHeader = sb.ToString();
+            var strPostHeader = sb.ToString();
 
-            byte[] postHeaderBytes = Encoding.UTF8.GetBytes(strPostHeader);
+            var postHeaderBytes = Encoding.UTF8.GetBytes(strPostHeader);
 
             postStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
-            int bytesRead = 0;
-            int blockSize = checked((int)System.Math.Min(4096, (long)postData.Length));
+            int bytesRead;
+            var blockSize = checked((int)Math.Min(4096, postData.Length));
 
-            byte[] buffer = new Byte[blockSize];
+            var buffer = new Byte[blockSize];
             postData.Position = 0;
 
 
@@ -81,14 +80,14 @@ namespace levelupspace
             }
             postData.Dispose();
 
-            byte[] finalyBoundaryBytes = Encoding.UTF8.GetBytes("\r\n--" + _boundary + "--\r\n");
+            var finalyBoundaryBytes = Encoding.UTF8.GetBytes("\r\n--" + _boundary + "--\r\n");
 
             postStream.Write(finalyBoundaryBytes, 0, finalyBoundaryBytes.Length);
             postStream.Dispose();
 
             //IAsyncResult asynchronousInputRead = postStream.BeginWrite(buffer, 0, blockSize, new AsyncCallback(ReadCallBack), myRequestState);
             // start the web request
-            webRequest.BeginGetResponse(new AsyncCallback(GetResponseCallback), webRequest);
+            webRequest.BeginGetResponse(GetResponseCallback, webRequest);
         }
 
         /// <summary>
@@ -98,19 +97,17 @@ namespace levelupspace
         private void GetResponseCallback(IAsyncResult asynchronousResult)
         {
             
-            HttpRresponseEventArgs eventArgs = new HttpRresponseEventArgs();
+            var eventArgs = new HttpRresponseEventArgs();
             try
             {
-                HttpWebRequest webRequest = (HttpWebRequest)asynchronousResult.AsyncState;
-
-                HttpWebResponse response;
+                var webRequest = (HttpWebRequest)asynchronousResult.AsyncState;
 
                 // end the get response operation
-                response = (HttpWebResponse)webRequest.EndGetResponse(asynchronousResult);
-                Stream streamResponse = response.GetResponseStream();
+                var response = (HttpWebResponse)webRequest.EndGetResponse(asynchronousResult);
+                var streamResponse = response.GetResponseStream();
 
-                StreamReader streamReader = new StreamReader(streamResponse);
-                string responseStr = streamReader.ReadToEnd();
+                var streamReader = new StreamReader(streamResponse);
+                var responseStr = streamReader.ReadToEnd();
                 streamResponse.Dispose();
                 streamReader.Dispose();
                 response.Dispose();
@@ -131,14 +128,14 @@ namespace levelupspace
 
         public async Task<string> POSTrequest(Uri reuestURI)
         {
-             WebRequest request = WebRequest.Create(reuestURI);
+             var request = WebRequest.Create(reuestURI);
             request.Method = "POST";
             
             var Webresponse = await request.GetResponseAsync();
             if (Webresponse != null)
             {
-                Stream responseStream = Webresponse.GetResponseStream();
-                StreamReader responseReader = new System.IO.StreamReader(responseStream, Encoding.UTF8);
+                var responseStream = Webresponse.GetResponseStream();
+                var responseReader = new StreamReader(responseStream, Encoding.UTF8);
                 return responseReader.ReadToEnd();
                 
             }

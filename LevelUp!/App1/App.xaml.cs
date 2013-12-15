@@ -5,8 +5,8 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-
 // Документацию по шаблону "Приложение таблицы" см. по адресу http://go.microsoft.com/fwlink/?LinkId=234226
+using levelupspace.DataModel;
 
 namespace levelupspace
 {
@@ -21,8 +21,8 @@ namespace levelupspace
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace levelupspace
         /// <param name="args">Сведения о запросе и обработке запуска.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
+            var rootFrame = Window.Current.Content as Frame;
 
             // Не повторяйте инициализацию приложения, если в окне уже имеется содержимое,
             // только обеспечьте активность окна
@@ -67,9 +67,9 @@ namespace levelupspace
                 // Если стек навигации не восстанавливается для перехода к первой странице,
                 // настройка новой страницы путем передачи необходимой информации в качестве параметра
                 // навигации
-                bool IsNotFirstStart = await ContentManager.IsContentDownloaded(DBconnectionPath.Local);
+                var isNotFirstStart = await ContentManager.IsContentDownloaded(DBconnectionPath.Local);
 
-                Type pagetype =  IsNotFirstStart ? typeof(MainMenu) : typeof(DownloadsPage);
+                var pagetype =  isNotFirstStart ? typeof(MainMenu) : typeof(DownloadsPage);
                 
                 if (!rootFrame.Navigate(pagetype))
                 {

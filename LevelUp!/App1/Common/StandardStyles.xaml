@@ -1934,6 +1934,7 @@
 
     <Style x:Key="FBShareButtonStyle" TargetType="Button">
         <Setter Property="MinWidth" Value="0"/>
+		
         <Setter Property="Width" Value="48"/>
         <Setter Property="Height" Value="48"/>
         <Setter Property="Margin" Value="36,0,36,36"/>
@@ -2022,6 +2023,14 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <ControlTemplate x:Key="ButtonMainMenuTemplate" TargetType="Button">
+    	<Grid Background="{StaticResource ABCBackgroundThemeBrush}">
+    		<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+    			<Image HorizontalAlignment="Left" Height="60" VerticalAlignment="Center" Width="60" Source="{Binding ButtonImage}"/>
+    			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{TemplateBinding Content}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+    		</StackPanel>
+    	</Grid>
+    </ControlTemplate>
     
     
 </ResourceDictionary>
